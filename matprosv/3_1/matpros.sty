@@ -1,0 +1,959 @@
+%17/03/97 20:20 Рабочая версия стиля \лк МатПросвещения\пк.
+% Этот стиль LaTeX'а создан для нужд сборника \лк МатПросвещение\пк
+% М.Н. Вялым путем творческой компиляции стандартного стиля
+% book.sty и стиля С.М. Львовского russcorr.sty. Ответственность за
+% имеющиеся в нем ошибки целиком лежит на М. Вялом. Связаться со мной
+% (с ним)  можно по адресу:
+% vyalyi@ium.ac.msk.su
+%
+% КАК ХОДИТЬ ПО ЭТОМУ ТЕКСТУ?
+% Основные блоки разделены строками вида
+%%%<ИМЯ-БЛОКА>%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%  ПЕРЕЧЕНЬ ОСНОВНЫХ БЛОКОВ
+% 1. ОПРЕДЕЛЕНИЕ ОСНОВНЫХ ЭЛЕМЕНТОВ ОФОРМЛЕНИЯ
+% 2. РУСИФИКАЦИИ
+% 3. РАСШИРЕННАЯ ПОДДЕРЖКА МАТЕМАТИКИ
+% 4. ОПРЕДЕЛЕНИЕ ПЕРВЫХ СТРАНИЦ (включая состав редколлегии)
+%
+% ОПРЕДЕЛЕНИЯ, СПЕЦИФИЧЕСКИЕ ДЛЯ ЭТОГО СТИЛЯ:
+%
+%\shorttitle#1 :определение сокращенного названия статьи в колонтитуле
+%\и эквивалент \and при задании авторов
+%\ак#1ъ позволяет указать звание автора так, чтобы оно не повторялось
+%в колонтитуле
+%
+%%% 1. ОПРЕДЕЛЕНИЕ ОСНОВНЫХ ЭЛЕМЕНТОВ ОФОРМЛЕНИЯ
+\ifx\@matprosloaded\relax\endinput\else\let\@matprosloaded\relax\fi
+% Если уже был вызван файл matpros ---
+% конец работы
+% изменение от 14.8.94 (Вялое)
+\typeout{Это - matpros.sty <17 марта 1997> русская версия}
+%
+% 05-08-95 Вялый: начало стандартной мантры по определению гарнитуры
+\def\@ptsize{0}
+\@namedef{ds@11pt}{\def\@ptsize{1}}
+\@namedef{ds@12pt}{\def\@ptsize{2}}
+
+\@twosidetrue
+\@mparswitchtrue
+\def\ds@draft{\overfullrule 5pt}
+
+\def\ds@twocolumn{\@twocolumntrue}
+
+\@options
+
+\input bk1\@ptsize.sty\relax
+% 05-08-95 Вялый: конец стандартной мантры по определению гарнитуры
+
+% 05-08-95 Вялый: стандартные обозначения для пунктов в перечислениях
+\def\labelitemi{$\triangleright$}
+\def\labelitemii{--}
+\def\labelitemiii{$\m@th\ast$}
+\def\labelitemiv{$\m@th\cdot$}
+
+% 05-08-95 Вялый: стандартные окружения verse,quotation,quote,description
+\def\verse{\let\\=\@centercr
+  \list{}{\itemsep\z@ \itemindent -1.5em\listparindent \itemindent
+          \rightmargin\leftmargin\advance\leftmargin 1.5em}\item[]}
+\let\endverse\endlist
+
+\def\quotation{\list{}{\listparindent 1.5em
+    \itemindent\listparindent
+    \rightmargin\leftmargin\parsep \z@ plus\p@}\item[]}
+\let\endquotation=\endlist
+
+\def\quote{\list{}{\rightmargin\leftmargin}\item[]}
+\let\endquote=\endlist
+
+\def\descriptionlabel#1{\hspace\labelsep \bf #1}
+\def\description{\leftmargini=0pt\relax
+\list{}{\labelwidth\z@ \itemindent-\leftmargin
+       \let\makelabel\descriptionlabel}}
+
+\let\enddescription\endlist
+
+\newdimen\descriptionmargin
+\descriptionmargin=1em % changed 3em to 1em Вялый 09-05-94 03:46pm
+
+\arraycolsep 3pt %changed from 5pt Вялый 05-08-95 02:11pm
+
+\tabcolsep 3pt   %changed from 6pt Вялый 09-05-94 03:50pm
+
+\arrayrulewidth .4pt
+\doublerulesep 2pt
+
+\tabbingsep \labelsep
+
+\skip\@mpfootins = \skip\footins
+
+\fboxsep = 3pt
+
+\fboxrule = .4pt
+
+\newcounter {part}                    %%% Часть соответствует рубрике,
+\newcounter {chapter}                 %   глава -- статье
+% 05-08-95 Вялый: правило состоит в том, что статья располагается
+%в отдельном файле, имеющем нормальную структуру LaTeX'овского документа:
+%с преамбулой и основной скобкой
+%\begin{document}
+%текст статьи
+%\end{document}
+%В преамбуле данная версия matpros.sty выделяет автора и название,
+%а все остальное игнорирует.
+% 05-08-95 Вялый: section соответствует разделу
+\newcounter {section}[chapter]
+% 05-08-95 Вялый: subsection соответствует пункту
+%принимаем сплошную нумерацию пунктов безотносительно к разделу
+%как в МП-II
+\newcounter {subsection}[chapter]
+\newcounter {subsubsection}[subsection]
+\newcounter {paragraph}[subsubsection]
+\newcounter {subparagraph}[paragraph]
+
+
+% 05-08-95 Вялый: Названия частей сборника
+\def\thepart{\headpart{part}}
+\def\headpart#1{\@headpart{\@nameuse {c@#1}}}
+\def\@headpart#1{
+\ifcase #1\or
+          \or
+Студенческие чтения        \or
+Школьный отдел             \or
+Задачный отдел             \else\fi
+}
+
+% Was changed to title and authors!!!Вялый 09-05-94 05:29pm
+\def\thechapter{}%Вялый 09-05-94 10:50pm {\markboth{\@title}{\@author}}
+
+\def\thesection       {\Roman{section}}% 05-08-95 Вялый
+\def\thesubsection    {\arabic{subsection}}% 05-08-95 Вялый
+\def\thesubsubsection {\thesubsection .\arabic{subsubsection}}
+\def\theparagraph     {\thesubsubsection.\arabic{paragraph}}
+\def\thesubparagraph  {\theparagraph.\arabic{subparagraph}}
+
+%\def\@chapapp{\chaptername} Вялый 09-05-94 04:28pm
+% 05-08-95 Вялый: необходимо для размещения сокращенных названий статей
+% в колонтитулах
+% 05-08-95 Вялый: далее идут специальные определения для поддержки полного
+% и краткого наименования авторов и статей
+\def\shorttitle#1{\gdef\@shorttitle{#1}}
+\let\@shorttitle\relax
+\newif\if@full\@fullfalse
+\def\и{\if@full\and\else\hskip0.6em\fi}
+\def\ак#1ъ{\if@full#1\space\else\relax\fi}
+\def\из#1{\if@full\space(#1)\else\relax\fi}
+\def\chapter{
+% 05-08-95 Вялый: в оглавление заносим в отдельной строке
+% автора и в отдельной --- название
+\addtocontents{toc}{\protect\large\protect\bf \@author}%Вялый 09-05-94 10:52pm
+\addcontentsline{toc}{chapter}{\@title}
+\markboth{}{}
+\refstepcounter{chapter}%
+\arttitle
+\chaptermark\@shorttitle}
+\def\part{%\cleardoublepage%Вялый 09-05-94 10:53pm
+\newpage
+   \thispagestyle{plain}%
+  \if@twocolumn
+     \onecolumn
+     \@tempswatrue
+    \else \@tempswafalse
+  \fi
+  \secdef\@part\@spart}
+
+\def\@part[#1]#2{
+        \refstepcounter{part}%
+    \ifnum\c@part>1
+        \addtocontents{toc}{\protect\bigskip
+\protect\Large\protect\bf\thepart\protect\\[1mm] }%
+    \fi% 05-08-95 Вялый
+   {\centering
+    \interlinepenalty \@M
+    \vskip -20\p@
+    \Huge \bf \thepart
+    \par\hrule height1.4pt\vskip2.8\p@\hrule height 0.8pt}
+\vskip1in\@endpart}
+
+\def\@endpart{
+   \if@twoside
+       \hbox{}%
+       \thispagestyle{empty}%
+   \fi
+   \if@tempswa
+     \twocolumn
+   \fi}
+
+\def\@spart#1{{\centering
+   \interlinepenalty \@M
+   \Huge \bf   #1\par\hrule height4pt\vskip1\p@\hrule}
+\vskip1in\@endpart}
+
+\def\@pnumwidth{1.55em}
+\def\@tocrmarg {2.55em}
+\def\@dotsep{4.5}
+\setcounter{tocdepth}{2}
+
+\def\tableofcontents{\@restonecolfalse
+  \if@twocolumn\@restonecoltrue\onecolumn\fi
+  \section*{\contentsname
+        \@mkboth{\uppercase{\contentsname}}{\uppercase{\contentsname}}}%
+  \@starttoc{toc}\if@restonecol\twocolumn\fi}
+
+\def\l@part#1#2{\addpenalty{-\@highpenalty}%
+   \addvspace{2.25em plus\p@}% space above part line
+   \begingroup
+   \@tempdima 3em
+     \parindent \z@ \rightskip \@pnumwidth
+     \parfillskip -\@pnumwidth
+     {\large \bf
+     \leavevmode
+     #1\hfil \hbox to\@pnumwidth{\hss #2}}\par
+     \nobreak
+    \global\@nobreaktrue
+    \everypar{\global\@nobreakfalse\everypar{}}%% suggested by
+   \endgroup}
+
+%\def\l@chapter#1#2{\addpenalty{-\@highpenalty}%
+%   \vskip 1.0em plus\p@
+%  \@tempdima 1.5em
+%  \begingroup
+%    \parindent \z@ \rightskip \@pnumwidth
+%    \parfillskip -\@pnumwidth
+%    \bf
+%    \leavevmode
+%     \advance\leftskip\@tempdima
+%     \hskip -\leftskip
+%    #1\nobreak\hfil \nobreak\hbox to\@pnumwidth{\hss #2}\par
+%    \penalty\@highpenalty
+%  \endgroup}
+\def\l@chapter{\@dottedtocline{1}{0.0em}{2.3em}}
+\def\l@section{\@dottedtocline{1}{1.5em}{2.3em}}
+\def\l@subsection{\@dottedtocline{2}{3.8em}{3.2em}}
+\def\l@subsubsection{\@dottedtocline{3}{7.0em}{4.1em}}
+\def\l@paragraph{\@dottedtocline{4}{10em}{5em}}
+\def\l@subparagraph{\@dottedtocline{5}{12em}{6em}}
+\def\section{\@startsection {section}{1}{\z@}{3.5ex plus1ex minus
+    .2ex}{2.3ex plus.2ex}{\reset@font\Large\bf}}
+\def\subsection{\@startsection{subsection}{2}{\parindent}{3.25ex plus1ex
+    minus.2ex}{-1em}{\reset@font\normalsize\bf}}
+\def\subsubsection{\@startsection{subsubsection}{3}{\z@}{1.25ex plus
+    1ex minus.4ex}{-1em}{\reset@font\normalsize\bf}}
+
+
+\def\listoffigures{\@restonecolfalse
+  \if@twocolumn\@restonecoltrue\onecolumn\fi
+  \section*{\listfigurename\@mkboth{\uppercase{\listfigurename}}%
+    {\uppercase{\listfigurename}}}\@starttoc{lof}\if@restonecol
+   \twocolumn\fi}
+
+\def\l@figure{\@dottedtocline{1}{1.5em}{2.3em}}
+
+\def\listoftables{\@restonecolfalse
+  \if@twocolumn\@restonecoltrue\onecolumn\fi
+  \section*{\listtablename\@mkboth{\uppercase{\listtablename}}%
+     {\uppercase{\listtablename}}}\@starttoc{lot}\if@restonecol
+    \twocolumn\fi}
+
+\let\l@table\l@figure
+
+\def\thebibliography#1{\section*{\bibname}
+\list
+  {\@biblabel{\arabic{enumiv}}}{\settowidth\labelwidth{\@biblabel{#1}}%
+    \leftmargin\labelwidth
+    \advance\leftmargin\labelsep
+    \usecounter{enumiv}%
+    \let\p@enumiv\@empty
+    \def\theenumiv{\arabic{enumiv}}}%
+    \def\newblock{\hskip .11em plus.33em minus.07em}%
+    \sloppy\clubpenalty4000\widowpenalty4000
+    \sfcode`\.=\@m}
+
+\def\endthebibliography{%
+  \def\@noitemerr{\@warning{Empty `thebibliography' environment}}%
+  \endlist}
+
+\newif\if@restonecol
+
+\def\theindex{\@restonecoltrue\if@twocolumn\@restonecolfalse\fi
+\columnseprule \z@
+\columnsep 35\p@\twocolumn[\@makeschapterhead{\indexname}]%
+    \@mkboth{\uppercase{\indexname}}{\uppercase{\indexname}}%
+    \thispagestyle{plain}\parindent\z@
+    \parskip\z@ plus .3\p@\relax\let\item\@idxitem}
+
+\def\@idxitem{\par\hangindent 40\p@}
+
+\def\subitem{\par\hangindent 40\p@ \hspace*{20\p@}}
+
+\def\subsubitem{\par\hangindent 40\p@ \hspace*{30\p@}}
+
+\def\endtheindex{\if@restonecol\onecolumn\else\clearpage\fi}
+
+\def\indexspace{\par \vskip 10\p@ plus5\p@ minus3\p@\relax}
+
+\def\footnoterule{\kern-3\p@
+  \hrule width .4\columnwidth
+  \kern 2.6\p@}
+
+\@addtoreset{footnote}{chapter}
+
+\def\thefootnote{\arabic{footnote})}
+
+
+\long\def\@makefntext#1{\parindent 1em\noindent
+            \hbox to 1.8em{\hss$\m@th^{\@thefnmark}$}#1}
+
+\setcounter{topnumber}{2}
+\def\topfraction{.7}
+\setcounter{bottomnumber}{1}
+\def\bottomfraction{.3}
+\setcounter{totalnumber}{3}
+\def\textfraction{.2}
+\def\floatpagefraction{.5}
+\setcounter{dbltopnumber}{2}
+\def\dbltopfraction{.7}
+\def\dblfloatpagefraction{.5}
+
+\long\def\@makecaption#1#2{%
+   \vskip 10\p@
+   \setbox\@tempboxa\hbox{#1: #2}%
+   \ifdim \wd\@tempboxa >\hsize
+       #1: #2\par
+     \else
+       \hbox to\hsize{\hfil\box\@tempboxa\hfil}%
+   \fi}
+
+\newcounter{figure}[chapter]
+\def\thefigure{\@arabic\c@figure}
+
+\def\fps@figure{tbp}
+\def\ftype@figure{1}
+\def\ext@figure{lof}
+\def\fnum@figure{\figurename~\thefigure}
+\def\figure{\@float{figure}}
+\let\endfigure\end@float
+\@namedef{figure*}{\@dblfloat{figure}}
+\@namedef{endfigure*}{\end@dblfloat}
+
+\newcounter{table}[chapter]
+\def\thetable{\@arabic\c@table}
+
+\def\fps@table{tbp}
+\def\ftype@table{2}
+\def\ext@table{lot}
+\def\fnum@table{\tablename~\thetable}
+\def\table{\@float{table}}
+\let\endtable\end@float
+\@namedef{table*}{\@dblfloat{table}}
+\@namedef{endtable*}{\end@dblfloat}
+
+% Анонс 04-25-95 02:06pm
+\newbox\AnnonceBox
+\setbox\AnnonceBox\vbox to1in{}
+\long\def\Анонс#1{\setbox\AnnonceBox\vbox{\vskip.5in
+\noindent{\LARGE\bf АНОНС}\vskip.2in\par%
+#1}}
+
+
+\def\arttitle{\par
+ \begingroup
+   \def\thefootnote{\fnsymbol{footnote}}%
+   \def\@makefnmark{\hbox
+       to\z@{$\m@th^{\@thefnmark}$\hss}}%
+   \if@twocolumn
+     \twocolumn[\@arttitle]%
+     \else
+     \global\@topnum\z@
+     \@arttitle \fi\thispagestyle{plain}\@thanks
+ \endgroup
+ \setcounter{footnote}{0}%
+\global\language=0
+ \gdef\@thanks{}\let\thanks\relax}
+
+\def\@arttitle{
+ \null
+ \vskip 2em\@fulltrue
+ \begin{center}%
+  {\LARGE \@title \par}%
+  \vskip 1.5em
+  {\large
+   \lineskip .5em
+   \begin{tabular}[t]{c}\@author
+   \end{tabular}\par}%
+ \end{center}%
+ \par
+ \vskip 1.5em
+\@fullfalse}
+
+\def\abstract{
+\if@twocolumn
+\section*{\abstractname}%
+\else \small
+\begin{center}
+\quotation
+\fi}
+
+\def\endabstract{
+\if@twocolumn\else\endquotation\end{center}\fi\bigskip}
+
+\mark{{}{}}
+
+\def\ps@headings{\let\@mkboth\markboth
+ \def\@oddfoot{}\def\@evenfoot{}%       No feet.
+ \def\@evenhead%
+{\raisebox{0pt}[\headheight][0pt]{%
+\vbox{\hbox to\textwidth{\rm \thepage\hfil\strut \sl \leftmark}% Left heading.
+\hrule}%
+}}
+ \def\@oddhead%
+{\raisebox{0pt}[\headheight][0pt]{%
+\vbox{\hbox to\textwidth{\strut\sl \rightmark\hfil \rm\thepage}% Right heading.
+\hrule}%
+}}
+ \def\chaptermark##1{\ifx##1\relax
+\markboth {\@author}{\@title}
+\else \markboth {\@author}{##1}\fi}
+}
+
+\def\ps@myheadings{\let\@mkboth\@gobbletwo
+ \def\@oddhead{{\sl\rightmark}\hfil \rm\thepage}%
+ \def\@oddfoot{}\def\@evenhead{\rm \thepage\hfil\sl\leftmark}%
+ \def\@evenfoot{}\def\chaptermark##1{}\def\sectionmark##1{}%
+ \def\subsectionmark##1{}}
+
+%Вялый 09-06-94 09:42am
+\def\newfile@newpage{%
+\global\let\@shorttitle\relax
+\newpage\endinput}
+%Вялый 09-05-94 06:56pm
+\def\resetDocEnd{\let\enddocument\Вялыйenddocument}
+\gdef\noops{\@ifnextchar [{\csname @noops\endcsname}{\@noops[!]}}
+\gdef\@noops[#1]#2{}
+
+\ps@headings
+\pagenumbering{arabic}
+\if@twocolumn
+ \@@input twocolum.sty\relax
+\else
+ \onecolumn
+\fi
+%
+\def\@allowhyphens{\penalty\@M\hskip\z@skip}
+\def\russianhyph{\righthyphenmin\tw@}
+\def\englishhyph{\righthyphenmin\thr@@}
+%
+
+%
+% С секциями
+% устроим  так, чтобы в заголовках после номера ставилась точка.
+% Например: 4.3. Кое-что о слонах
+%
+% Чтобы сохранить возможность возврата к стандарту,
+% введем команды \aftersectionseparator и т.п. (см. ниже)
+% и определим их точкой. Чтобы вернуться к сандарту, надо переопределить
+% их на \relax или {}
+% Можно определить их и еще как-нибудь, если такое взбредет в голову.
+%
+% Заметим, что, если просто сказать что-нибудь наподобие
+%  \def\thesection{\arabic{chapter}.\arabic{section}.} ,
+% то возникнут проблемы с \label и \ref .
+%
+\def\@aftersepkern{\kern-.5em}
+%\def\postchapter{.\@aftersepkern}
+\def\postsection{.\@aftersepkern}
+\def\postsubsection{.\@aftersepkern}
+\def\postsubsubsection{.\@aftersepkern}
+\def\postparagraph{.\@aftersepkern}
+\def\postsubparagraph{.\@aftersepkern}
+\def\presection{}
+\def\presubsection{}
+\def\presubsubsection{}
+\def\preparagraph{}
+\def\presubparagraph{}
+%
+%  Приступим к постановке точек после номеров...
+%
+\def\@sect#1#2#3#4#5#6[#7]#8{\ifnum #2>\c@secnumdepth
+     \let\@svsec\@empty\else
+     \refstepcounter{#1}\edef\@svsec{%
+     \csname pre#1\endcsname
+% Добавил строку
+     \csname the#1\endcsname
+     \csname post#1\endcsname
+% Добавил строку
+\hskip 1em}\fi
+
+     \@tempskipa #5\relax
+      \ifdim \@tempskipa>\z@
+        \begingroup #6\relax
+ \leftskip=#3\relax \rightskip=#3\relax
+          \begin{center}
+\@svsec\interlinepenalty \@M \ignorespaces#8\par
+          \end{center}
+% Вставил в предыдущей строке \ignorespaces
+% Здесь и далее такие добавки - против лишних пробелов, появляющихся,
+% если аргумент sectioning-команды начинается с пробела.
+        \endgroup
+       \csname #1mark\endcsname{\protect\ignorespaces #7}
+\else
+% Добавил два token'а перед #7
+        \def\@svsechd{#6\hskip #3\relax  %% \relax added 2 May 90
+                   \@svsec #8\csname #1mark\endcsname
+                      {\protect\ignorespaces #7}}
+\fi
+% Добавил два token'а перед #7
+     \@xsect{#5}}
+\def\@ssect#1#2#3#4#5{\@tempskipa #3\relax
+   \ifdim \@tempskipa>\z@
+     \begingroup #4
+ \leftskip=#1\relax \rightskip=#1\relax
+          \begin{center}
+\interlinepenalty \@M \ignorespaces#5\par
+          \end{center}
+     \endgroup
+% добавил \ignorespaces перед #5
+   \else \def\@svsechd{#4\hskip #1\relax
+\ignorespaces #5}\fi
+% добавил \ignorespaces перед #5
+    \@xsect{#3}}
+%
+% Теперь подправим подписи к рисункам и таблицам
+%
+\message{captions,}
+\long\def\@makecaption#1#2{%
+  \vskip 10\p@
+  \setbox\@tempboxa\hbox{#1. #2}% Заменили двоеточие на точку...
+  \ifdim \wd\@tempboxa >\hsize
+      \unhbox\@tempboxa\par
+    \else
+      \centerline{\box\@tempboxa}\fi}
+\long\def\@caption#1[#2]#3{\par\addcontentsline{\csname
+  ext@#1\endcsname}{#1}{\protect\numberline{\csname
+  the#1\endcsname.}{\ignorespaces #2}}\begingroup
+    \@parboxrestore
+    \normalsize
+    \@makecaption{\csname fnum@#1\endcsname}{\ignorespaces #3}\par
+  \endgroup}
+
+%Здесь были колонтитулы. Убрал Вялый 09-05-94 11:41pm
+%
+% Подправим \enddocument: будем подсчитывать общее количество
+% страниц и выдавать сообщение "labels may have changed" по-русски
+%
+\def\@refswarning{\@@warning{%
+Чтобы получить корректные ссылки, запустите LaTeX еще раз-другой}}
+\let\@@global\global
+\@definecounter{totalpages}
+\c@totalpages\m@ne
+\newif\if@pagecntsw % true, если надо подсчитывать количество страниц
+\def\countpages{\global\@pagecntswtrue}
+\def\dontcountpages{\global\@pagecntswfalse}
+\dontcountpages
+\def\enddocument{\@checkend{document}\clearpage
+\begingroup
+ \if@filesw
+   \advance\c@page\m@ne % \c@page==(total number of pages)
+   \immediate\write\@mainaux
+   {\string\@@global\string\c@totalpages\number\c@page\relax}%
+ \fi
+ \if@filesw \immediate\closeout\@mainaux
+   \def\global\@namedef##1##2{}\def\newlabel{\@testdef r}%
+   \def\@@global\c@totalpages##1\relax{%
+     \@tempcnta\z@
+     \if@pagecntsw
+       \ifnum
+         \c@totalpages=##1\else\@tempcnta\@ne
+       \fi
+     \fi
+   }% end of \def\@@global
+   \def\bibcite{\@testdef b}\@tempswafalse \makeatletter\input \jobname.aux
+    \if@tempswa
+      \@refswarning
+      \else
+       \ifodd\@tempcnta\@refswarning\fi
+    \fi
+ \fi
+\endgroup\deadcycles\z@\@@end}
+%
+% Теперь подкорректируем размеры страницы по высоте
+% (в соответствии с рекомендациями из lkurz)
+%
+\message{page size,}
+\def\@margcorrx{-30}\def\@heightcorrx{60}% для 10 пунктов
+\def\@margcorrxi{-34}\def\@heightcorrxi{68}% для 11 пунктов
+\def\@margcorrxii{-30}\def\@heightcorrxii{60}% для 12 пунктов
+%
+% В нижеследующих пятнадцати \def'ах нули в фигурных скобках надо будет
+% заменить на поправки (в пунктах)
+%
+% Поправки полей для верстки "односторонней"...
+\def\@oddmargcorrx{-10}\def\@evenmargcorrx{-10}% для 10 пунктов
+\def\@oddmargcorrxi{-18}\def\@evenmargcorrxi{-18}% для 11 пунктов
+\def\@oddmargcorrxii{-22}\def\@evenmargcorrxii{-22}% для 12 пунктов
+% ... и двусторонней.
+\def\@twosdoddmargcorrx{0}    % для 10 пунктов
+\def\@twosdoddmargcorrxi{0}   % для 11 пунктов
+\def\@twosdoddmargcorrxii{-6}% для 12 пунктов
+%   Поправки ширины строки
+\def\@textwidthcorrx{20}% для 10 пунктов
+\def\@textwidthcorrxi{30}% для 11 пунктов
+\def\@textwidthcorrxii{30}% для 12 пунктов
+%
+% Конец определения поправок
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Реализация поправок
+%
+\@tempcnta\@ptsize\advance\@tempcnta10%
+%    Значение \@tempcnta равно кеглю
+\advance\topmargin\@nameuse{@margcorr\romannumeral\@tempcnta}\p@
+\advance\textheight\@nameuse{@heightcorr\romannumeral\@tempcnta}\p@
+\def\@tempa{\if@twoside twosd\fi}
+\advance\oddsidemargin\@nameuse{@\@tempa
+oddmargcorr\romannumeral\@tempcnta}\p@
+\evensidemargin\oddsidemargin
+\advance\textwidth\@nameuse{@textwidthcorr\romannumeral\@tempcnta}\p@\relax
+
+
+%%% 2. РУСИФИКАЦИИ
+% Определим команды \ralph и \Ralph, аналогичные \alph и \Alph,
+% но с русскими буквами. Естественно, \"е, й, ъ, ы, ь пропускаются.
+\message{lists,}
+\def\ralph#1{\@ralph{\@nameuse {c@#1}}}
+\def\@ralph#1{\ifcase #1\or а\or б\or в\or г\or д\or е\or ж\or з\or
+и\else\@iralph{#1}\fi
+}
+\def\@iralph#1{\ifcase #1\or\or\or\or\or\or\or\or\or\or
+     к\or л\or м\or н\or о\or п\or р\or с\or т\or у\or
+     ф\or х\or ц\or ч\or ш\or щ\or э\or ю \or я\else\@ctrerr
+     \fi}
+\def\Ralph#1{\@Ralph{\@nameuse {c@#1}}}
+\def\@Ralph#1{\ifcase #1%
+     \or А\or Б\or В\or Г\or Д\or Е\or Ж\or З\or
+     И\else\@iRalph{#1}\fi}
+\def\@iRalph#1{\ifcase #1
+     \or\or\or\or\or\or\or\or\or\or К\or Л\or М\or
+     Н\or О\or П\or Р\or С\or Т\or У\or Ф\or Х\or Ц\or
+     Ч\or Ш\or Щ\or Э\or Ю \or Я\else\@ctrerr
+     \fi}
+% Теперь "русифицируем" окружение enumerate:
+\def\labelenumi{\theenumi.}      % чтобы после номера шла точка;
+\def\theenumii{\ralph{enumii}}   % чтобы на втором   уровне шли русские,
+\def\labelenumii{\theenumii)}    % а не латинские буквы
+\def\p@enumii{\theenumi}         % а это для \ref
+\def\labelenumiii{{\bf--}}       % а на третьем уровне пусть будут лишь тире,
+\let\theenumiii\relax            % и отдельных ссылок на него не будет
+\def\p@enumiii{\theenumi\theenumii}
+\let\labelenumiv\relax   %        %
+\let\theenumiv\relax     %        %
+\let\p@enumiv\relax      %        %
+%
+
+% И еще запретим вкладывать четыре enumerate друг в друга ...
+%
+\def\enumerate{\ifnum \@enumdepth >2% было 3, а не 2
+\@toodeep\else
+      \advance\@enumdepth \@ne
+      \edef\@enumctr{enum\romannumeral\the\@enumdepth}\list
+      {\csname label\@enumctr\endcsname}{\usecounter
+        {\@enumctr}\def\makelabel##1{\hss\llap{##1}}}\fi}
+%
+%
+\def\today{\number\day\space\ifcase\month\or
+  января\or февраля\or марта\or апреля\or мая\or июня\or
+  июля\or августа\or сентября\or октября\or ноября\or декабря\fi
+  \space\number\year}
+
+% Теперь подправим заголовки
+%
+\def\contentsname{Содержание}
+\def\figurename{Рис.}
+\def\listfigurename{Список рисунков}
+\def\listtablename{Список таблиц}
+\def\refname{Литература}
+\def\bibname{Литература}
+\def\indexname{Предметный указатель}
+\def\tablename{Таблица}
+\def\abstractname{Аннотация}
+%
+% Теперь облегчим переносы в русских текстах
+\hyphenation{
+пре-ж-де чи-с-ло чи-с-ла чи-с-лу чи-с-лом чи-с-ле
+чи-с-лам чи-с-лах чи-с-лам чи-с-ла-ми ча-с-то вме-с-то про-с-то
+бу-к-ва бу-к-вы бу-к-ве бу-к-ву бу-к-вой бу-к-вам бу-к-ва-ми бу-к-вах
+то-г-да ко-г-да свой-с-т-ва свой-с-т-во
+свой-с-т-ву свой-с-т-вом свой-с-т-вам свой-с-т-вах ча-с-то ка-ж-дый
+ка-ж-дая ка-ж-дое ка-ж-до-го ка-ж-до-му ка-ж-дым ка-ж-дом
+ка-ж-дые ка-ж-дых ка-ж-дым ка-ж-ды-ми
+мож-но
+пре-об-ра-зо-ва-ния пре-об-ра-зо-ва-ние пре-об-ра-зо-ва-ни-ем
+пре-об-ра-зо-ва-нию пре-об-ра-зо-ва-нии
+пре-об-ра-зо-ва-ний пре-об-ра-зо-ва-ни-ям пре-об-ра-зо-ва-ни-ями
+пре-об-ра-зо-ва-ни-ях
+про-с-т-ран-с-т-во про-с-т-ран-с-т-ва про-с-т-ран-с-т-ву
+про-с-т-ран-с-т-вом про-с-т-ран-с-т-ве
+про-с-т-ран-ств
+про-с-т-ран-с-т-вам про-с-т-ран-с-т-ва-ми про-с-т-ран-с-т-вах
+}
+
+\def\set@low@box#1{\setbox\tw@\hbox{,}\setbox\z@\hbox{#1}\dimen\z@\ht\z@
+     \advance\dimen\z@ -\ht\tw@
+     \setbox\z@\hbox{\lower\dimen\z@ \box\z@}\ht\z@\ht\tw@ \dp\z@\dp\tw@ }
+%    (this lowers the german left quotes to the same level as the comma.)
+\def\@glqq{{\ifhmode \edef\@SF{\spacefactor\the\spacefactor}\else
+     \let\@SF\empty \fi \leavevmode
+     \set@low@box{''}\box\z@\kern-.04em\@allowhyphens\@SF\relax}}
+\def\glqq{\protect\@glqq}
+\def\@grqq{\ifhmode \edef\@SF{\spacefactor\the\spacefactor}\else
+     \let\@SF\empty \fi \kern-.07em``\kern.07em\@SF\relax}
+\def\grqq{\protect\@grqq}
+\def\@glq{{\ifhmode \edef\@SF{\spacefactor\the\spacefactor}\else
+     \let\@SF\empty \fi \leavevmode
+     \set@low@box{'}\box\z@\kern-.04em\@allowhyphens\@SF\relax}}
+\def\glq{\protect\@glq}
+\def\@grq{\kern-.07em`\kern.07em}
+\def\grq{\protect\@grq}
+% !!!!
+%
+% А теперь определим кавычки-"елочки" и знак номера.
+% Это совсем просто после того, как в шрифты добавлены
+% соответствующие символы.
+%
+\chardef\лк=192%
+\chardef\пк=193%
+\chardef\номер=194%
+%
+% Теперь определим окружение rlist
+% для создания списков, в которых
+% \item'ы нумеруются русскими буквами
+% (строчными для rlist, прописными для rlist[u])
+%
+\@definecounter{rlistctr}
+\newif\if@rlistsnested\@rlistsnestedfalse % последняя команда вроде бы
+% избыточна, но Lamport в аналогичных ситуациях так делает
+\def\rlist{\@ifnextchar[{\@rlist}{\@@rlist}}
+\def\@rlist[#1]{\ifx#1u\def\@@case{R}\else\def\@@case{r}\fi
+                \if@rlistsnested\@toodeep\else
+                \@rlistsnestedtrue
+                \list{\labelrlist}{\usecounter
+                   {rlistctr}\def\makelabel##1{\hss\llap{##1}}%
+                \itemsep\z@\topsep\z@
+}\fi}
+\def\@@rlist{\@rlist[l]}
+\let\endrlist\endlist
+\def\therlistctr{\csname\@@case alph\endcsname{rlistctr}}
+\def\p@rlistctr{}
+\def\labelrlist{\therlistctr)}
+%
+
+
+
+
+% 3. РАСШИРЕННАЯ ПОДДЕРЖКА МАТЕМАТИКИ
+
+%
+% Следующая проблема - поставить точки после номеров "теорем".
+% Мы опять определим \afterthmseparator и инициализируем
+% его точкой. Для возврата к стандарту - переопределить
+% его на \relax
+%
+\def\afterthmseparator{.}
+\def\@begintheorem#1#2{\trivlist \item[\hskip \labelsep{\bf
+#1\ #2\unskip\afterthmseparator}]\it} % вставил 2 token'а после #2
+\def\@opargbegintheorem#1#2#3{\trivlist
+      \item[\hskip \labelsep{\bf
+#1\ #2\ (#3)\afterthmseparator}]\it} % вставил token после (#3)
+
+
+\@addtoreset{equation}{chapter}
+% 05-08-95 Вялый: уравнения нумеруются сплошь по статье
+\def\theequation{\arabic{equation}}
+
+  \newtheorem{theorem}{Теорема}[chapter]
+  \newtheorem{definition}{Определение}[chapter]
+  \newtheorem{lemma}{Лемма}[chapter]
+  \newtheorem{rK}{Замечание}[chapter]
+  \newtheorem{statement}{Предложение}[chapter]
+  \newtheorem{Theorem}{Теорема}[chapter]
+  \newtheorem{Definition}{Определение}[chapter]
+  \newtheorem{Lemma}{Лемма}[chapter]
+  \newtheorem{Rk}{Замечание}[chapter]
+  \newtheorem{Statement}{Предложение}[chapter]
+  \newtheorem {pF}{Доказательство}[chapter]
+  \newtheorem {corollary}{Следствие}[chapter]
+  \newtheorem {Corollary}{Следствие}[chapter]
+  \newtheorem {задача}{Задача}[chapter]
+  \newtheorem {Утв}{Утверждение}[chapter]
+  \newtheorem {Задача}{Задача}[chapter]
+  \newtheorem {Exer}{Упражнение}[chapter]
+  \newtheorem {Example}{Пример}[chapter]
+\renewcommand \theExample {}
+\renewcommand \theЗадача {}
+\renewcommand \theTheorem {}
+\renewcommand \theDefinition {}
+\renewcommand \theLemma {}
+\renewcommand \theRk {}
+\renewcommand \theStatement {}
+\renewcommand \thepF {}
+\renewcommand \theCorollary {}
+\renewcommand \theУтв {\arabic{Утв}}
+\renewcommand \therK {\arabic{rK}}
+\renewcommand \theзадача {\arabic{задача}}
+\renewcommand \thetheorem {\arabic{theorem}}
+\renewcommand \thedefinition {\arabic{definition}}
+\renewcommand \thelemma {\arabic{lemma}}
+\renewcommand \theExer {\arabic{Exer}}
+\renewcommand \thecorollary {\arabic{corollary}}
+
+\newenvironment {Пример}{\begin{Example}\rm}{\end{Example}}
+\newenvironment {proof}{\begin{pF}\rm}{\end{pF}}
+\newenvironment {remark}{\begin{rK}\rm}{\end{rK}}
+\newenvironment {Remark}{\begin{Rk}\rm}{\end{Rk}}
+
+%
+%			 MATH SYMBOLS
+%
+\newcommand \bydef {\stackrel{\mbox{def}}{=}}
+\newcommand \Iff
+ {\ifmmode \mathrel{\Longleftrightarrow} \else $\Longleftrightarrow$\fi}
+\newcommand \oper[1] {\mathop{\rm #1}\nolimits}
+\def\const{\oper{const}}
+\def\tg{\oper{tg}}
+\def\tan{\oper{tg}}
+
+%Готический и пустотелый шрифты
+\message{Готический шрифт(gtc) и пустотелый шрифт(BBB)}
+\font\twelvegtc=eufm10 scaled 1200
+\font\tengtc=eufm10
+\font\ninegtc=eufm9
+\font\sevengtc=eufm7
+\font\fivegtc=eufm5
+\newfam\gtcfam
+\def\gtc{\fam\gtcfam\twelvegtc}
+\textfont\gtcfam=\twelvegtc
+\scriptfont\gtcfam=\ninegtc
+\scriptscriptfont\gtcfam=\sevengtc
+%
+\font\twelveBBB=msbm10 scaled 1200
+\font\tenBBB=msbm10
+\font\sevenBBB=msbm7
+\newfam\BBBfam
+\def\BBB{\fam\BBBfam\twelveBBB}
+\textfont\BBBfam=\twelveBBB
+\scriptfont\BBBfam=\tenBBB
+\scriptscriptfont\BBBfam=\sevenBBB
+%
+\def\KK{{\BBB K}}  \def\QQ{{\BBB Q}}  \def\ZZ{{\BBB Z}}  \def\NN{{\BBB N}}
+\def\RR{{\BBB R}}  \def\CC{{\BBB C}}  \def\LL{{\BBB L}}  \def\FF{{\BBB F}}
+\mathchardef\kkk="707C   \def\kk{{\BBB \kkk}}
+%
+\def\gtcp{{\gtc p}}  \def\gtcq{{\gtc q}}  \def\gtcm{{\gtc m}}
+\def\gtcA{{\gtc A}}  \def\gtcB{{\gtc B}}  \def\gtcC{{\gtc C}}
+\def\gtcG{{\gtc G}}  \def\gtcg{{\gtc p}}  \def\gtcg{{\gtc g}}
+\def\gtcA{{\gtc A}}  \def\gtcB{{\gtc B}}  \def\gtcC{{\gtc C}}
+\def\gtcG{{\gtc G}}  \def\gtcg{{\gtc p}}  \def\gtcg{{\gtc g}}
+
+
+%%% 4. ОПРЕДЕЛЕНИЕ ПЕРВЫХ СТРАНИЦ (включая состав редколлегии)
+\def\titlepage{
+\language=1
+\@restonecolfalse\if@twocolumn\@restonecoltrue\onecolumn
+     \else \newpage \fi \pagestyle{empty}\c@page\z@}
+
+\def\endtitlepage{\if@restonecol\twocolumn \else \newpage \fi
+\pagestyle{plain}\language=0}
+
+\newbox\titlebox
+\font\nf= cminch
+\font\hf=cmdunh10 scaled 4800
+% Титульные страницы!Вялый 09-05-94 05:30pm
+\long\def\maketitle{\begin{titlepage}%
+ \let\footnotesize\small
+ \let\footnoterule\relax
+\setbox\titlebox\vbox to 24cm{
+ \vskip 30\p@
+\hbox to20cm{\hss\hf МАТЕМАТИЧЕСКОЕ \hss}%
+ \vskip 45\p@
+\hbox to20cm{\hss\hf ПРОСВЕЩЕНИЕ \hss}%
+ \vskip 30\p@
+\hbox to20cm{\rule{20cm}{2pt}}
+ \vskip 1\p@
+\hbox to20cm{\rule[12pt]{7.5cm}{1pt}\hfill
+{\Large\sc Третья серия}\hfill
+\rule[12pt]{7.5cm}{1pt}}
+\hbox to20cm{\rule[16pt]{7.5cm}{1pt}\hfill
+\rule[16pt]{7.5cm}{1pt}}
+\vfill
+\hbox to20cm{\hss\nf\выпуск\hss}%
+\vskip 0.2in
+\hbox to20cm{\rule[2pt]{8.7cm}{1pt}\hfill
+{\Large\sc выпуск }\hfill
+\rule[2pt]{8.7cm}{1pt}}
+\hbox to20cm{\rule[8pt]{20cm}{2pt}}
+\vskip30pt
+\hbox to20cm{\hss\Huge\Year\hss}%
+\vskip40pt
+}
+\advance\hoffset by -0.8in
+\shipout\box\titlebox%
+\advance\hoffset by 0.8in
+ \begin{center}%
+   {\Huge МАТЕМАТИЧЕСКОЕ \par}%
+   {\Huge ПРОСВЕЩЕНИЕ \par}%
+   \vfill{\Large Третья серия\par}\vfill
+   {\large\sc выпуск \выпуск\par}
+   \vfill\vfill\vfill
+\unitlength=1mm
+\begin{picture}(116,60)
+\put(0,60){\special{em:graph sign.pcx}}
+\put(80,41){\makebox(0,0)[cc]{\Large\bf ИЗДАТЕЛЬСТВО}}
+\put(80,35){\makebox(0,0)[cc]{\Large\bf МК НМУ}}
+\end{picture}
+\vfill
+Москва \Year\par
+\vskip10pt
+\end{center}
+\newpage
+\unvbox\AnnonceBox
+
+\vfil
+\centerline{\LARGE\bf Редакционная коллегия}\par
+\begin{center}
+{\bf
+\begin{tabular}{ll}
+Васильев Н.Б.        &
+Вялый М.Н.           \\
+Егоров А.А.          &
+Имайкин В.М.         \\
+Комаров С.И.         &
+Константинов Н.Н.    \\
+Розов Н.Х.           &
+Савин А.П.           \\
+Сосинский А.Б.       &
+Тихомиров~В.М.       \\
+Шарыгин И.Ф.
+\end{tabular}
+}
+\end{center}
+\vfil
+\noindent{\copyright Издательство МК НМУ, \Year~г.}
+\advance\textheight by-100pt
+\advance\topmargin by30pt
+
+
+ \setcounter{page}{2}%
+
+\newpage
+\mark{{}{}}
+\pagestyle{plain}
+\tableofcontents
+\end{titlepage}%
+\setcounter{footnote}{0}%
+\let\thanks\relax
+\gdef\@thanks{}\gdef\@author{}\gdef\@title{}\let\maketitle\relax
+\let\documentstyle\noops
+\let\document\chapter
+\let\Вялыйenddocument\enddocument
+\let\enddocument\newfile@newpage
+}
+
+\endinput

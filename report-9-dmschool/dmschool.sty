@@ -1,0 +1,75 @@
+\ProvidesPackage{dmschool}
+\RequirePackage[T2A]{fontenc}
+\RequirePackage[cp1251]{inputenc}
+\RequirePackage{amsmath, amsfonts, amsthm,amssymb}
+\RequirePackage[russian]{babel}
+\RequirePackage{textcase}
+\RequirePackage{indentfirst}
+\RequirePackage{geometry}
+
+\tolerance=500
+
+\pagestyle{plain} 
+\textheight=190mm
+\textwidth=125mm
+\footskip=6mm
+\voffset=-1.5cm
+\hoffset=-0.4cm
+
+\righthyphenmin=2
+\setcounter{secnumdepth}{5}
+\makeatletter
+\renewcommand{\tableofcontents}{\centerline{\large\bf\MakeTextUppercase{\contentsname}}\bigskip\@starttoc{toc}}
+
+\renewcommand{\l@section}{\@dottedtocline{1}{0pt}{1.5em}}
+\renewcommand{\theparagraph}{\arabic{paragraph}.}
+\renewcommand{\paragraph}{\@startsection{paragraph}{4}{0mm}{-\baselineskip}{.5\baselineskip}{\centering\normalfont\bf}}
+
+\renewcommand{\title}[1]{\gdef\@title{#1}}
+\renewcommand{\author}[1]{\gdef\@author{{#1}}}
+\newcommand{\city}[1]{\gdef\@city{{#1}}}
+
+\renewcommand{\maketitle}{
+\setcounter{theorem}{0}\setcounter{lemma}{0}\setcounter{stat}{0}
+\setcounter{cor}{0}\setcounter{equation}{0}\setcounter{paragraph}{0}
+\setcounter{lit}{0}\setcounter{defi}{0}
+\bigskip
+\noindent\parbox{\textwidth}{
+ \begin{center}
+   {\large\bf\MakeTextUppercase{\@title}}
+
+   \bigskip{\bf\large \@author\ (\@city)}
+ \end{center}
+ }
+ \addcontentsline{toc}{section}{\textbf{\@author} \@title}
+ \nopagebreak
+ \smallskip
+ }
+\makeatother
+
+\newcommand{\literature}{\paragraph*{Список литературы}}
+
+\newcounter{lit}
+\newcommand{\lit}{%\vspace{3pt minus 0.5pt}
+\refstepcounter{lit}%
+{\arabic{lit}.}~}
+\newcommand{\bl}[1]{\par\vspace{3pt minus
+0.5pt}\par\noindent\parbox[b]{7.5mm}{\lit\,}\parbox[t]{114mm}{#1}}
+
+\newtheoremstyle{ipmthm}{\topsep}{\topsep}{\itshape}{\parindent}{}{.}{ }{\thmname{{\bf #1}}\thmnumber{~{\bf #2}}\thmnote{ #3}}
+\newtheoremstyle{ipmdef}{\topsep}{\topsep}{}{\parindent}{\bf}{.}{ }{}
+
+\theoremstyle{ipmthm}
+\newtheorem{stat}{Утверждение}
+\newtheorem{theorem}{Теорема}
+\newtheorem{lemma}{Лемма}
+\newtheorem{cor}{Следствие}
+\newtheorem*{stat*}{Утверждение}
+\newtheorem*{theorem*}{Теорема}
+\newtheorem*{lemma*}{Лемма}
+\newtheorem*{cor*}{Следствие}
+
+\theoremstyle{ipmdef}
+\newtheorem{defi}{Определение}
+\newtheorem*{defi*}{Определение}
+\newtheorem*{prf}{Доказательство}

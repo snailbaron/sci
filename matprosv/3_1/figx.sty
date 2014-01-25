@@ -1,0 +1,135 @@
+%%%%%%%%%%%%%%%%%%%РИСУНКИ!!!
+%02/04/97 Вялый: размещение рисунков!
+\newcount\figcnt
+\newdimen\figdima
+\newdimen\figdimb
+\newdimen\figdimc
+\newdimen\figdimw
+\newdimen\fboxdimw
+\newbox\figtextbox
+\newbox\figfigbox
+\newbox\fignumbox
+\fboxdimw=0pt
+\newif\ifpcxfig
+\pcxfigfalse
+
+\def\setpcxbox(#1:#2)(#3:#4)#5{
+\setbox\figfigbox\hbox to#1{\hfill
+\vbox to#3{\vskip#4\пиксели{#2}{#3}{#5}\vss}\hfill}
+}
+
+\def\setW(#1:#2)(#3:#4){#3}
+
+\newif\ifautoscale
+\autoscaletrue
+
+\def\scale#1{\autoscalefalse
+\def\epsfsize##1##2{#1##1}}
+
+\long\def\рис#1#2#3#4{\small
+\setbox\fignumbox\hbox{\slshape\bfseries Рис. #3.}%номер рисунка
+ \ifpcxfig\setpcxbox#1{#2}\else
+    \setbox\figfigbox\hbox{\epsfbox{#2}}
+ \fi
+\figdimw=\wd\figfigbox
+\advance\figdimw by-\fboxdimw
+\setbox\figtextbox\hbox{\copy\fignumbox\hskip1em\slshape\mdseries #4}
+\ifdim\wd\figtextbox > \figdimw
+\setbox\figtextbox\hbox to\figdimw{%
+\figdima=\figdimw
+\advance\figdima by-\wd\fignumbox
+\advance\figdima by-0.5em
+\parbox[t]{\wd\fignumbox}{\box\fignumbox}\hskip0.5em%
+\parbox[t]{\figdima}
+{\raggedright \ignorespaces\slshape\mdseries #4}%
+}%
+\else\fi
+\figdima=\ht\figtextbox
+\ifpcxfig\figdimc=\setW#1\else
+\figdimc=#1\fi
+\advance\figdima by13.6pt
+\ifdim\ht\figfigbox<\figdimc
+\figdimb=\figdimc\advance\figdimb by-\ht\figfigbox
+\divide\figdimb by2 \advance\figdima by\figdimb
+\else
+\fi
+\figdimc=\wd\figfigbox
+\advance\figdimc by-\figdimw
+\divide\figdimc by2
+\hbox to\figdimc{\raise\figdima\hbox{\box\figfigbox}\hss}%
+\hbox to\figdimw{\hfil\box\figtextbox\hfil}
+\normalsize}%02/04/97 Вялый: end of macro
+
+%06/04/97 Вялый: врезка рисунка
+\def\flowfig#1#2#3#4#5{\figdima=#1\advance\figdima by-\columnsep
+\if#2>0 \vskip#1\baselineskip\else\fi
+\figcnt\c@page
+\vbox to 0pt{\hbox to\textwidth{%
+\ifodd\figcnt\hfill\else\fi%
+\hbox to#1{%06/04/97 Вялый: #1 -- width of flowed picture
+\ifautoscale
+\def\epsfsize##1##2{\ifdim##1>\figdima\figdima\else#1\fi}
+\fi\autoscaletrue
+\ifodd\figcnt\hfill\else\fi%
+\рис{0.2pt}{#3}{#4}{#5}
+\ifodd\figcnt\else\hfill\fi%
+}\ifodd\figcnt\else\hfill\fi%
+}\vss}
+\if#2>0 \vskip-#1\baselineskip\else\vskip-0.5\baselineskip\fi
+\ifodd\figcnt\hangindent=-#1\else\hangindent=#1\fi
+ \hangafter=#2%
+}%06/04/97 Вялый: end of def
+
+\let\врезка\flowfig%06/04/97 Вялый:  и по-русски, и по-аглицки
+
+%06/04/97 Вялый: врезка иллюстрации .PCX
+\def\flowpic#1#2#3#4#5{\figdima=#1\advance\figdima by-\columnsep
+\if#2>0 \vskip#1\baselineskip\else\fi
+\vbox to 0pt{\hbox to\textwidth{\hfill%
+\hbox to#1{%06/04/97 Вялый: #1 -- width of flowed picture
+\def\epsfsize##1##2{\ifdim##1>\figdima\figdima\else#1\fi}
+\hfill\setpcxbox(#1:#2)(#3\baselineskip:#4){#5}\copy\figfigbox\hfill}
+%\ifodd\c@page\else\hfill\fi%
+}\vss}
+\if#3>0 \vskip-#1\baselineskip\else\vskip-\baselineskip\fi
+\hangindent=-#1
+ \hangafter=-#3%
+}%06/04/97 Вялый: end of def
+
+%12/06/97 Вялый: врезка иллюстрации .PS
+\def\flowill#1#2#3#4{\figdima=#1\advance\figdima by-\columnsep
+\if#2>0 \vskip#1\baselineskip\else\fi
+\figcnt\c@page
+\vbox to 0pt{\vskip#3\hbox to\textwidth{%
+\ifodd\figcnt\hfill\else\fi%
+\hbox to\figdima{%06/04/97 Вялый: #1 -- width of flowed picture
+%\ifautoscale
+%\def\epsfsize##1##2{\ifdim##1>\figdima\figdima\else#1\fi}
+%\fi\autoscaletrue
+\ifodd\figcnt\hfill\else\fi
+%\vbox to#3{\vss\epsfbox{#4}\vss}
+\epsfbox{#4}
+\ifodd\figcnt\else\hfill\fi
+}\ifodd\figcnt\else\hfill\fi%
+}\vss}
+\if#2>0 \vskip-#1\baselineskip\else\vskip-0.5\baselineskip\fi
+\ifodd\figcnt\hangindent=-#1\else\hangindent=#1\fi
+ \hangafter=#2%
+}%06/04/97 Вялый: end of def
+
+
+\newif\iflaseriv
+\newif\iflaser
+%30/03/97 Вялый: Размещение .pcx при различных разрешениях
+\def\placepcx#1#2#3{\iflaseriv\special{em: graph #3.pcx}\else%
+\iflaser\special{em: graph #2.pcx}\else%
+\special{em: graph #1.pcx}\fi\fi}
+
+\def\пиксели#1#2#3{
+\hbox to#1{\vbox to#2{\placepcx{#3_l}{#3_m}{#3_h}\vfill}\hfill}
+}
+
+%%%%%%%%%%%%%%%%%%%end of РИСУНКИ%%%%%%%%%%%%%%%%%%
+
+
+\endinput

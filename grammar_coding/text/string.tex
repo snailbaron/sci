@@ -1,0 +1,25 @@
+\documentclass{article}
+\usepackage[english,russian]{babel}
+\usepackage[cp1251]{inputenc}
+\usepackage{amsmath}
+\title{Прикладная дискретная математика}
+\begin{document}
+
+\section{Помехоустойчивое кодирование}
+\subsection{Конечные поля}
+Вначале, напомним основные определения, относящиеся к разделу.
+
+Группой называется алгебраическая система $\langle G, \circ, 1 \rangle$, где: \\
+$G$ - некоторое множество, \\
+$\circ$ - бинарная операция на множестве $G$, \\
+$1 \in G$; \\
+для которой выполняются следующие аксиомы: \\
+1). Ассоциативность: $\forall x,y,z \in G (x \circ y) \circ z = x \circ (y \circ z)$ \\
+2). $\forall x \in G 1 \circ x = x \circ 1 = x$ \\
+3). $\forall x \in G \exists x^{-1} \in G : x \circ x^{-1} = x^{-1} \circ x = 1$
+
+Рассмотрим некоторую группу $\langle G, +, 0 \rangle$ и $a \in G$. Будем рассматривать элементы $\underbrace{a + a + \cdots + a}_n = na$, а также $\underbrace{-a -a \cdots -a}_n = -na$. Возможны две ситуации.
+
+1). Все элементы $na$, $-ka$ различны (бесконечная циклическая группа). Можно показать, что группа, образованная этими элементами, изоморфна
+		
+\end{document}

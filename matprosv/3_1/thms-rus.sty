@@ -1,0 +1,79 @@
+\ProvidesPackage{thms-rus}
+    [19/03/97 19:15]
+\expandafter\ifx\csname thms-rus.sty\endcsname\relax
+        \expandafter\def\csname thms-rus.sty\endcsname{}
+\else\endinput\fi
+
+\def\section{\@startsection {section}{2}{\z@}%
+                                   {3.5ex \@plus 1ex \@minus .2ex}%
+                                   {1.3ex \@plus.2ex}%
+                                   {\normalfont\large\mdseries\scshape}}
+\def\subsection{\@startsection{subsection}{2}{\z@}%
+                                     {3.25ex\@plus 1ex \@minus .2ex}%
+                                     {0.75ex \@plus .2ex}%
+                                     {\normalfont\normalsize\scshape}}
+\def\subsubsection{\@startsection{subsubsection}{3}{\z@}%
+                                     {3.25ex\@plus 1ex \@minus .2ex}%
+                                     {0.75ex \@plus .2ex}%
+                                     {\normalfont\normalsize\scshape}}
+\def\paragraph{\@startsection{paragraph}{4}{\z@}%
+                                    {3.25ex \@plus1ex \@minus.2ex}%
+                                    {-1em}%
+                                    {\normalfont\normalsize\scshape}}
+\def\subparagraph{\@startsection{subparagraph}{5}{\parindent}%
+                                       {3.25ex \@plus1ex \@minus .2ex}%
+                                       {-1em}%
+                                      {\normalfont\normalsize\bfseries}}
+%\theoremstyle{plain}
+  \newtheorem{theorem}{Теорема}[chapter]
+  \newtheorem{lemma}{Лемма}[chapter]
+  \newtheorem{statement}{Предложение}[chapter]
+  \newtheorem{Theorem}{Теорема}[chapter]
+  \newtheorem{Lemma}{Лемма}[chapter]
+  \newtheorem{Statement}{Предложение}[chapter]
+  \newtheorem {corollary}{Следствие}[chapter]
+  \newtheorem {Corollary}{Следствие}[chapter]
+  \newtheorem {задача}{Задача}[chapter]
+  \newtheorem {Утв}{Утверждение}[chapter]
+  \newtheorem {Задача}{Задача}[chapter]
+  \newtheorem {Exer}{Упражнение}[chapter]
+  \newtheorem{definition}{Определение}[chapter]
+  \newtheorem{Definition}{Определение}[chapter]
+  \newtheorem{rK}{Замечание}[chapter]
+  \newtheorem{Rk}{Замечание}[chapter]
+  \newtheorem {pF}{Доказательство}[chapter]
+  \newtheorem {generic}{}[chapter]
+  \newtheorem {Example}{Пример}[chapter]
+\renewcommand \theExample {}
+\renewcommand \theЗадача {}
+\renewcommand \thegeneric{}
+\newenvironment{thgen}{%
+\def\afterthmseparator{}\begin{generic}}{\end{generic}%
+\def\afterthmseparator{.}%
+}
+\renewcommand \theTheorem {}
+\renewcommand \theDefinition {}
+\renewcommand \theLemma {}
+\renewcommand \theRk {}
+\renewcommand \theStatement {}
+\renewcommand \thepF {}
+\renewcommand \theCorollary {}
+\renewcommand \theУтв {\arabic{Утв}}
+\renewcommand \therK {\arabic{rK}}
+\renewcommand \theзадача {\arabic{задача}}
+\renewcommand \thestatement {\arabic{statement}}
+\renewcommand \thetheorem {\arabic{theorem}}
+\renewcommand \thedefinition {\arabic{definition}}
+\renewcommand \thelemma {\arabic{lemma}}
+\renewcommand \theExer {\arabic{Exer}}
+\renewcommand \thecorollary {\arabic{corollary}}
+
+\newenvironment {Пример}{\begin{Example}\rm}{\end{Example}}
+\newenvironment {proof}{\begin{pF}\rm}{\end{pF}}
+\newenvironment {remark}{\begin{rK}\rm}{\end{rK}}
+\newenvironment {Remark}{\begin{Rk}\rm}{\end{Rk}}
+
+\def\thefootnote{\arabic{footnote})}
+\def\labelenumi{\theenumi.}
+
+\endinput

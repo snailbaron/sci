@@ -1,0 +1,389 @@
+\documentclass{beamer}
+\usepackage[utf8]{inputenc}
+\usepackage[russian]{babel}
+\usepackage{sansmathaccent}
+\usepackage{hyperref}
+\hypersetup{unicode=true}
+\usepackage{units}
+\usepackage{multicol}
+\usepackage{qtree}
+\usepackage{graphics}
+
+\renewcommand{\leq}{\leqslant}
+\renewcommand{\geq}{\geqslant}
+
+\begin{document}
+	\setbeamertemplate{navigation symbols}{}
+	
+	% Титульный слайд
+	\begin{frame}
+		\begin{center}
+			{\Large Курсовая работа} \\
+			{\small по теме:} \\
+			\vspace{5mm}
+			{\LARGE <<Энтропия множества деревьев вывода в разложимой стохастической КС-грамматике, имеющей вид "цепочки"{}>> }
+		\end{center}
+		
+		\vfill
+		
+		{\small
+		\begin{flushright}
+			\textbf{Студент:} \\
+			Матрынов Игорь Михайлович\\
+			\vspace{5mm}
+			\textbf{Научный руководитель:} \\
+			Жильцова Лариса Павловна \\
+		\end{flushright}
+		}
+	\end{frame}
+	
+	\setbeamertemplate{footline}[text line]
+	{
+		\parbox{\linewidth}{\vspace*{-8pt} \color{gray} Мартынов И.М.\hfill Энтропия множества деревьев вывода \hfill\insertpagenumber}
+	}
+
+	\begin{frame}
+		\frametitle{Стохастическая КС-грамматика}
+		{\Large
+		\begin{equation*}
+			G = <V_N, V_T, s, R>
+		\end{equation*}
+		}
+		\vspace{5pt}
+		
+		$V_N$ и $V_T$ --- конечные алфавиты терминальных и нетерминальных символов
+		\vspace{2pt}
+		
+		$s \in V_N$ --- аксиома
+		\vspace{2pt}
+		
+		$R = \cup_{i=1}^k R_i$, где $R_i$ --- множество правил вида:
+		\begin{equation*}
+			r_{ij} : A_i \xrightarrow{p_{ij}} \beta_{ij}\quad (j = 1,2,\ldots,n_i)
+		\end{equation*}
+		$\beta_{ij} \in (V_N \cup V_T)^*$, $p_{ij}$ --- вероятность применения правила
+		\begin{equation*}
+			0 < p_{ij} \leq 1\quad \sum_{j=1}^{n_j} p_{ij} = 1
+		\end{equation*}
+	\end{frame}
+	
+	\begin{frame}
+		\frametitle{Пример вывода слова}
+		\framesubtitle{Язык арифметических выражений (+, -, *, /, a, b)}
+		\begin{multicols}{2}
+			{\small
+			\begin{equation*}
+				\begin{split}
+					&V_N = \{E, S, M\},\: V_T = \{a, b\},\: s = E \\
+					&{} \\
+					&\text{Множество правил вывода} \\
+					&r_{11} : E \rightarrow E + S \\
+					&r_{12} : E \rightarrow E - S \\
+					&r_{13} : E \rightarrow S \\
+					&r_{21} : S \rightarrow S \cdot M \\
+					&r_{22} : S \rightarrow S / M \\
+					&r_{23} : S \rightarrow M \\
+					&r_{31} : M \rightarrow (E) \\
+					&r_{32} : M \rightarrow a \\
+					&r_{33} : M \rightarrow b
+				\end{split}
+			\end{equation*}
+			}
+			
+			\begin{equation*}
+				a \cdot (b + a) - b
+			\end{equation*}
+			
+			{\footnotesize
+			\renewcommand{\qtreepadding}{1.5pt}
+			\Tree [.E [.E [.S [.M a ] ] $\cdot$ [.M ( [.E [.E [.S [.M b ] ] ] + [.S [.M a ] ] ] ) ] ] - [.S [.M b ] ] ]
+			}
+		\end{multicols}
+	\end{frame}
+
+	\begin{frame}
+		\frametitle{Отношение следования на множестве нетерминалов}
+		$A_i \rightarrow A_j$, если существует правило $A_i \xrightarrow{p_{ij}} \alpha A_j \beta$, где $\alpha, \beta \in (V_N \cup V_T)^*$.
+		\vspace{5pt}
+		
+		$(\rightarrow_*)$ --- рефлексивное транзитивное замыкание $(\rightarrow)$.
+		\vspace{5pt}
+		
+		$A_i \leftrightarrow_* A_j$, если $A_i \rightarrow_* A_j$ и $A_j \rightarrow_* A_i$.
+		\vspace{5pt}
+		
+		Разобьём нетерминалы на классы по отношению $(\leftrightarrow_*)$. Тогда:
+		\begin{equation*}
+			\forall A_i, A_j \in K\quad A_i \rightarrow_* A_j
+		\end{equation*}
+		Не рассматриваем особые классы: $K = \{ A \}$, $A \not \rightarrow A$.
+		\vspace{5pt}
+		
+		$K_1 \prec K_2$, если $\exists A_1 \in K_1, A_2 \in K_2 : A_1 \rightarrow A_2$.
+		\vspace{5pt}
+		
+		$(\prec_*)$ --- рефлексивное транзитивное замыкание $(\prec)$.
+	\end{frame}
+	
+	\begin{frame}
+		\frametitle{Производящие функции}
+		\begin{equation*}
+			F_i(s_1, s_2, \ldots, s_k) = \sum_{j=1}^{n_i} p_{ij} s_1^{l_1} s_2^{l_2} \ldots s_k^{l_k},
+		\end{equation*}
+		где $l_s$ --- число нетерминалов $A_s$ в правой части правила $A_i \xrightarrow{p_{ij}} \beta{ij}$.
+		\vspace{15pt}
+		
+		Производящие функции с параметром $t$:
+		\begin{equation*}
+			F_i(t, \bar{s}) = \left\{
+			\begin{split}
+				&F_i(\bar{s}),  & &\text{при}\;\; t = 1 \\
+				&F_i(\bar{F}(t-1, \bar{s})), & &\text{при}\;\; t = 2,3,\ldots
+			\end{split}
+			\right.
+		\end{equation*}
+	\end{frame}
+	
+	\begin{frame}
+		\frametitle{Первые моменты}
+		\begin{equation*}
+			\left. \frac{\partial F_i(s_1, s_2, \ldots, s_k)}{\partial s_j} \right|_{s_1 = s_2 = \ldots = s_k = 1} = a^i_j
+		\end{equation*}
+		$a^i_j$ --- математическое ожидание числа нетерминалов $A_j$ при однократном применении случайного правила к $A_i$.
+		\vspace{10pt}
+		
+		Матрица $A = (a^i_j)$ --- матрица первых моментов.
+		\vspace{10pt}
+		
+		$r$ --- максимальное по модулю собственное число матрица $A$ (перронов корень). Будем рассматривать критический случай $r = 1$.
+	\end{frame}
+	
+	\begin{frame}
+		\frametitle{Пример: язык арифметических выражений (без скобок)}
+		\begin{equation*}
+			V_N = \{E, S, M, X\} \quad V_T = \{a, b, c\} \quad s = E
+		\end{equation*}
+		\begin{multicols}{2}
+			{\small
+			$R$ содержит правила:
+			\begin{equation*}
+				\begin{split}
+					&r_{11} : E \xrightarrow{\nicefrac{1}{2}} E + E \\
+					&r_{12} : E \xrightarrow{\nicefrac{1}{2}} S \\
+					&r_{21} : S \xrightarrow{\nicefrac{1}{4}} S \cdot S \\
+					&r_{22} : S \xrightarrow{\nicefrac{1}{4}} a \\
+					&r_{23} : S \xrightarrow{\nicefrac{1}{4}} b \\
+					&r_{24} : S \xrightarrow{\nicefrac{1}{4}} c
+				\end{split}
+			\end{equation*}
+			Матрица первых моментов:
+			\begin{equation*}
+				\begin{pmatrix}
+					1 & \nicefrac{1}{2} \\
+					0 & \nicefrac{1}{2}
+				\end{pmatrix}
+			\end{equation*}
+			
+			{\footnotesize
+			\Tree [.E [.E [.S [.S a ] $\cdot$ [.S b ] ] ] + [.E [.S c ] ] ]
+			\begin{multline*}
+				p(a \cdot b + c) = p_{11} \cdot p_{12} \cdot p_{21} \cdot p_{22} \cdot p_{23} \cdot p_{12} \cdot p_{24} = \\
+				= \left(\frac{1}{2}\right)^3 \cdot \left(\frac{1}{4}\right)^4 = \frac{1}{2048}
+			\end{multline*}
+			}
+			}
+		\end{multicols}
+	\end{frame}
+	
+	\begin{frame}
+		\frametitle{Грамматика вида <<цепочки>>}
+		\begin{picture}(1000, 35)
+			\put(60, 20){\circle{30}}
+			\put(54, 16){$K_1$}
+			\put(75, 20){\vector(1,0){25}}
+			\put(115, 20){\circle{30}}
+			\put(109, 16){$K_2$}
+			\put(130, 20){\vector(1,0){25}}
+			\put(165, 10){...}
+			\put(185, 20){\vector(1,0){25}}
+			\put(225, 20){\circle{30}}
+			\put(219, 16){$K_m$}
+		\end{picture}
+		\vspace{-30pt}
+				
+		\begin{equation*}
+			K_1 \prec K_2 \prec \ldots \prec K_m
+		\end{equation*}
+		
+		Матрица первых моментов такой грамматики имеет вид:
+		\begin{equation*}
+			A =
+			\begin{pmatrix}
+				A_{11} & A_{12} & 0      & \cdots & 0      & 0      \\
+				0      & A_{22} & A_{23} & \cdots & 0      & 0      \\
+				0      & 0      & A_{33} & \cdots & 0      & 0      \\
+				\vdots & \vdots & \vdots & \ddots & \vdots & \vdots \\
+				0      & 0      & 0      & \cdots & A_{m-1,m-1} & A_{m-1,m} \\
+				0      & 0      & 0      & \cdots & 0      & A_{mm}
+			\end{pmatrix}
+		\end{equation*}
+		
+		Блоки $A_{ii} (i = 1,2,\ldots,m)$ неразложимы, имеют перроновы корни $r_i$.
+		
+		Перронов корень всей матрицы $r = \max\{r_i\}$.
+	\end{frame}
+	
+	\begin{frame}
+		\frametitle{Асимптотика матрицы первых моментов}
+		Пусть $A_{ij}^{(t)}$ --- блок матрицы $A^t$ на позиции блока $A_{ij}$ матрицы $A$.
+		
+		При $t \rightarrow \infty$
+		\begin{equation*}
+			A_{ij}^{(t)} = U^{(i)} V^{(j)} \cdot t^{s_{ij} - 1} \cdot (1 + o(1))
+		\end{equation*}
+		Если класс $K_i$ ($K_j$) критический, то $U^{(i)}$ ($V^{(i)}$) --- правый (левый) собственный вектор блока $A_{ii}$ ($A_{jj}$).
+		\begin{flushright}
+			\textit{Л. П. Жильцова}
+		\end{flushright}
+		
+		\begin{picture}(1000, 35)
+			\put(20, 20){\circle*{20}}
+			\put(30, 20){\vector(1,0){20}}
+			\put(60, 20){\circle{20}}
+			\put(70, 20){\vector(1,0){20}}
+			\put(100, 20){\circle*{20}}
+			\put(110, 20){\vector(1,0){20}}
+			\put(140, 20){\circle{20}}
+			\put(150, 20){\vector(1,0){20}}
+			\put(180, 20){\circle*{20}}
+			\put(190, 20){\vector(1,0){20}}
+			\put(220, 20){\circle*{20}}
+			\put(230, 20){\vector(1,0){20}}
+			\put(260, 20){\circle{20}}
+			\put(270, 20){\vector(1,0){20}}
+			\put(300, 20){\circle{20}}
+			\put(100, -10){\vector(0,1){20}}
+			\put(100, -10){\line(1,0){120}}
+			\put(220, -10){\vector(0,1){20}}
+			\put(102, -5){$i$}
+			\put(223, -5){$j$}
+			\put(250, -10){$s_{ij} = 3$}
+		\end{picture}
+	\end{frame}
+	
+	\begin{frame}
+		\frametitle{Вероятности продолжения}
+		$Q_i(t)$ --- вероятность деревьев вывода высоты $\geq t$ с корнем $A_i$ (вероятности продолжения).
+		
+		$P_i(t)$ --- вероятность деревьев высоты $t$.
+		
+		При $t \rightarrow \infty$
+		\begin{equation*}
+			\begin{split}
+				&Q_i(t) = c_n \cdot U_i \cdot t^{-\left(\frac{1}{2}\right)^{s_{nm} - 1}} \cdot (1 + o(1)) \\
+				&P_i(t) = \tilde{c}_n \cdot U_i \cdot t^{-1 -\left(\frac{1}{2}\right)^{s_{nm} - 1}} \cdot (1 + o(1))
+			\end{split},
+		\end{equation*}
+		где $A_i \in K_n$, $U_i, c_n, \tilde{c}_n > 0$.
+		
+		\begin{picture}(1000, 45)
+			\put(20, 20){\circle*{20}}
+			\put(30, 20){\vector(1,0){20}}
+			\put(60, 20){\circle{20}}
+			\put(70, 20){\vector(1,0){20}}
+			\put(100, 20){\circle*{20}}
+			\put(110, 20){\vector(1,0){20}}
+			\put(140, 20){\circle{20}}
+			\put(150, 20){\vector(1,0){20}}
+			\put(180, 20){\circle*{20}}
+			\put(190, 20){\vector(1,0){20}}
+			\put(220, 20){\circle*{20}}
+			\put(230, 20){\vector(1,0){20}}
+			\put(260, 20){\circle{20}}
+			\put(270, 20){\vector(1,0){20}}
+			\put(300, 20){\circle{20}}
+			\put(140, -10){\vector(0,1){20}}
+			\put(142, -5){$n$}
+			\put(140, -10){\vector(1,0){170}}
+			\put(200, -2){$s_{nm} = 2$}
+		\end{picture}
+	\end{frame}
+	
+	\begin{frame}
+		\frametitle{Математические ожидания числа применений правил}
+		$M_{ij}(t)$ --- математическое ожидание числа применений правила $r_{ij}$ в деревьях высоты $t$
+		
+		При $t \rightarrow \infty$
+		\begin{equation*}
+			M_{ij}(t) = d_i \cdot p_{ij} \cdot t^{\left(\frac{1}{2}\right)^{s_{nm} - 1 - \xi}} \cdot (1 + o(1)),
+		\end{equation*}
+		где $A_i \in K_n$, $d_i > 0$ и
+		\begin{equation*}
+			\xi = \left\{
+			\begin{split}
+				&1,\quad K_n \text{ --- критический} \\
+				&0,\quad K_n \text{ --- докритический}
+			\end{split}
+			\right.
+		\end{equation*}
+		
+		\begin{picture}(1000, 45)
+			\put(20, 20){\circle*{20}}
+			\put(30, 20){\vector(1,0){20}}
+			\put(60, 20){\circle{20}}
+			\put(70, 20){\vector(1,0){20}}
+			\put(100, 20){\circle*{20}}
+			\put(110, 20){\vector(1,0){20}}
+			\put(140, 20){\circle{20}}
+			\put(150, 20){\vector(1,0){20}}
+			\put(180, 20){\circle*{20}}
+			\put(190, 20){\vector(1,0){20}}
+			\put(220, 20){\circle*{20}}
+			\put(230, 20){\vector(1,0){20}}
+			\put(260, 20){\circle{20}}
+			\put(270, 20){\vector(1,0){20}}
+			\put(300, 20){\circle{20}}
+			\put(140, -10){\vector(0,1){20}}
+			\put(142, -5){$n$}
+			\put(140, -10){\vector(1,0){170}}
+			\put(200, -2){$s_{nm} = 2$}
+		\end{picture}
+	\end{frame}
+	
+	\begin{frame}
+		\frametitle{Энтропия деревьев вывода фиксированной высоты}
+		При $t \rightarrow \infty$
+		\begin{equation*}
+			H(D^t) = t^2 \cdot\hspace{-5pt}\sum_{i > \sigma_{n-1}}\hspace{-5pt}d_i \sum_{j=1}^{n_i} p_{ij} \log p_{ij} \cdot (1 + o(1)),
+		\end{equation*}
+		где $\sigma_{n-1}$ --- число нетерминалов в классах, предшествующих последнему критическому
+		\vspace{10pt}
+		
+		В докритическом случае:
+		\begin{equation*}
+			H(D^t) = t \cdot \left( \log r - \sum_{i=1}^k \sum_{j=1}^{n_i} w_{ij} \log p_{ij} \right) \cdot (1 + o(1))
+		\end{equation*}
+	\end{frame}
+	
+	% Список литературы
+	\begin{frame}
+		\frametitle{Использованная литература}
+		{\footnotesize
+		\begin{itemize}
+			\item \textbf{Севастьянов Б. А.} Ветвящиеся процессы. --- M.: Наука, 1971 --- 436 с.
+			\item \textbf{Фу К.} Структурные методы в распознавании образов. М.: Мир, 1977
+			\item \textbf{Гантмахер Ф. Р.} Теория матриц. --- 5-е изд., --- М.: ФИЗМАТЛИТ, 2010
+			\item \textbf{Ахо А., Ульман Дж.} Теория синтаксического анализа, перевода и компиляции. Том 1. М.: Мир, 1978
+			\item \textbf{Жильцова Л. П.} О матрице первых моментов разложимой стохастической КС-грамматики. УЧЁНЫЕ ЗАПИСКИ КАЗАНСКОГО ГОСУДАРСТВЕННОГО УНИВЕРСИТЕТА, Том 151, кн. 2, 2009
+			\item \textbf{Жильцова Л. П.} Закономерности применения правил грамматики в выводах слов стохастического контекстно-свободного языка // Математические вопросы кибернетики. Выр. 9. М.: Наука, 2000. С. 100-126.
+			\item \textbf{Борисов А. Е.} Закономерности в словах стохастических контекстно-свободных языков, порождённых грамматиками с двумя классами нетерминальных символов. Вопросы экономного кодирования.
+		\end{itemize}
+		}
+	\end{frame}
+	
+	\begin{frame}
+		\begin{center}
+			{\Huge \textbf{Спасибо за внимание!}}
+		\end{center}
+	\end{frame}
+\end{document}

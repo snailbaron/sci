@@ -1,0 +1,42 @@
+\documentclass{article}
+\usepackage[T2A]{fontenc}
+\usepackage[cp1251]{inputenc}
+\usepackage[english,russian]{babel}
+\usepackage{amsmath}
+\begin{document}
+
+\section{Полностью критический случай}
+
+Рассмотрим стохастическую КС-грамматику "в виде цепочки".
+
+Матрица первых моментов $A$ такой грамматики имеет вид
+\begin{equation}
+	A = 
+	\begin{pmatrix}
+		A_{11} & A_{12} & 0      & \cdots & 0           & 0     \\
+		0      & A_{22} & A_{23} & \cdots & 0           & 0     \\
+		       &        &        & \cdots &             &       \\
+		0      & 0      & 0      & \cdots & A_{M-1,M-1} & A_{M-1,M} \\       
+		0      & 0      & 0      & \cdots & 0 & A_{M,M}       
+	\end{pmatrix}
+\end{equation}
+Пусть $k_j$ - число нетерминалов в $j$-м классе разложимости рассматриваемой грамматики. Тогда, $A_{jj} \in R^{k_j \times k_j} (j=1, \ldots ,M)$. Обозначим для удобства $\sigma_j = k_1 + k_2 + \ldots + k_j$, и $I_j = \left\{\sigma_{j-1}+1, \ldots ,\sigma_j\right\}$.
+
+Производящие функции для такой грамматики запишутся следующим образом:
+\begin{equation}
+	F_i(\textbf{s}) = \sum_{\alpha_{ij}} p_{ij}s_1^{\beta^{ij}_1}s_2^{\beta^{ij}_2} \ldots s_{\gamma_{ij}}^{\beta^{ij}_{\gamma_{ij}}}
+\end{equation}
+
+Учитывая что $\left\{p_{ij}\right\}$ - вероятностное распределение на множестве слов $\alpha_{ij}$, $F_i(1) = \sum\limits_{j=1}^{\gamma_{ij}} p_{ij} = 1$.
+
+Разлагая $F_i(\textbf{s})$ в ряд Тейлора в окрестности $\textbf{s} = \textbf{1} = (1,1,\ldots,1)$, получаем:
+
+\begin{eqnarray}
+	F_i(\textbf{s}) = F_i(\textbf{1}) + (\nabla F_i(\textbf{1}),\textbf{s}-\textbf{1}) + (\textbf{s}-\textbf{1})^T \nabla^2 F_i(\textbf{1}) (\textbf{s}-\textbf{1}) + o(\left\| \textbf{s}-\textbf{1} \right\| ^2) = \\
+	= 1 + \sum_{j=1}^N a^i_j (s_j - 1) + \sum_{j,l=1}^N b^i_{jl} (s_j-1)(s_l-1) + o(\left\| \textbf{s} - \textbf{1} \right\|^2) \nonumber
+\end{eqnarray}
+
+
+
+
+\end{document}

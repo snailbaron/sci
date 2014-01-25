@@ -1,0 +1,66 @@
+%!PS
+%%BoundingBox: -9 -44 155 110 
+%%Creator: MetaPost
+%%CreationDate: 1997.06.12:1749
+%%Pages: 1
+%*Font: cmmi10 9.96265 9.96265 61:f
+%*Font: cmr7 6.97385 6.97385 30:8
+%%EndProlog
+%%Page: 1 1
+ 0 1.59402 dtransform truncate idtransform setlinewidth pop [] 0 setdash
+ 1 setlinejoin 10 setmiterlimit
+newpath 144.45653 33.09874 moveto
+144.45653 75.08351 110.42116 109.11888 68.43639 109.11888 curveto
+26.45161 109.11888 -7.58376 75.08351 -7.58376 33.09874 curveto
+-7.58376 -8.88603 26.45161 -42.9214 68.43639 -42.9214 curveto
+110.42116 -42.9214 144.45653 -8.88603 144.45653 33.09874 curveto closepath
+ stroke
+newpath 0 0 moveto
+112.91515 94.74858 lineto
+136.87277 0 lineto
+ closepath stroke
+ 0 1.19551 dtransform truncate idtransform setlinewidth pop 1 setlinecap
+newpath 0 0 moveto
+106.55565 89.41225 lineto stroke
+newpath 143.46144 45.43034 moveto
+126.47177 41.13443 lineto stroke
+ 1.19551 0 dtransform exch truncate exch idtransform pop setlinewidth
+newpath 143.46144 45.43034 moveto
+143.46144 0 lineto stroke
+ 0 1.19551 dtransform truncate idtransform setlinewidth pop
+newpath 143.46144 45.43034 moveto
+106.55565 89.41225 lineto stroke
+-8.2661 -2.14476 moveto
+(a) cmmi10 9.96265 fshow
+ 0 3 dtransform truncate idtransform setlinewidth pop
+newpath 0 0 moveto 0 0 rlineto stroke
+146.46144 41.97108 moveto
+(d) cmmi10 9.96265 fshow
+newpath 143.46144 45.43034 moveto 0 0 rlineto stroke
+110.77734 97.74858 moveto
+(b) cmmi10 9.96265 fshow
+newpath 112.91515 94.74858 moveto 0 0 rlineto stroke
+138.97276 -6.3895 moveto
+(c) cmmi10 9.96265 fshow
+newpath 136.87277 0 moveto 0 0 rlineto stroke
+113.73627 39.73686 moveto
+(a) cmmi10 9.96265 fshow
+119.00237 38.24246 moveto
+(0) cmr7 6.97385 fshow
+95.67485 93.00664 moveto
+(c) cmmi10 9.96265 fshow
+99.98625 91.51224 moveto
+(0) cmr7 6.97385 fshow
+145.56143 3.59439 moveto
+(b) cmmi10 9.96265 fshow
+149.83704 2.09999 moveto
+(0) cmr7 6.97385 fshow
+ 0 0.79701 dtransform truncate idtransform setlinewidth pop
+ [3 3 ] 0 setdash
+newpath 146.85933 -8.22676 moveto
+98.58932 108.72308 lineto stroke
+ [] 0 setdash
+newpath 136.87277 0 moveto
+146.09686 0 lineto stroke
+showpage
+%%EOF

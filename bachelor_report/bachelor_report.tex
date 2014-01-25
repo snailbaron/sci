@@ -1,0 +1,605 @@
+\documentclass[12pt]{article}
+\usepackage[T2A]{fontenc}
+\usepackage[cp1251]{inputenc}
+\usepackage[russian]{babel}
+\usepackage{amsmath}
+\usepackage{amssymb}
+
+\oddsidemargin=10mm
+\textwidth=140mm
+\topmargin=10mm
+\headheight=0mm
+\headsep=0mm
+\textheight=200mm
+
+\newtheorem{theorem}{Теорема}
+\newtheorem{lemma}{Лемма}
+
+\title{Исследование разложимых КС-языков, имеющих вид <<цепочки>>}
+\author{Игорь Мартынов}
+\begin{document}
+
+\clearpage
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{8pt}
+
+\begin{titlepage}
+	\begin{center}
+		Министерство образования и науки Российской Федерации\\
+		Государственное образовательное учреждение высшего профессионального образования "<Нижегородский государственный университет им. Н.И.~Лобачевского">\\
+		\vspace{5mm}
+		\textbf{Факультет вычислительной математики и кибернетики}\\
+		\textbf{Кафедра математической логики и высшей алгебры}\\
+		\vspace{5mm}
+		Направление: прикладная математика и информатика\\
+		\vspace{25mm}
+		{\Large \upshape{ВЫПУСКНАЯ КВАЛИФИКАЦИОННАЯ РАБОТА БАКАЛАВРА}}\\
+		\vspace{10mm}
+		Тема:\\
+		{\large "<Исследование одного класса стохастических КС-""грамматик с разложимой матрицей первых моментов">}\\
+		\vspace{10mm}
+	\end{center}
+
+	\begin{flushright}
+		\textbf{Заведующий кафедрой:}\\
+		Д. ф.-м. н. Шевченко Валерий Николаевич\\
+		\vspace{3mm}
+		\textbf{Выполнил:} студент группы 84-03\\
+		Мартынов Игорь Михайлович\\
+		\vspace{45mm}
+	\end{flushright}
+	
+	\begin{center}
+		Нижний Новгород\\
+		2011
+	\end{center}
+\end{titlepage}
+
+\section{Основные определения}
+
+\textit{Стохастической КС-грамматикой} называется система $G = <V_T, V_N, R, s>$, где $V_T$ и $V_N$ --- алфавиты терминальных и нетерминальных символов (\textit{терминалов} и \textit{нетерминалов}) соответственно, $s$ --- аксиома грамматики, $R$ --- множество правил вывода, представимое в виде $R = \cup_{i = 1}^k R_i$, где $k = |V_N|$, и $R_i$ --- множество правил вида
+\begin{equation}
+    r_{ij} : A_i \xrightarrow{p_{ij}} \beta_{ij}\quad{}\left( A_i \in V_N, \beta_{ij} \in (V_N \cup V_T)^* \right),
+\end{equation}
+и $p_{ij}$ --- вероятность применения правила $r_{ij}$, причём при фиксированном $i$ вероятности $r_{ij}$ задают вероятностное распределение на множестве $R_i$:
+\begin{equation}
+    0 < p_{ij} \leqslant 1\quad\text{и}\quad\sum_{j = 1}^{n_i} p_{ij} = 1,\qquad{}i = 1,2,\ldots,k,
+\end{equation}
+где $n_i = |R_i|$.
+
+Слово $\beta$ называется \textit{непосредственно выводимым} из $\alpha$ (обозначается $\alpha \Rightarrow \beta$), если существуют $\alpha_1, \alpha_2 \in (V_N \cup V_N)^*$, для которых $\alpha = \alpha_1 A_i \alpha_2$, $\beta = \alpha_1 \beta_{ij} \alpha_2$ и в $R$ имеется правило $A_i \xrightarrow{p_{ij}} \beta_{ij}$.
+
+Через $\Rightarrow_*$ обозначим рефлексивное транзитивное замыкание $\Rightarrow$. Если $\alpha \Rightarrow_* \beta$, говорят, что $\beta$ \textit{выводимо} из $\alpha$. Язык $L_G$, \textit{порождаемый} грамматикой $G$ определяется как множество слов $\alpha \in V_T^*$, выводимых из аксиомы $s$ грамматики $G$.
+
+Последовательность правил грамматики $\omega(\alpha) = (r_1, r_2, \ldots, r_k)$, последовательное применение которых к $s$ даёт слово $\alpha$, называется \textit{выводом} этого слова. Если на каждом шаге правило применяется к самому левому нетерминалу в слове, вывод назвается \textit{левым}.
+
+Вероятность вывода определяется как $p(\omega(\alpha)) = p(r_1) \cdot p(r_2) \cdot \ldots \cdot p(r_k)$, где $p(r_i)$ --- вероятность соответствующего правила. Вероятность слова определяется как сумма вероятностей всех его левых выводов.
+
+Грамматика $G$ называется \textit{согласованной}, если
+\begin{equation}
+    \sum_{\alpha \in L_G} p(\alpha) = 1.
+\end{equation}
+Согласованная грамматика $G$ задаёт распределение вероятностей $P$ на $L_G$, и определяет \textit{стохастический КС-язык} $\mathfrak{L} = (L, P)$. В дальнейшем всюду предполагается, что грамматика согласованна.
+
+По выводу слова может быть построено \textit{дерево вывода}. В корень дерева помещается аксиома $s$, далее на каждом ярусе дерева ко всем нетерминалам этого яруса применяется правило, соответствующее выводу. Символы этого слова записываются слева направо в дереве, присоединяясь к исходному нетерминалу как к родителю.
+
+Обозначим $D_l^t$ --- множество деревьев вывода высоты $t$, порождаемых грамматикой $G$ при замене её аксиомы на $A_l$. Аналогично, $D_l^{\leqslant t}$ --- множество деревьев вывода, высота которых не превосходит $t - 1$.
+
+Для исследования вероятностных характеристик стохастической КС-""грамматики применяются производящие функции
+\begin{equation}
+    F_i(s_1, s_2, \ldots, s_k) = \sum_{\substack{j = 1\\r_{ij} \in R}}^{n_i} p_{ij} s_1^{l_1} s_2^{l_2} \ldots s_k^{l_k},
+\end{equation}
+где $l_m = l_m(i,j)$ --- число вхождений нетерминала $A_m$ в $\beta_{ij}$.
+
+Величины
+\begin{equation}
+    a^i_j = \left. \frac{\partial F_i(s_1, s_2, \ldots, s_k)}{\partial s_j} \right|_{s_1 = s_2 = \ldots = s_k = 1}
+\end{equation}
+называются \textit{первыми моментами} грамматики $G$. Матрица $A = (a^i_j)$ называется \textit{матрицей первых моментов} грамматики $G$.
+
+
+Матрица $A$, по построению, неотрицательна. По теореме Фробениуса, доказанной в~\cite{gantmaher}, существует максимальный по модулю вещественный неотрицательный собственный корень $r$. Известно, что критерием согласованности стохастической КС-грамматики при отсутствии бесполезных нетерминалов является условие $r \leqslant 1$.
+
+Говорят, что нетерминал $A_j$ \textit{непосредственно следует} за нетерминалом $A_i$ (обозначается $A_i \rightarrow A_j$), если в $R$ имеется правило $A_i \xrightarrow(p_{ij}) \alpha_1 A_j \alpha_2$, где $\alpha_1, \alpha_2 \in (V_N \cup V_T)^*$. Транзитивное замыкание отношения $\rightarrow$ обозначается $\rightarrow_*$. Если $A_i \rightarrow_* A_j$, говорят, что $A_j$ \textit{выводится} из $A_i$.
+
+Введём также отношение $\leftrightarrow_*$. Будем считать, что $A_i \leftrightarrow_* A_j$, если одновременно $A_i \rightarrow_* A_j$ и $A_j \rightarrow_* A_i$. Очевидно, отношение $\leftrightarrow_*$ есть отношение эквивалентности, и потому разбивает множество нетерминалов на классы $V_N = K_1 \cup K_2 \cup \ldots \cup K_m : K_i \cap K_j = \varnothing (i \neq j)$. Класс, содержащий ровно один нетерминал, будем называть \textit{особым}. Множество классов $\{K_1, K_2, \ldots, K_m\}$ обозначим $\mathcal{K}$.
+
+Если все нетерминалы грамматики образуют один класс, она называется \textit{неразложимой}. В противном случае она называется \textit{разложимой}. Очевидно, разложимой грамматике соответствует разложимая \cite{gantmaher} матрица первых моментов.
+
+Говорят, что класс $K_j$ \textit{непосредственно следует} за классом $K_i$ (обозначается $K_i \prec K_j$), если существуют $A_1 \in K_i$ и $A_2 \in K_j$ такие, что $A_1 \rightarrow A_2$. Рефлексивное транзитивное замыкание $\prec$ обозначим $\prec_*$, и назовём отношением \textit{следования}.
+
+Будем говорить, что грамматика имеет вид \textit{<<цепочки>>}, если она разложима, и граф, построенный на множестве $\mathfrak{K}$ по отношению $\prec$, имеет вид $P_m$. Пронумеруем классы грамматики таким образом, что $K_i \prec K_{i+1}, i = 1,2,\ldots,m-1$. Пронумеруем нетерминалы так, что для любых $A_i \in K_p$ и $A_j \in K_q$ условия $i < j$ и $p < q$ равносильны. После этого матрица первых моментов грамматики приобретает вид:
+\begin{equation}
+    A = 
+    \begin{pmatrix}
+        A_{11} & A_{12} & 0 & \cdots & 0 & 0 \\
+        0 & A_{22} & A_{23} & \cdots & 0 & 0 \\
+        \vdots & \vdots & \vdots & \ddots & \vdots & \vdots \\
+        0 & 0 & 0 & \cdots & A_{m-1,m-1} & A_{m-1,m} \\
+        0 & 0 & 0 & \cdots & 0 & A_{m,m}
+    \end{pmatrix}
+\end{equation}
+
+Блоки $A_{i,i} (i = 1,2,\ldots,m)$ являются неразложимыми неотрицательными матрицами. Не уменьшая общности, будем считать их положительными и непериодичными \cite{gantmaher}. Этого можно добиться с помощью метода укрупнения правил грамматики. Пусть $r_i$ --- перронов корень матрицы $A_{i,i}$. По построению матрицы $A$, $r = \max_i \{r_i\}$ и $r > 0$.
+
+\section{Свойства матрицы первых моментов}
+
+Обозначим $J = \{ i : r_i = r \}$ --- множество индексов $i$, таких что перронов корень матрицы $A_i$ равен $r$. Обозначим $J = \{ i_1, i_2, \ldots, i_q \}$ причём $i_1 < i_2 < \ldots < i_q$ Разобьём множество классов $\mathcal{K}$ на группы классов $\mathcal{M}_1, \mathcal{M}_2, \ldots, \mathcal{M}_w$. При этом $\mathcal{M}_1 = \{K_1, K_2, \ldots, K_{i_1} \}$, и $\mathcal{M}_l = \{ K_{i_{l-1} + 1}, \ldots, K_{i_l} \}$, где $l > 1$. Нетрудно видеть, что в каждой группе $\mathcal{M}_j$ содержится ровно один класс с номером из $J$.
+
+Тогда матрицу первых моментов можно представить в виде
+\begin{equation}
+    A = 
+    \begin{pmatrix}
+        B_{11} & B_{12} & \cdots & 0 & 0 \\
+        0 & B_{22} & \cdots & 0 & 0 \\
+        \vdots & \vdots & \ddots & \vdots & \vdots \\
+        0 & 0 & \cdots & B_{w-1,w-1} & B_{w-1,w} \\
+        0 & 0 & \cdots & 0 & B_{w,w}
+    \end{pmatrix},
+\end{equation}
+где $B_{ij}$ --- блок, находящийся на пересечении строк, соответствующих нетерминалам классов группы $\mathcal{M}_i$, и столбцов, соответствующим нетерминалам классов группы $\mathcal{M}_j$. Очевидно, каждой из матриц $B_{i,i}$ соответствует перронов корень равный $r$.
+
+Рассмотрим матрицу
+\begin{equation}
+    A^t = 
+    \begin{pmatrix}
+        B_{11}^t & B_{12}^{(t)} & \cdots & B_{1,w-1}^{(t)} & B_{1,w}^{(t)} \\
+        0 & B_{22}^t & \cdots & B_{2,w-1}^{(t)} & B_{2,w}^{(t)} \\
+        \vdots & \vdots & \ddots & \vdots & \vdots \\
+        0 & 0 & \cdots & B_{w-1,w-1}^t & B_{w-1,w}^{(t)} \\
+        0 & 0 & \cdots & 0 & B_{w,w}^t
+    \end{pmatrix}.
+\end{equation}
+Её вид был установлен в \cite{zhiltsova-mpm}, где приведено доказательство для случая $r < 1$, однако при $r = 1$ доказательство остаётся справедливым.
+
+Сформулируем этот результат в виде теоремы.
+\begin{theorem}
+	В принятых обозначениях при $t \rightarrow \infty$
+    \begin{equation}
+        B_{lh}^{(t)} = H_{lh} \cdot t^{s_{lh} - 1} r^t (1 + o(1))\quad\text{при}\quad l \neq h,
+    \end{equation}
+    где $H_{lh}$ не зависит от $t$, и $s_{lh}$ --- число классов с номерами из $J$ среди $K_l, K_{l+1}, \ldots, K_h$.
+\end{theorem}
+
+\section{Вероятности продолжения}
+
+Для получения вероятностей продолжения \cite{sevast} рассматриваемой стохастической КС-""грамматики, определим \textit{производящие функции} следующим образом:
+\begin{equation}
+\begin{split}
+	&F(\mathbf{s}) = \sum p_{ij} s_1^{l_i^1} s_2^{l_i^2} \ldots s_{n_i}^{l_i^{n_i}} \\
+	&F(t,\mathbf{s}) = F(F(t-1,\mathbf{s}))
+\end{split}
+\end{equation}
+
+Раскладывая $F_i(s)$ в ряд Тейлора в окрестности точки $\mathbf{1} = (1,1,\ldots,1)$, получаем:
+\begin{multline}
+	F_i(\mathbf{s}) = F_i(\mathbf{1}) + (\nabla F_i(\mathbf{1}), \mathbf{s} - \mathbf{1}) + \frac{1}{2} (\mathbf{s} - \mathbf{1})^{\text{T}} \nabla^2 F_i(\mathbf{1}) (\mathbf{s} - \mathbf{1}) = \\
+	= 1 + \sum_j a^i_j (s_j - 1) + \frac{1}{2} \sum_{j,l} b^i_{jl} (s_j - 1) (s_l - 1) + \hspace{-10pt}\mathop{O}_{(k \in {1,2,\ldots,n})}\hspace{-12pt}(|s_k - 1|^3)
+\end{multline}
+
+Учитывая
+\begin{equation}
+	F(t+1,\mathbf{s}) = F(F(t,\mathbf{s})),
+\end{equation}
+можно записать рекуррентное соотношение для вероятностей продолжения:
+\begin{equation}
+	Q_i(t+1) = \sum_j a^i_j	Q_j(t) - \frac{1}{2} \sum_{j,l} b^i_{j,l} Q_j(t) Q_l(t) + O(|Q_k^3(t)|),
+\end{equation}
+где $Q_i(t)$ --- вероятность продолжения для деревьев высоты $t$.
+	
+Рассматривая лишь нетерминалы класса с номером $m$, получим:
+\begin{multline}
+	\mathop{Q_i}_{i \in I_m}\hspace{-2pt}(t+1) = \sum_{j \in I_m} a^i_j Q_j(t) - \frac{1}{2} \sum_{j,l \in I_m} b^i_{jl} Q_j(t) Q_l(t) + \\
+	+ \sum_{j \in I_{m+1}} a^i_j Q_j(t) - \frac{1}{2} \sum_{j,l \in I_{m+1}} b^i_{jl} Q_j(t) Q_l(t) - \\
+	- \frac{1}{2} b^i_{jl} Q_j(t) Q_l(t) +\hspace{-15pt}\mathop{O}_{(k \in I_m \cup I_{m+1})}\hspace{-17pt}(Q_k^3(t))
+\end{multline}	
+	
+Перемножая левый собственный вектор матрицы $A_{m,m}$ ($v^{(m)}$) и вектор $Q^{(m)}(t)$, составленный из вероятностей продолжения $Q_i(t) : i \in I_m$, и полагая $Q_*^{(m)}(t) = (v^{(m)}, Q^{(m)}(t))$, получаем, после преобразований:
+\begin{equation}
+	Q_*^{(m)}(t+1) = r_m Q_*^{(m)}(t) + b_m Q_*^{(m+1)}(t) (1 + o(1)) - \frac{1}{2} B_m (Q_*^{(m)}(t))^2 (1 + o(1))
+\end{equation}
+
+Для цепочки, состоящей полностью из классов с перроновым корнем $1$, результат известен. Рассмотрим теперь подцепочку классов $K_i, K_{i+1}, \ldots, K_M$, где $K_M$ --- последний из классов грамматики. Будем предполагать, что среди $A_i, \ldots, A_M$ есть матрица с перроновым корнем равным 1. Пусть $A_j (j \in {i,i+1,\ldots,M})$ --- первая из таких матриц, то есть $r_i, r_{i+1}, \ldots, r_{j-1}$ меньше 1.
+
+Пусть асимптотика вероятностей продолжения для нетерминалов класса $K_j$ известна: $Q^{(j)} = U_j V_j \cdot t^s (1 + o(1))$.
+
+Известно, что асимптотика вероятностей продолжения определяется видом степени матрицы первых моментов, то есть, $Q(t) = A^{t-k} Q(k) (1 + o(1))$ для некоторого фиксированного $k$. Тогда для всех $l \in \{ i,i+1,\ldots,j-1 \}$
+\begin{equation}
+	\quad Q^{(l)}(t + k) = A_{l,l}^t Q^{(l)}(k) + A_{l,l+1}^{(t)} Q^{(l+1)}(k) + \ldots + A_{l,M}^{(t)} Q^{(M)}(k)
+\end{equation}
+
+Поскольку в подцепочке $K_i,\ldots,K_{j-1}$ все перроновы корни меньше 1, выполняется неравенство
+\begin{equation}
+	A_{l,l}^t Q^{(l)}(k) + A_{l,l+1}^{(t)} Q^{(l+1)}(k) + \ldots + A_{l,j-1}^{(t)} Q^{(j-1)}(k) \le O(r^t)\quad\text{при}\quad r < 1
+\end{equation}
+Это следует сразу из вида матрицы $A^t$. Кроме того $A_{l,h}^{(t)} = H_{l,h} t^{s_{lh}-1} (1 + o(1))$ и $A_{j,h}^{(t)} = H_{j,h} t^{s_{jh}-1} (1 + o(1))$, где $j \le h \le M$ и $s_{ab}$ --- число классов с максимальным перроновым корнем в подцепочке $K_a, \ldots, K_b$. Поскольку классы с максимальным перроновым корнем содержатся только в подцепочке $K_j,\ldots,K_M$, матрицы $A_{l,h}^{(t)}$ и $A_{j,h}^{(t)}$ имеют одинаковую асимптотику. Отсюда, $Q^{(l)} = O(t^s)$.
+
+В ходе доказательства в \cite{zhiltsova-mpm} показано, что $\forall h \in \{j,j+1,\ldots,M\} \quad A_{l,h}^{(t)} = U V_{lh} \cdot t^{s_{lh}-1} (1 + o(1))$, где $U = (r_l E - A_{l,l})^{-1} A_{l,l+1} \ldots A_{j-2,j-1} (r_{j-1} E - A_{j-1,j-1})^{-1} A_{j-1,j} u^{(j)}$, и соответственно, компонетны вектора $Q^{(l)}$ пропорциональны компонетнам $U$.
+
+Объединяя результаты докритического случая, случая цепочки, полностью состоящей из критических классов, и полученные здесь, можно записать общий вид вероятностей продолжения для грамматики в виде цепочки.
+
+\begin{theorem}
+	Пусть грамматика имеет вид цепочки. Пусть также $Q_i(t)$ --- вероятности продолжения для деревьев высоты не менее $t$, и $P_i(t) = Q_i(t) - Q_i(t-1)$. Тогда
+	\begin{equation}
+	    \begin{split}
+	        &Q_n(t) = c_\mu U^{(\mu)}_{n - k_{\mu-1}} t^{-\left( \frac{1}{2} \right)^{m - \mu}} \\
+	        &P_n(t) = d_\mu U^{(\mu)}_{n - k_{\mu-1}} t^{-1 -\left( \frac{1}{2} \right)^{m - \mu}}
+	    \end{split},
+	\end{equation}
+	где $n \in I_\mu$, $c_\mu$ и $d_\mu$ заданы.
+\end{theorem}	
+
+\section{Математические ожидания числа применений правила в деревьях вывода}
+
+Обозначим через $q^l_{ij}(t,\tau)$ и $\bar{q}^l_{ij}(t,\tau)$ случайные величины, равные числу применений правила $r_{ij}$ в дереве вывода, соответственно, из $D_l^t$ и $D_l^{\leqslant t}$. Пусть также
+\begin{equation}
+    \begin{split}
+        &S^l_{ij}(t) = \sum_{\tau = 1}^{t-1} q^l_{ij}(t,\tau) \\
+        &\bar{S}^l_{ij}(t) = \sum_{\tau = 1}^{t-1} \bar{q}^l_{ij}(t,\tau)
+    \end{split},
+\end{equation}
+и $S^l_{ij}(t)$, $\bar{S}^l_{ij}$ --- соответственно число применений правила $r_{ij}$ в дереве из $D_l^t$, $D_l^{\leqslant t}$. Для удобства записи положим
+\begin{equation}
+    \begin{split}
+        S_{ij}(t) = S^1_{ij}(t),&\quad{}\bar{S}_{ij}(t) = \bar{S}^1_{ij}(t) \\
+        q_{ij}(t,\tau) = q^1_{ij}(t,\tau),&\quad{}\bar{q}_{ij}(t,\tau) = \bar{q}^1_{ij}(t,\tau)
+    \end{split}.
+\end{equation}
+
+Рассмотрим математические ожидания некоторых из введённых величин. Обозначим
+\begin{equation}
+    M^l_{ij}(t) = M[ S^l_{ij}(t) ],\quad{}\bar{M}^l_{ij}(t) = M[ \bar{S}^l_{ij}(t) ].
+\end{equation}
+
+Задача данного раздела заключается в вычислении $\bar{M}^l_{ij}(t)$, $M^l_{ij}(t)$ для грамматик в виде <<цепочки>>. Для их нахождения будет удобно использовать три леммы, доказанные в \cite{borisov-disser}.
+
+\begin{lemma}
+\label{l:powers}
+    Пусть $s,d$ --- натуральные, $m = (m_1, \ldots, m_s)$ --- вектор целых неотрицательных чисел, $y = (y_1, \ldots, y_s)$ --- вектор, и $\bar{m} = \sum_{j = 1}^s m_j$. Тогда
+    \begin{equation}
+        (1 - y_1)^{n_1} \ldots (1 - y_s)^{n_s} = \sum_{\substack{\bar{m} < d \\ m \geqslant 0}} \binom{n_1}{m_1} \binom{n_2}{m_2} \ldots \binom{n_s}{m_s} (-1)^{\bar{m}} y^m + R_d(n_1, \ldots, n_s, y),
+    \end{equation}
+    где $y^m = y_1^{m_1} \ldots y_s^{m_s}$, и остаточный член представим в виде
+    \begin{equation}
+        R_d(n_1, \ldots, n_s, y) = \sum_{\substack{\bar{m} = d \\ m \geqslant 0}} (-1)^d \varepsilon_m(n_1, \ldots, n_s, y) y^m,
+    \end{equation}
+    причём
+    \begin{equation}
+        0 \leqslant \varepsilon_m(n_1, \ldots, n_s, y') \leqslant \varepsilon_m(n_1, \ldots, n_s, y) \leqslant \binom{n_1}{m_1} \ldots \binom{n_s}{m_s}
+    \end{equation}
+    при $0 \leqslant y_i \leqslant y_i' \leqslant 1\quad{}(i = 1,\ldots,s)$.
+\end{lemma}
+
+\begin{lemma}
+\label{l:x_b_a}
+    Пусть $A(t)$ --- последовательность матриц размером $k \times k$, и $A(t) \rightarrow A$ при $t \rightarrow \infty$, причём $A > 0$, и её перронов корень $r = 1$. Пусть $b(t) = b t^{\alpha} (1 + o(1))$ --- последовательность векторов длины $k$, где $b \geqslant 0$, $b \neq 0$, и $\alpha$ --- действительное число. Тогда для последовательности векторов $x(t)$ при $t = 1,2,\ldots$, определяемой рекуррентным соотношением $x(t) = b(t) + A(t) x(t-1)$ при $t \rightarrow \infty$ справедливо соотношение
+    \begin{equation}
+        \frac{ x_i(t) }{ v x(t) } \rightarrow u_i,
+    \end{equation}
+    при условии что $x(t_0) > 0$ для некоторого номера $t_0$, где $u,v > 0$ --- соответственно правый и левый собственные векторы матрицы $A$ при нормировке $vu = 1$.
+\end{lemma}
+
+\begin{lemma}
+\label{l:x_rec}
+    Пусть последовательность ${x_t}$, $x_t > 0$ при любом $t \geqslant 0$, удовлетворяет рекуррентному соотношению
+    \begin{equation}
+        x_{t+1} = a t^{\alpha} (1 + \varepsilon_1(t)) + (1 - b t^{\beta} (1 + \varepsilon_2(t))) x_t,
+    \end{equation}
+    где $\beta < 0$, $b > 0$, и $\varepsilon_1(t), \varepsilon_2(t) = o(1)$ при $t \rightarrow \infty$. Тогда верны следующие асимптотические равенства:
+    \begin{equation}
+        \begin{split}
+            &(1)\;x_t = \frac{a t^{\alpha + 1}}{\alpha + 1} (1 + o(1))\quad\text{при}\quad\beta < -1,\;\alpha \geqslant 0 \\
+            &(2)\;x_t = \frac{a t^{\alpha + 1}}{\alpha + b + 1} (1 + o(1))\quad\text{при}\quad\beta = -1,\;\alpha > -1 \\
+            &(3)\;x_t = \frac{a t^{\alpha - \beta}}{b} (1 + o(1))\quad\text{при}\quad{}-1 < \beta < 0
+        \end{split}
+    \end{equation}
+\end{lemma}
+
+Вначале рассмотрим $\bar{M}^q_{ij}(t)$. Пусть $p(\cdot)$ --- условная вероятность дерева $d$ в грамматике $G$, при условии что $d \in D_q^{\leqslant t}$. Рассмотрим множество $D_{ql}^{\leqslant t}$ деревьев из $D_q^{\leqslant t}$, первый ярус которых получен применением правила $r_{ql}$ к корню дерева. Пусть
+\begin{equation}
+    \bar{P}_{ql}^{ij}(t) = \sum_{d \in D_{ql}^{\leqslant t}} p(d) q_{ij}(d),
+\end{equation}
+где $q_{ij}(d)$ --- число применений правила $r_{ij}$ в дереве $d$, и $\bar{P}_{ql}^{ij}(t)$ --- вклад деревьев из $D_{ql}^{\leqslant t}$ в матожидание $\bar{M}^q_{ij}(t)$. Для краткости, обозначим $\bar{P}_{ql} = \bar{P}_{ql}^{ij}$. Тогда, очевидно,
+\begin{equation}
+    \bar{M}^q_{ij}(t) = \sum_{l = 1}^{n_q} \bar{P}_{ql}(t).
+\end{equation}
+
+Рассмотрим величину $\bar{P}_{ql}(t)$. Пусть
+\begin{equation}
+    q_{ij}(d) = q^{(1)}_{ij}(d) + q^{(2)}_{ij}(d),
+\end{equation}
+где $q^{(1)}_{ij}(d)$ --- число применений правила $r_{ql}$ в дереве $d$ на первом его ярусе, а $q^{(2)}_{ij}(d)$ --- на остальных ярусах. Тогда
+\begin{equation}
+\label{eq:bar_p_12}
+    \bar{P}_{ql}(t) = \sum_{d \in D_{ql}^{\leqslant t}} p(d) q_{ij}(d) = \sum_{d \in D_{ql}^{\leqslant t}} p(d) q^{(1)}_{ij}(d) + \sum_{d \in D_{ql}^{\leqslant t}} p(d) q^{(2)}_{ij}(d) = \bar{P}^{(1)}_{ql}(t) + \bar{P}^{(2)}_{ql}(t)
+\end{equation}
+
+Очевидно, $q^{(1)}_{ij}(d) = \delta^q_i \delta^l_j$ (где $delta$ --- символ Кронекера), и следовательно, учитывая что $p(\cdot)$ --- условные вероятности, получаем
+\begin{equation}
+    \bar{P}^{(1)}_{ql}(t) = \delta^q_i \delta^l_j \frac{ p_{ij} Q_{s_{ij}}(t-1) }{ 1 - Q_q(t) },
+\end{equation}
+где $Q_X(t)$ --- вероятность наборов деревьев вывода высоты не превосходящей $t-1$, набор корней которых задан характеристическим вектором $X \in \mathbb{N}^k$.
+
+Обозначим также $\delta^i(n) = \left. ( \delta^i_k ) \right|_{i = \overline{1,n}} \in \{0,1\}^n$.
+
+Условную вероятность дерева $p(d)$ при $d \in D_{ql}^{\leqslant t}$ можно выразить как
+\begin{equation}
+    p(d) = \frac{ p_{ql} }{ 1 - Q_q(t) } p_1(d) p_2(d) \ldots p_{\bar{s}_{ql}}(d),
+\end{equation}
+где $p_j(d)$ --- вероятность поддерева $d$ с корнем в $j$-м узле первого яруса. Тогда
+\begin{equation}
+\label{eq:bar_P_2}
+    \bar{P}^{(2)}_{ql}(t) = \frac{p_{ql}}{1 - Q_q(t)} \sum_{d \in D_{ql}^{\leqslant t}} \prod_{n = 1}^{\bar{s}_{ql}} p_n(d) \sum_{m = 1}^{\bar{s}_{ql}} q'^m_{ij}(d),
+\end{equation}
+где $q'^m_{ij}(d)$ --- число применений правила $r_{ij}$ в поддереве дерева $d$ с корнем в $m$-том нетерминале первого яруса.
+
+Выделим в $d$ поддеревья $d_1, d_2, \ldots, d_{\bar{s}_{ql}}$, где $d_j$ --- поддерево с корнем в $j$-м узле первого яруса $d$. Преобразуя $(\ref{eq:bar_P_2})$, получаем
+\begin{multline}
+    \bar{P}^{(2)}_{ql}(t) = \frac{p_{ql}}{1 - Q_q(t)} \sum_{m = 1}^{\bar{s}_{ql}} \sum_{d \in D_{ql}^{\leqslant t}} \left( \prod_{n = 1}^{\bar{s}_{ql}} p_n(d) \right) q'^m_{ij}(d) = \\
+    = \frac{p_{ql}}{1 - Q_q(t)} \sum_{m = 1}^{\bar{s}_{ql}} \sum_{ d_1, \ldots, d_{m-1}, d_{m+1}, \ldots, d_{\bar{s}_{ql}} } p_1(d_1) \ldots p_{m-1}(d_{m-1}) p_{m+1}(d_{m+1}) \ldots p_{\bar{s}_{ql}}(d_{\bar{s}_{ql}}) q'^m_{ij}(d) = \\
+    \frac{p_{ql}}{1 - Q_q(t)} \sum_{m = 1}^{\bar{s}_{ql}} Q_{s_{ql} - \delta^m} q_{ij}(d_m) = \frac{p_{ql}}{1 - Q_q(t)} \sum_{m = 1}^k s_{ql}^m \bar{M}^m_{ij}(t-1) Q_{s_{ql} - \delta^m}(t-1)
+\end{multline}
+
+Зная $\bar{P}_{ql}(t) = \bar{P}^{(1)}_{ql}(t) + \bar{P}^{(2)}_{ql}(t)$, получаем
+\begin{equation}
+    \bar{M}^q_{ij}(t) = \frac{1}{1 - Q_q(t)} \left[ \delta^q_i p_{ij} Q_{s_{ij}}(t-1) + \sum_{l = 1}^{n_q} p_{ql} \sum_{m = 1}^k s_{ql}^m \bar{M}^m_{ij}(t-1) Q_{s_{ql} - \delta^m}(t-1) \right]
+\end{equation}
+
+Обозначая
+\begin{equation}
+\label{eq:bar_m_ap}
+    \bar{M}'^q_{ij}(t) = \bar{M}^q_{ij}(t) (1 - Q_q(t)),
+\end{equation}
+имеем
+\begin{equation}
+\label{eq:bar_m_recur}
+    \bar{M}'^q_{ij}(t) = \delta^q_i p_{ij} Q_{s_{ij}}(t-1) + \sum_{l = 1}^{n_q} p_{ql} \sum_{m = 1}^k s_{ql}^m \bar{M}'^m_{ij}(t-1) Q_{s_{ql} - \delta^m}(t-1)
+\end{equation}
+
+Рекуррентное соотношение $(\ref{eq:bar_m_recur})$ является опорной точкой для вычисления $\bar{M}^q_{ij}(t)$. Получим аналогичное уравнение для $M^q_{ij}(t)$.
+
+$M^q_{ij}(t) = \sum_{l = 1}^{n_q} P_{ql}(t)$, где $P_{ql}(t)$ --- вклад деревьев из $D_{ql}^t$ в $M^q_{ij}(t)$. Аналогично тому, как это сделано в $(\ref{eq:bar_p_12})$, полагаем $P_{ql}(t) = P^{(1)}_{ql}(t) + P^{(2)}_{ql}(t)$. При этом
+\begin{equation}
+    P^{(1)}_{ql}(t) = \delta^q_i \delta^l_j \frac{ p_{ij} R_{s_{ij}}(t-1) }{P_q(t)},
+\end{equation}
+где $R_X(t)$ --- вероятность наборов деревьев из $D^{\leqslant t}$, набор корней которых задан характеристическим вектором $X$, и высота хотя бы одного из которых достигает $t-1$. $P^{(2)}_{ql}(t)$ можно представить в виде
+\begin{equation}
+    P^{(2)}_{ql}(t) = \sum_{m = 1}^{\bar{s}_{ql}} P^{(2)m}_{ql}(t),
+\end{equation}
+где $P^{(2)m}_{ql}(t)$ --- вклад деревьев с $m$-м корнем на первом ярусе в $M^q_{ij}(t)$.
+
+Обозначим через $S_1$ вклад в $P^{(2)m}_{ql}(t)$ наборов деревьев, в которых ярус $t$ достигается деревом с корнем в $m$-м нетерминале первого яруса. Очевидно,
+\begin{equation}
+    S_1 = \frac{ (1 - Q_{z_m}(t-1)) Q_{s_{ql} - \delta^{z_m}}(t-1) M^{z_m}_{ij}(t-1) }{ P_q(t) },
+\end{equation}
+где $z_m$ --- $m$-й нетерминал первого яруса.
+
+Пусть $S_2$ --- вклад наборов, где ярус $t$ достигается через другие деревья. Тогда
+\begin{equation}
+    S_2 = \frac{ (1 - Q_{z_m}(t-1)) R_{s_{ql} - \delta^m}(t-1) \bar{M}^{z_m}_{ij}(t-1) }{ P_q(t) }.
+\end{equation}
+
+В результате, для $M^q_{ij}$ получаем
+\begin{multline}
+\label{eq:m_recur}
+    M^q_{ij} = \sum_{l = 1}^{n_q} \left( P^{(1)}_{ql}(t) + \sum_{m = 1}^{\bar{s}_{ql}} P^{(2)m}_{ql}(t) \right) = \\
+    = \frac{1}{P_q(t)} [ \delta^q_i p_{ij} R_{s_{ij}}(t-1) + \sum_{l = 1}^{n_q} p_{ql} \sum_{m = 1}^k (P_m(t-1) Q_{s_{ql} - \delta^m}(t-1) M^m_{ij}(t-1) + \\
+    + (1 - Q_m(t-1)) R_{s_{ql} - \delta^m}(t-1) \bar{M}^m_{ij}(t-1)) ]
+\end{multline}
+
+Таким образом, получено рекуррентное соотношение для $M^q_{ij}(t)$, аналогичное $(\ref{eq:bar_m_recur})$.
+
+Из леммы $\ref{l:powers}$ следуют равенства для $Q_X(t$ и $R_X(t)$:
+\begin{equation}
+\label{eq:qx_rx}
+    \begin{split}
+        &Q_X(t) = \prod_{i = 1}^k (1 - Q_i(t))^{x_i} = 1 - \sum_{i = 1}^k x_i Q_i(t) + \Theta\left( \sum_{i,j = 1}^k x_i x_j Q_i(t) Q_j(t) \right) \\
+        &R_X(t) = Q_X(t) - Q_X(t-1) = \sum_{i = 1}^k x_i P_i(t) + \Theta\left( \sum_{i,j = 1}^k x_i x_j Q_i(t) Q_j(t) \right)
+    \end{split}
+\end{equation}
+
+Теперь можно приступить к вычислению $\bar{M}'^q_{ij}(t)$ и $M'^q_{ij}(t)$.
+
+\subsection{Случай критического класса}
+
+Рассмотрим вначале случай, когда $I(q) \in J$.
+
+Пусть $q,i \in I_\mu$. Тогда при $m \in I_\nu : \nu > \mu$ $\bar{M}'^m_{ij}(t) = 0$, и для $\bar{M}'^q_{in}(t$ получаем:
+\begin{equation}
+    \bar{M}'^q_{ij}(t) = \delta^i_q p_{ij} Q_{s_{ij}}(t-1) + \sum_{l = 1}^{n_q} p_{ql} \sum_{m \in I_\mu} s_{ql}^m \bar{M}'^m_{ij}(t-1) Q_{s_{ql} - \delta^m}(t-1)
+\end{equation}
+Подставляя выражения $(\ref{eq:qx_rx})$ где это необходимо, и учитывая, что $I(q) \in J$, имеем
+\begin{equation}
+\label{eq:bar_m_one}
+    \bar{M}'^q_{ij}(t) = \delta^i_q + \sum_{m \in I_\mu} \sum_{l = 1}^{n_q} p_{ql} s_{ql}^m \bar{M}'^m_{ij}(t-1) - \sum_{m \in I_\mu} \sum_{l = 1}^{n_q} p_{ql} s_{ql}^m \bar{M}'^m_{ij}(t-1) \cdot \sum_{n \in I_\mu} (s_{ql}^n - \delta^m_n) Q_n(t-1) (1 + o(1)).
+\end{equation}
+
+Непосредственным взятием производных от производящих функций проверяются выражения для первых и вторых моментов:
+\begin{equation}
+\label{eq:moments}
+    \begin{split}
+        &a^q_m = \sum_{l = 1}^{n_q} p_{ql} s_{ql}^m \\
+        &b^q_{mn} = \sum_{l = 1}^{n_q} p_{ql} s_{ql}^m (s_{ql}^n - \delta^m_n)
+    \end{split}
+\end{equation}
+Подставляя их в $(\ref{eq:bar_m_one})$, получаем
+\begin{multline}
+\label{eq:bar_m_ksi}
+    \bar{M}'^q_{ij}(t) = \delta^i_q p_{ij} + \sum_{m \in I_\mu} a^q_m \bar{M}'^m_{ij}(t-1) - \\
+    - c_\mu t^{\xi(\mu) - 1} \sum_{\substack{m \in I_\mu \\ n \in I}} b^q_{mn} u^{I(n)}_{n - k_{I(n)-1}} \bar{M}'^m_{ij}(t-1) (1 + o(1))
+\end{multline}
+где $\xi(\mu)$ --- число классов с перроновым корнем, равным 1 в цепочке $K_\mu$, $K_{\mu+1}, \ldots, K_m$, и $K_{I(n)} \ni A_n$.
+
+Применяя лемму $\ref{l:x_b_a}$, получаем:
+\begin{equation}
+\label{eq:bar_m_star}
+    \bar{M}'^q_{ij}(t) = u^{(\mu)}_{q - k_{\mu-1}} \cdot \sum_{l \in I_\mu} v^{(\mu)}_{n - k_{\mu-1}} \bar{M}'^l_{ij}(t) = u^{(\mu)}_{q - k_{\mu-1}} M^{(\mu)}_*(t),
+\end{equation}
+где $M^{(\mu)}_*(t) = \sum_{l \in I_{\mu}} v^{(\mu)}_{n - k_{\mu-1}} \bar{M}'^l_{ij}(t)$, и $v^{(\mu)}$ --- левый собственный вектор матрицы $A_{\mu,\mu}$.
+
+Домножая $(\ref{eq:bar_m_ksi})$ на $v^{(\mu)}_{q - k_{\mu-1}}$ и суммируя по $q$, получаем:
+\begin{equation}
+    \delta \bar{M}^{(\mu)}_*(t) = v^{(\mu)}_{i - k_{\mu-1}} p_{ij} - c_{\mu} t^\alpha \sum_{q,m,n \in I_\mu} v^{(\mu)}_{q - k_{\mu-1}} b^q_{mn} u^{(\mu)}_{m - k_{\mu-1}} u^{(\mu)}_{n - k_{\mu-1}} = v^{(\mu)}_{i - k_{\mu-1}} p_{ij} - c_{\mu} t^\alpha B_\mu,
+\end{equation}
+где $\alpha = -\left( \frac{1}{2} \right)^{\xi(\mu) - 1}$.
+
+Нетрудно видеть, что величина $\bar{M}^{(\mu)}_*(t)$ удовлетворяет условиям леммы $\ref{l:x_rec}$. Применяя её, получаем:
+\begin{equation}
+\label{eq:bar_m_result_1}
+    \begin{split}
+        &\bar{M}^{(\mu)}_*(t) = \frac{ v^{(\mu)}_{i - k_{\mu-1}} p_{ij} }{ c_{\mu} B_{\mu} + 1 } t (1 + o(1)),\quad\text{если}\;\alpha = -1 \\
+        &\bar{M}^{(\mu)}_*(t) = \frac{ v^{(\mu)}_{i - k_{\mu-1}} p_{ij} }{ c_{\mu} B_{\mu} } t^{-\alpha} (1 + o(1)),\quad\text{если}\;\alpha > -1
+    \end{split},
+\end{equation}
+где $\alpha = -\left( \frac{1}{2} \right)^{\xi(\mu) - 1}$.
+
+Пусть теперь $I(q) < I(i)$ ($q$ и $i$ в различных классах). Тогда $\bar{M}'^q_{ij}(t)$ выражается следующим образом:
+\begin{equation}
+    \bar{M}'^q_{ij}(t) = \delta^i_q p_{ij} Q_{s_{ij}}(t-1) + \sum_{m \in I_\mu \cup I_{\mu+1}} \sum_{l = 1}^{n_q} p_{ql} s_{ql}^m \bar{M}'^m_{ij}(t-1) Q_{s_{ql} - \delta^m} (t-1)
+\end{equation}
+Учитывая малость $Q_n(t)$ при $I(n) > I(q)$, получаем
+\begin{multline}
+    \bar{M}'^q_{ij}(t) = O(p_{ij}) + \sum_{m \in I_\mu} \sum_{l = 1}^{n_q} p_{ql} s_{ql}^m \bar{M}'^m_{ij}(t-1) \cdot \left( 1 - \sum_{n \in I_\mu} (s_{ql}^n - \delta^m_n) Q_n(t-1) \right) (1 + o(1)) + \\
+    + \sum_{m \in I_{\mu+1}} \sum_{l = 1}^{n_q} p_{ql} s_{ql}^m \bar{M}'^m_{ij}(t-1) (1 + o(1))
+\end{multline}
+
+Положим, $\bar{M}'^m_{ij}(t-1) = \overline{\mathcal{M}}'_{\mu+1} t^{\gamma(\mu+1)} (1 + o(1))$. Это выполняется для $\mu + 1 = m$, что видно из полученных соотношений $(\ref{eq:bar_m_result_1})$. Исходя из этого, получим выражение для $\bar{M}'^q_{ij}(t)$. Подставляя дополнительно выражения для первых и вторых моментов, а также для вероятностей продолжения $Q_n(t-1)$, получаем:
+\begin{multline}
+    \bar{M}'^q_{ij}(t) = \sum_{m \in I_\mu} a^q_m \bar{M}'^m_{ij}(t-1) - c_\mu t^{\alpha(\mu)} \sum_{m,n \in I_\mu} b^q_{mn} u^{(\mu)}_{n - k_{\mu-1}} \bar{M}'^m_{ij}(t-1)(1 + o(1)) + \\
+    + \overline{\mathcal{M}}'_{\mu+1} t^{\gamma(\mu+1)} \sum_{m \in I_{\mu+1}} a^q_m u^{(\mu+1)}_{m - k_\mu} (1 + o(1))
+\end{multline}
+Домножая на $v^{(\mu)}_{q - k_{\mu-1}}$ и суммируя по $q$, получаем
+\begin{multline}
+    \delta \bar{M}^{(\mu)}_*(t) = \overline{\mathcal{M}}'_{\mu+1} \left( \sum_{\substack{q \in I_\mu \\ m \in I_{\mu+1}}} v^{(\mu)}_{q - k_{\mu-1}} a^q_m u^{(\mu+1)}_{m - k_\mu} \right) \cdot t^{\gamma(\mu+1)} - \\
+    - c_\mu t^{\alpha(\mu)} \cdot \left( \sum_{q,m,n \in I_\mu} v^{(\mu)}_{q - k_{\mu-1}} b^q_{mn} u^{(\mu)}_{m - k_{\mu-1}} u^{(\mu)}_{n - k_{\mu-1}} \right) \cdot \bar{M}^{(\mu)}_*(t-1) (1 + o(1)) = \\
+    = \overline{\mathcal{M}}'_{\mu+1} b_{\mu+1} t^{\gamma(\mu+1)} (1 + o(1)) - c_\mu B_\mu t^{\alpha(\mu)} \bar{M}^{(\mu)}_*(t-1) (1 + o(1))
+\end{multline}
+
+Случай $\alpha(\mu) = -1$ рассматривать не имеет смысла, так как это означает, что не существует критических классов с номерами, превышающими $\mu$. Полагая $\alpha(\mu) > -1$ и применяя лемму $\ref{l:x_b_a}$, получаем
+\begin{equation}
+\label{eq:bar_m_result_2}
+    \bar{M}^{(\mu)}_*(t) = \frac{ \overline{\mathcal{M}}'_{\mu+1} b_{\mu+1} t^{\gamma(\mu+1) - \alpha(\mu)} }{ c_\mu B_\mu }
+\end{equation}
+
+Из полученных формул $(\ref{eq:bar_m_result_1})$ и $(\ref{eq:bar_m_result_2})$ нетрудно получить общее выражение для величины $\bar{M}^{(\mu)}_*(t)$, при условии что грамматика имеет вид <<цепочки>> и состоит только из критических классов ($J = \{1,2,\ldots,m\}$).
+\begin{equation}
+    \bar{M}^{(\mu)}_*(t) = \prod_{j = \mu}^{\nu-1} \left( \frac{ b_{j+1} }{ c_j B_j } \right) \cdot \left( \frac{ v^{(\nu)}_{i - k_{\nu-1}} p_{ij} }{ c_\nu B_\nu + \delta^m_\nu } \right) \cdot t^{ \frac{1}{2}^{m - \nu} \left(2 - \frac{1}{2}^{\nu - \mu} \right) },
+\end{equation}
+где $\mu = I(q)$, $\nu = I(i)$. Подставляя $(\ref{eq:bar_m_star})$, и затем $(\ref{eq:bar_m_ap})$, непосредственно получаем
+\begin{equation}
+    \bar{M}^q_{ij}(t) = \frac{ u^{(\mu)}_{q - k_{\mu-1}} }{ 1 - Q_q(t) } \prod_{j = \mu}^{\nu-1} \left( \frac{ b_{j+1} }{ c_j B_j } \right) \cdot \left( \frac{ v^{(\nu)}_{i - k_{\nu-1}} p_{ij} }{ c_\nu B_\nu + \delta^m_\nu } \right) \cdot t^{ \frac{1}{2}^{m - \nu} \left(2 - \frac{1}{2}^{\nu - \mu} \right) }
+\end{equation}
+
+Перейдём к вычислению $M^q_{ij}(t)$. Пусть $I(q) = I(i)$. Полагая $M'^q_{ij}(t) = M^q_{ij}(t) P_q(t)$, из $(\ref{eq:m_recur})$ получаем
+\begin{multline}
+\label{eq:m_ap_first}
+    M'^q_{ij}(t) = O(p_{ij}) t^{\beta(\mu)} + \sum_{m \in I_\mu} \sum_{l = 1}^{n_q} p_{ql} s_{ql}^m M'^m_{ij}(t-1) - \\
+    - \sum_{m,n \in I_\mu} \sum_{l = 1}^{n_q} p_{ql} s_{ql}^m (s_{ql}^n - \delta^m_n) Q_n(t-1) M'^m_{ij}(t-1) + \\
+    + \sum_{m,n \in I_\mu} \sum_{l = 1}^{n_q} p_{ql} s_{ql}^m (s_{ql}^n - \delta^m_n) P_n(t-1) \bar{M}'^m_{ij}(t-1)
+\end{multline}
+
+Обозначим
+\begin{equation}
+    \begin{split}
+        &Q^{(\mu)}(t) = c_\mu u^{(\mu)} t^{\alpha(\mu)} \\
+        &P^{(\mu)}(t) = d_\mu u^{(\mu)} t^{\beta(\mu)}
+    \end{split}
+\end{equation}
+Подставляя выражения $(\ref{eq:moments})$ для первых и вторых моментов в $(\ref{eq:m_ap_first})$, имеем
+\begin{multline}
+    M'^q_{ij}(t) = \sum_{m \in I_\mu} a^q_m M'^m_{ij}(t-1) - c_\mu t^{\alpha(\mu)} \sum_{m,n \in I_\mu} b^q_{mn} u^{(\mu)}_{n - k_{\mu-1}} M'^m_{ij}(t-1) (1 + o(1)) + \\
+    + d_\mu t^{\beta(\mu)} \sum_{m,n \in I_\mu} b^q_{mn} u^{(\mu)}_{n - k_{\mu-1}} \bar{M}^m_{ij}(t-1) (1 + o(1))
+\end{multline}
+Обозначая дополнительно $M^q_{ij}(t) = \mathcal{M}_q t^{\left( \frac{1}{2} \right)^{m - \mu}}$, а также учитывая $\beta(\mu) = -1 -\left( \frac{1}{2} \right)^{m - \mu}$ и выражения для первых моментов, получаем
+\begin{multline}
+\label{eq:m_ap_rec}
+    M'^q_{ij}(t) = \sum_{m \in I_\mu} a^q_m M'^m_{ij}(t-1) - c_\mu t^{\alpha(\mu)} \sum_{m,n \in I_\mu} b^q_{mn} u^{(\mu)}_{n - k_{\mu-1}} M'^m_{ij}(t-1) (1 + o(1)) + \\
+    + d_\mu \mathcal{M}_\mu t^{-1} \sum_{m,n \in I_\mu} b^q_{mn} u^{(\mu)}_{m - k_{\mu - 1}} u^{(\mu)}_{n - k_{\mu-1}} (1 + o(1))
+\end{multline}
+
+Применяя лемму $\ref{l:x_b_a}$, получаем
+\begin{equation}
+    \begin{split}
+        &M'^q_{ij}(t) = u^{(\mu)}_{q - k_{\mu-1}} M^{(\mu)}_*(t) (1 + o(1)) \\
+        &M^{(\mu)}_*(t) = \sum_{m \in I_\mu} v^{(\mu)}_{n - k_{\mu-1}} M'^n_{ij}(t)
+    \end{split}
+\end{equation}
+
+Домножая $(\ref{eq:m_ap_rec})$ на $v^{(\mu)}_{q - k_{\mu-1}}$ и суммируя по $q$, имеем
+\begin{equation}
+    \delta M^{(\mu)}_*(t) = d_\mu \mathcal{M}_\mu B_\mu t^{-1} - c_\mu t^{\alpha(\mu)} B_\mu M^{(\mu)}_*(t-1) (1 + o(1))
+\end{equation}
+Применяя лемму $\ref{l:x_rec}$, получаем в результате
+\begin{equation}
+\label{eq:m_star_result_1}
+    M^{(\mu)}_*(t) =
+    \begin{cases}
+        d_\mu \overline{\mathcal{M}}'_\mu B_\mu (1 + o(1)),&\quad{}\text{при}\;\mu = m, \\
+        \frac{ d_\mu \overline{\mathcal{M}}'_\mu }{ c_\mu } t^{-1 -\alpha(\mu)} (1 + o(1)),&\quad{}\text{при}\;\mu < m
+    \end{cases}
+\end{equation}
+
+Пусть теперь $I(q) = \mu$, $I(i) = \nu$, $\mu < \nu$, тогда из $(\ref{eq:m_recur})$ получаем
+\begin{multline}
+    M'^q_{ij}(t) = \delta^q_i p_{ij} R_{s_{ij}}(t-1) + \sum_{m \in I_\mu \cup I_{\mu+1}} \sum_{l = 1}^{n_q} p_{ql} s_{ql}^m \cdot [ Q_{s_{ql} - \delta^m}(t-1) M'^m_{ij}(t-1) + \\
+    + (1 - Q_m(t-1)) R_{s_{ql} - \delta^m}(t-1) \bar{M}^m_{ij}(t-1) ],
+\end{multline}
+откуда
+\begin{multline}
+    M'^q_{ij}(t) = O\left( t^{\beta(\mu)} \right) + \sum_m a^q_m M'^m_{ij}(t-1) - \sum_{\substack{m \in I_\mu \cup I_{\mu+1} \\ n \in I_\mu }} b^q_{mn} Q_n(t-1) M'^m_{ij}(t-1) (1 + o(1)) + \\
+    + \left( \sum_{\substack{ m \in I_\mu \cup I_{\mu+1} \\ n \in I_\mu }} b^q_{mn} P_n(t-1) \bar{M}^m_{ij}(t-1) \right) (1 + o(1))
+\end{multline}
+
+%TODO: здесь подробнее
+
+Можем записать
+\begin{multline}
+    M'^q_{ij}(t) = \sum_{m \in I_\mu} a^q_m M'^m_{ij}(t-1) - \sum_{m,n \in I_\mu} b^q_{mn} Q_n(t-1) M'^m_{ij}(t-1) (1 + o(1)) + \\
+   + \sum_{m,n \in I_\mu} b^q_{mn} P_n(t-1) \bar{M}^m_{ij}(t-1) (1 + o(1))
+\end{multline}
+Домножая на $v^{(\mu)}_{q - k_{\mu-1}}$ и суммируя по $q$, имеем
+\begin{equation}
+    \delta M^{(\mu)}_*(t) = d_\mu \overline{\mathcal{M}}_\mu B_\mu t^{\beta(\mu) + \left( \frac{1}{2} \right)^{m - \nu} \left( 2 - \left( \frac{1}{2} \right)^{\nu - \mu} \right)} (1 + o(1)) - c_\mu B_\mu t^{\alpha(\mu)} \cdot M^{(\mu)}_*(t-1) (1 + o(1))
+\end{equation}
+Так как $\mu < m$, $\alpha(\mu) > -1$, поэтому по лемме $\ref{l:x_rec}$ получаем
+\begin{equation}
+\label{eq:m_star_result_2}
+    M^{(\mu)}_*(t) = \frac{ d_\mu \overline{\mathcal{M}}_\mu }{ c_\mu } t^{-1 + \left( \frac{1}{2} \right)^{m - \nu} \left( 2 - \left( \frac{1}{2} \right)^{\nu - \mu} \right)}
+\end{equation}
+
+Объединяя результаты $(\ref{eq:m_star_result_1})$ и $(\ref{eq:m_star_result_2})$, получаем
+\begin{equation}
+    M^{(\mu)}_*(t) = \frac{ d_\mu \overline{\mathcal{M}}_\mu B_\mu }{ \delta^m_\mu (c_\mu B_\mu - 1) + 1 } \cdot t^{-1 + \left( \frac{1}{2} \right)^{m - \nu} \left( 2 - \left( \frac{1}{2} \right)^{\nu - \mu} \right)} (1 + o(1)),
+\end{equation}
+после чего из $(\ref{eq:m_ap_rec})$
+\begin{equation}
+    M^q_{ij}(t) = \frac{ u^{(\mu)}_{q - k_{\mu-1}} }{ P_q(t) } \frac{ d_\mu \overline{\mathcal{M}}_\mu B_\mu }{ \delta^m_\mu (c_\mu B_\mu - 1) + 1 } \cdot t^{-1 + \left( \frac{1}{2} \right)^{m - \nu} \left( 2 - \left( \frac{1}{2} \right)^{\nu - \mu} \right)} (1 + o(1))
+\end{equation}
+
+Сформулируем полученный результат в виде теоремы.
+\begin{theorem}
+	Пусть стохастическая КС-""грамматика имеет вид цепочки, и для неё известны вторые моменты $b^q_{mn}$. Пусть также для перронов корень подматрицы каждого класса равен $1$.
+	\begin{equation}
+	    M^q_{ij}(t) = \frac{ u^{(\mu)}_{q - k_{\mu-1}} }{ P_q(t) } \frac{ d_\mu \overline{\mathcal{M}}_\mu B_\mu }{ \delta^m_\mu (c_\mu B_\mu - 1) + 1 } \cdot t^{-1 + \left( \frac{1}{2} \right)^{m - \nu} \left( 2 - \left( \frac{1}{2} \right)^{\nu - \mu} \right)} (1 + o(1)),
+	\end{equation}
+	где
+	\begin{equation}
+		B_\mu = \sum_{m,n \in I_\mu} b^q_{mn} u^{(\mu)}_{m - k_{\mu-1}} u^{(\mu)}_{n - k_{\mu-1}},
+	\end{equation}
+	$P_q(t)$ --- вероятности деревьев высоты $t$ в данной грамматике, и $c_\mu, d_\mu$ --- некоторые константы.
+\end{theorem}	
+
+\newpage
+
+\begin{thebibliography}{99}
+    \bibitem{gantmaher}
+        Гантмахер~Ф.Р. \textbf{Теория матриц.} --- 5-е изд., --- М.: ФИЗМАТЛИТ, 2010 --- 560 с.
+    \bibitem{sevast}
+    	Севастьянов~Б.А. \textbf{Ветвящиеся процессы} --- М.: Наука, 1971 --- 436 с.
+    \bibitem{zhiltsova-mpm}
+    	Жильцова~Л.П. О матрице первых моментов разложимой стохастической КС-""грамматики // Учёные записки Казанского государственного университета, 2009
+    \bibitem{borisov-disser}
+        Борисов~А.Е. Закономерности в словах стохастических контекстно-свободных языков, порождённых грамматиками с двумя классами нетерминальных символов. Вопросы экономного кодирования.
+\end{thebibliography}
+
+\end{document}

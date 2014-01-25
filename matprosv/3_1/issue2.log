@@ -1,0 +1,47 @@
+This is pdfTeX, Version 3.1415926-1.40.10 (MiKTeX 2.8) (preloaded format=latex 2009.11.5)  19 DEC 2009 20:03
+entering extended mode
+**issue2
+(H:\sci\matprosv\3_1\issue2.tex
+LaTeX2e <2009/09/24>
+Babel <v3.8l> and hyphenation patterns for english, dumylang, nohyphenation, ge
+rman, ngerman, german-x-2009-06-19, ngerman-x-2009-06-19, french, loaded.
+(H:\sci\matprosv\3_1\matpros.cls
+Document Class: matpros 13/04/97 document class MATPROS
+("D:\Programs\MiKTeX 2.8\tex\latex\base\bk11.clo"
+File: bk11.clo 2007/10/19 v1.4h Standard LaTeX file (size option)
+)
+\c@part=\count79
+\c@chapter=\count80
+\c@section=\count81
+\c@subsection=\count82
+\c@subsubsection=\count83
+\c@paragraph=\count84
+\c@subparagraph=\count85
+ lists
+\c@rlistctr=\count86
+\c@figure=\count87
+\c@table=\count88
+\abovecaptionskip=\skip41
+\belowcaptionskip=\skip42
+\bibindent=\dimen102
+
+
+! LaTeX Error: Missing \begin{document}.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.988 \let\ллл
+              \glqq
+? X
+ 
+Here is how much of TeX's memory you used:
+ 287 strings out of 495286
+ 3103 string characters out of 3180793
+ 48189 words of memory out of 3000000
+ 3576 multiletter control sequences out of 15000+200000
+ 4656 words of font info for 17 fonts, out of 3000000 for 9000
+ 14 hyphenation exceptions out of 8191
+ 21i,0n,19p,180b,36s stack positions out of 5000i,500n,10000p,200000b,50000s
+No pages of output.

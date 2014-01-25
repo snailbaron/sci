@@ -1,0 +1,79 @@
+\bigskip \textbf {Хроника математической жизни}\\[1mm] 
+\noindent А.\nobreakspace {}Б.\nobreakspace {}Сосинский\nopagebreak 
+\contentsline {chapter}{\textit {Математический Центр в новом здании}}{6}
+\bigskip \textbf {Студенческие чтения}\\[1mm] 
+\noindent В.\nobreakspace {}И.\nobreakspace {}Арнольд\nopagebreak 
+\contentsline {chapter}{\textit {О некоторых задачах псевдопериодической топологии}}{10}
+\bigskip \textbf {Лекции для школьников}\\[1mm] 
+\noindent В.\nobreakspace {}М.\nobreakspace {}Тихомиров\nopagebreak 
+\contentsline {chapter}{\textit {Олимпиады и геометрия}}{24}
+\contentsline {section}{\numberline {1.\hskip .5em\relax }Несколько слов об истории геометрии и олимпиад}{24}
+\contentsline {section}{\numberline {2.\hskip .5em\relax }Теоремы Фалеса, Пифагора и Евклида}{26}
+\contentsline {section}{\numberline {3.\hskip .5em\relax }Геометрические решения олимпиадных задач}{30}
+\contentsline {section}{\numberline {4.\hskip .5em\relax }Продолжение экскурса-ликбеза и аналитические решения задач 9 и 10 классов}{32}
+\contentsline {section}{\numberline {5.\hskip .5em\relax }Некоторые заключительные замечания и комментарии}{36}
+\bigskip \textbf {Тема номера: основная теорема алгебры}\\[1mm] 
+\noindent В.\nobreakspace {}М.\nobreakspace {}Тихомиров, В.\nobreakspace {}В.\nobreakspace {}Успенский\nopagebreak 
+\contentsline {chapter}{\textit {Десять доказательств основной теоремы алгебры}}{50}
+\contentsline {section}{\numberline {1.\hskip .5em\relax }Введение}{50}
+\contentsline {section}{\numberline {2.\hskip .5em\relax }Эквивалентные формулировки}{52}
+\contentsline {section}{\numberline {3.\hskip .5em\relax } Доказательства}{55}
+\noindent Е.\nobreakspace {}А.\nobreakspace {}Горин\nopagebreak 
+\contentsline {chapter}{\textit {От спектрального радиуса к основной теореме алгебры}}{71}
+\contentsline {section}{\numberline {1.\hskip .5em\relax }Несколько алгебраических тождеств}{75}
+\contentsline {section}{\numberline {2.\hskip .5em\relax }Спектральный индикатор}{78}
+\contentsline {section}{\numberline {3.\hskip .5em\relax }Теорема о непустоте спектра}{79}
+\contentsline {section}{\numberline {4.\hskip .5em\relax }\dots и основная теорема алгебры}{81}
+\contentsline {section}{\numberline {5.\hskip .5em\relax }Небольшое послесловие}{83}
+\noindent А.\nobreakspace {}В.\nobreakspace {}Пухликов\nopagebreak 
+\contentsline {chapter}{\textit {\лк {}Вещественное\пк {} доказательство основной теоремы алгебры}}{85}
+\noindent П.\nobreakspace {}Е.\nobreakspace {}Пушкарь\relax \nopagebreak 
+\contentsline {chapter}{\textit {О некоторых топологических доказательствах основной теоремы алгебры }}{90}
+\contentsline {section}{\numberline {1.\hskip .5em\relax } О топологических фактах лежащих в основе \лк вещественного\пк {} доказательства основной теоремы алгебры.}{90}
+\contentsline {section}{\numberline {2.\hskip .5em\relax }О некоторых доказательствах основной теоремы алгебры, основанных на понятии степени отображения.}{93}
+\bigskip \textbf {По-новому о старом: фрагменты классической математики}\\[1mm] 
+\noindent С.\nobreakspace {}Ю.\nobreakspace {}Оревков\nopagebreak 
+\contentsline {chapter}{\textit {Физическое доказательство теоремы Уитни о плоских кривых}}{96}
+\noindent Б.\nobreakspace {}Р.\nobreakspace {}Френкин\nopagebreak 
+\contentsline {chapter}{\textit {Интеграл от степени: неочевидное в очевидном}}{103}
+\noindent В.\nobreakspace {}В.\nobreakspace {}Прасолов\nopagebreak 
+\contentsline {chapter}{\textit {Теорема о пучке коник, проходящих через 4 точки}}{109}
+\bigskip \textbf {Наш семинар: математические сюжеты}\\[1mm] 
+\noindent Н.\nobreakspace {}Н.\nobreakspace {}Андреев, В.\nobreakspace {}А.\nobreakspace {}Юдин\nopagebreak 
+\contentsline {chapter}{\textit {Экстремальные расположения точек на сфере}}{115}
+\noindent Д.\nobreakspace {}Н.\nobreakspace {}Андреев\nopagebreak 
+\contentsline {chapter}{\textit {Об одной замечательной нумерации положительных рациональных чисел }}{126}
+\contentsline {section}{\numberline {1.\hskip .5em\relax } Предварительные замечания}{127}
+\contentsline {section}{\numberline {2.\hskip .5em\relax }Основная конструкция}{127}
+\contentsline {section}{\numberline {3.\hskip .5em\relax } Вычисление нумерации}{129}
+\contentsline {section}{\numberline {4.\hskip .5em\relax }Среднее значение}{130}
+\contentsline {section}{\numberline {5.\hskip .5em\relax }Принцип индукции}{133}
+\contentsline {section}{\numberline {6.\hskip .5em\relax } Заключение}{134}
+\noindent В.\nobreakspace {}В.\nobreakspace {}Прасолов\nopagebreak 
+\contentsline {chapter}{\textit {Диофантовы уравнения для многочленов}}{135}
+\noindent В.\nobreakspace {}О.\nobreakspace {}Бугаенко\nopagebreak 
+\contentsline {chapter}{\textit {Коммутирующие многочлены}}{140}
+\contentsline {section}{\numberline {1.\hskip .5em\relax }Сопряженные многочлены}{143}
+\contentsline {section}{\numberline {2.\hskip .5em\relax }Единственность коммутирующего многочлена данной степени}{145}
+\contentsline {section}{\numberline {3.\hskip .5em\relax }Транзитивность коммутирования}{147}
+\contentsline {section}{\numberline {4.\hskip .5em\relax }Четные и нечетные многочлены}{148}
+\contentsline {section}{\numberline {5.\hskip .5em\relax }Цепочки коммутирующих многочленов.\\ Многочлены Чебыш\"ева}{150}
+\contentsline {section}{\numberline {6.\hskip .5em\relax }Неподвижные точки}{151}
+\contentsline {section}{\numberline {7.\hskip .5em\relax }Кубические многочлены}{156}
+\contentsline {section}{\numberline {8.\hskip .5em\relax }Классификация многочленов, коммутирующих с квадратными многочленами}{157}
+\contentsline {section}{\numberline {9.\hskip .5em\relax }Коммутирующие рациональные функции}{160}
+\bigskip \textbf {Конкурсы и олимпиады}\\[1mm] 
+\noindent Н.\nobreakspace {}Н.\nobreakspace {}Константинов\nopagebreak 
+\contentsline {chapter}{\textit {Турнир городов и математическая олимпиада}}{164}
+\contentsline {section}{\numberline {1.\hskip .5em\relax }Чем хорошо и чем плохо соревнование}{164}
+\contentsline {section}{\numberline {2.\hskip .5em\relax }Примеры задач}{168}
+\contentsline {section}{\numberline {3.\hskip .5em\relax }Турнир городов и образовательный потенциал}{171}
+\bigskip \textbf {Проблемы математического образования}\\[1mm] 
+\noindent Г.\nobreakspace {}Д.\nobreakspace {}Глейзер\relax , Н.\nobreakspace {}Х.\nobreakspace {}Розов\relax \nopagebreak 
+\contentsline {chapter}{\textit {Восьмой Международный конгресс по математическому образованию }}{175}
+\bigskip \textbf {Задачный раздел}\\[1mm] 
+\noindent \nopagebreak 
+\contentsline {chapter}{\textit {Условия задач}}{193}
+\bigskip \textbf {Новые издания}\\[1mm] 
+\noindent Е.\nobreakspace {}Г.\nobreakspace {}Козлова, В.\nobreakspace {}В.\nobreakspace {}Произволов\nopagebreak 
+\contentsline {chapter}{\textit {МИРОС вашему дому}}{195}

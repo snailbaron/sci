@@ -1,0 +1,71 @@
+%!PS
+%%BoundingBox: -30 -4 144 87 
+%%Creator: MetaPost
+%%CreationDate: 1997.06.12:1749
+%%Pages: 1
+%*Font: cmmi10 9.96265 9.96265 10:8000000000007000000064
+%*Font: cmr10 9.96265 9.96265 30:8004
+%*Font: cmr7 6.97385 6.97385 31:e
+%*Font: cmmi7 6.97385 6.97385 27:80000000000000002
+%%EndProlog
+%%Page: 1 1
+ 0 1.59402 dtransform truncate idtransform setlinewidth pop [] 0 setdash
+ 1 setlinejoin 10 setmiterlimit
+newpath 91.20067 76.52768 moveto
+114.09462 0 lineto
+0 0 lineto
+ closepath stroke
+ 0 1.19551 dtransform truncate idtransform setlinewidth pop 1 setlinecap
+newpath 91.20067 27.28351 moveto
+57.0473 24.62209 lineto
+68.4318 25.50948 lineto stroke
+ 0 0.79701 dtransform truncate idtransform setlinewidth pop
+newpath 91.20067 76.52768 moveto
+57.0473 0 lineto stroke
+newpath 114.09462 0 moveto
+45.60033 38.26384 lineto stroke
+newpath 104.72302 31.32935 moveto
+0 0 lineto stroke
+newpath 66.95262 56.18088 moveto
+114.09462 0 lineto stroke
+-29.0979 -3.4039 moveto
+(C) cmmi10 9.96265 fshow
+-18.4975 -3.4039 moveto
+(=) cmr10 9.96265 fshow
+-7.9814 -3.4039 moveto
+(0) cmr10 9.96265 fshow
+ 0 3 dtransform truncate idtransform setlinewidth pop
+newpath 0 0 moveto 0 0 rlineto stroke
+117.09462 -3.4039 moveto
+(B) cmmi10 9.96265 fshow
+127.91852 -3.4039 moveto
+(=) cmr10 9.96265 fshow
+138.43462 -3.4039 moveto
+(a) cmmi10 9.96265 fshow
+newpath 114.09462 0 moveto 0 0 rlineto stroke
+93.30066 78.62767 moveto
+(A) cmmi10 9.96265 fshow
+103.53996 78.62767 moveto
+(=) cmr10 9.96265 fshow
+114.05606 78.62767 moveto
+(be) cmmi10 9.96265 fshow
+122.97057 82.24307 moveto
+(i') cmmi7 6.97385 fshow
+newpath 91.20067 76.52768 moveto 0 0 rlineto stroke
+45.2193 22.13142 moveto
+(\020) cmmi10 9.96265 fshow
+49.578 20.63702 moveto
+(2) cmr7 6.97385 fshow
+newpath 57.0473 24.62209 moveto 0 0 rlineto stroke
+newpath 68.4318 25.50948 moveto 0 0 rlineto stroke
+63.17308 35.21594 moveto
+(\020) cmmi10 9.96265 fshow
+67.53178 33.72154 moveto
+(3) cmr7 6.97385 fshow
+86.78667 32.2207 moveto
+(\020) cmmi10 9.96265 fshow
+91.14537 30.7263 moveto
+(1) cmr7 6.97385 fshow
+newpath 91.20067 27.28351 moveto 0 0 rlineto stroke
+showpage
+%%EOF

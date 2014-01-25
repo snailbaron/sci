@@ -1,0 +1,41 @@
+%!PS
+%%BoundingBox: -39 -43 43 65 
+%%Creator: MetaPost
+%%CreationDate: 1997.06.12:1749
+%%Pages: 1
+%*Font: cmmi10 9.96265 9.96265 61:f8
+%%EndProlog
+%%Page: 1 1
+ 0 1.19551 dtransform truncate idtransform setlinewidth pop [] 0 setdash
+ 1 setlinejoin 10 setmiterlimit
+newpath 41.52438 -2.30316 moveto
+41.52438 19.35812 23.96445 36.91806 2.30316 36.91806 curveto
+-19.35812 36.91806 -36.91806 19.35812 -36.91806 -2.30316 curveto
+-36.91806 -23.96445 -19.35812 -41.52438 2.30316 -41.52438 curveto
+23.96445 -41.52438 41.52438 -23.96445 41.52438 -2.30316 curveto closepath
+ stroke
+ 1 setlinecap
+newpath -36.85037 0 moveto
+0 36.85037 lineto
+26.09087 62.94124 lineto stroke
+newpath 27.63779 27.63779 moveto
+33.95718 -25.46642 lineto
+23.32692 63.86256 lineto stroke
+-34.75038 -6.3895 moveto
+(a) cmmi10 9.96265 fshow
+ 0 3 dtransform truncate idtransform setlinewidth pop
+newpath -36.85037 0 moveto 0 0 rlineto stroke
+2.09999 27.83188 moveto
+(b) cmmi10 9.96265 fshow
+newpath 0 36.85037 moveto 0 0 rlineto stroke
+29.73778 29.73778 moveto
+(c) cmmi10 9.96265 fshow
+newpath 27.63779 27.63779 moveto 0 0 rlineto stroke
+36.95718 -28.92567 moveto
+(d) cmmi10 9.96265 fshow
+newpath 33.95718 -25.46642 moveto 0 0 rlineto stroke
+26.71884 58.42445 moveto
+(e) cmmi10 9.96265 fshow
+newpath 23.71884 60.56921 moveto 0 0 rlineto stroke
+showpage
+%%EOF

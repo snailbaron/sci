@@ -1,0 +1,92 @@
+%!PS
+%%BoundingBox: -128 -38 47 49 
+%%Creator: MetaPost
+%%CreationDate: 1997.06.12:1749
+%%Pages: 1
+%*Font: cmmi10 9.96265 9.96265 10:800001000000000000000000002
+%*Font: cmr7 6.97385 6.97385 31:f
+%%EndProlog
+%%Page: 1 1
+ 0 1.59402 dtransform truncate idtransform setlinewidth pop [] 0 setdash
+ 1 setlinejoin 10 setmiterlimit
+newpath 28.34796 0 moveto
+28.34796 15.65614 15.65614 28.34796 0 28.34796 curveto
+-15.65614 28.34796 -28.34796 15.65614 -28.34796 0 curveto
+-28.34796 -15.65614 -15.65614 -28.34796 0 -28.34796 curveto
+15.65614 -28.34796 28.34796 -15.65614 28.34796 0 curveto closepath stroke
+ 0 1.19551 dtransform truncate idtransform setlinewidth pop
+newpath 15.11897 -28.34796 moveto
+34.49197 0.53 lineto
+8.73552 36.48251 lineto
+-116.0625 -28.34825 lineto
+ closepath stroke
+ 1.19551 0 dtransform exch truncate exch idtransform pop setlinewidth
+ 1 setlinecap
+newpath 0 0 moveto
+-0.00002 -28.34825 lineto stroke
+ 0 1.19551 dtransform truncate idtransform setlinewidth pop
+newpath 0 0 moveto
+-13.06778 25.15593 lineto stroke
+newpath 0 0 moveto
+23.04466 16.5089 lineto stroke
+newpath 0 0 moveto
+23.542 -15.79234 lineto stroke
+18.11897 -30.83862 moveto
+(\020) cmmi10 9.96265 fshow
+22.47768 -32.33302 moveto
+(1) cmr7 6.97385 fshow
+37.49197 -1.96066 moveto
+(\020) cmmi10 9.96265 fshow
+41.85068 -3.45506 moveto
+(2) cmr7 6.97385 fshow
+4.32152 41.41971 moveto
+(\020) cmmi10 9.96265 fshow
+8.68022 39.92531 moveto
+(3) cmr7 6.97385 fshow
+-127.8905 -30.83891 moveto
+(\020) cmmi10 9.96265 fshow
+-123.5318 -32.33331 moveto
+(4) cmr7 6.97385 fshow
+25.642 -22.18184 moveto
+(z) cmmi10 9.96265 fshow
+30.2751 -23.67624 moveto
+(1) cmr7 6.97385 fshow
+25.14465 20.10329 moveto
+(z) cmmi10 9.96265 fshow
+29.77776 18.60889 moveto
+(2) cmr7 6.97385 fshow
+-24.27026 28.75032 moveto
+(z) cmmi10 9.96265 fshow
+-19.63716 27.25592 moveto
+(3) cmr7 6.97385 fshow
+-4.55127 -35.63776 moveto
+(z) cmmi10 9.96265 fshow
+0.08183 -37.13216 moveto
+(4) cmr7 6.97385 fshow
+ 0 0.79701 dtransform truncate idtransform setlinewidth pop
+newpath 6.61884 -4.44 moveto
+8.47041 -1.67986 8.41472 1.93962 6.47911 4.64153 curveto stroke
+newpath 5.66922 4.06133 moveto
+3.6491 6.88126 -0.13652 7.78778 -3.21481 6.18861 curveto stroke
+newpath 7.28899 5.22171 moveto
+4.69168 8.84732 -0.17554 10.01286 -4.13335 7.95679 curveto stroke
+newpath -2.75555 5.30453 moveto
+-8.30873 2.41982 -6.25777 -5.97757 0 -5.97757 curveto stroke
+newpath -3.67407 7.07271 moveto
+-11.07831 3.22643 -8.34369 -7.9701 0 -7.9701 curveto stroke
+newpath -4.5926 8.84088 moveto
+-13.84789 4.03302 -10.42961 -9.96262 0 -9.96262 curveto stroke
+14.95367 -0.99228 moveto
+(') cmmi10 9.96265 fshow
+21.47087 -2.48668 moveto
+(1) cmr7 6.97385 fshow
+-2.70938 16.56361 moveto
+(') cmmi10 9.96265 fshow
+3.80782 15.06921 moveto
+(2) cmr7 6.97385 fshow
+-25.60043 -4.0128 moveto
+(') cmmi10 9.96265 fshow
+-19.08324 -5.5072 moveto
+(3) cmr7 6.97385 fshow
+showpage
+%%EOF

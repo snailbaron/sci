@@ -1,0 +1,57 @@
+%!PS
+%%BoundingBox: -96 -38 153 44 
+%%Creator: MetaPost
+%%CreationDate: 1997.06.12:1748
+%%Pages: 1
+%*Font: cmmi10 9.96265 9.96265 20:81000000700400006
+%*Font: cmsy7 6.97385 6.97385 0e:8
+%*Font: cmr10 9.96265 9.96265 30:9
+%%EndProlog
+%%Page: 1 1
+ 0 1.19551 dtransform truncate idtransform setlinewidth pop [] 0 setdash
+ 1 setlinecap 1 setlinejoin 10 setmiterlimit
+newpath 0 -28.34645 moveto
+-85.03935 0 lineto
+138.52159 0 lineto
+-26.53642 33.77647 lineto
+0 -28.34645 lineto stroke
+newpath -26.53642 33.77647 moveto
+-85.03935 0 lineto stroke
+newpath 138.52159 0 moveto
+0 -28.34645 lineto stroke
+-95.51135 -3.4039 moveto
+(A) cmmi10 9.96265 fshow
+ 0 3 dtransform truncate idtransform setlinewidth pop
+newpath -85.03935 0 moveto 0 0 rlineto stroke
+-30.56473 36.77647 moveto
+(B) cmmi10 9.96265 fshow
+newpath -26.53642 33.77647 moveto 0 0 rlineto stroke
+2.09999 -37.25424 moveto
+(C) cmmi10 9.96265 fshow
+newpath 0 -28.34645 moveto 0 0 rlineto stroke
+141.52159 -3.4039 moveto
+(M) cmmi10 9.96265 fshow
+newpath 138.52159 0 moveto 0 0 rlineto stroke
+-63.15398 18.98824 moveto
+(a) cmmi10 9.96265 fshow
+58.09258 18.98824 moveto
+(b) cmmi10 9.96265 fshow
+ 0 0.79701 dtransform truncate idtransform setlinewidth pop
+newpath -70.86612 0 moveto
+-70.86612 2.48793 -71.52098 4.93196 -72.76494 7.08662 curveto stroke
+ 0.79701 0 dtransform exch truncate exch idtransform pop setlinewidth
+newpath 107.97359 6.25139 moveto
+107.55252 4.19408 107.34032 2.09966 107.34032 0 curveto stroke
+ 0 0.79701 dtransform truncate idtransform setlinewidth pop
+newpath 96.0019 0 moveto
+96.0019 -2.86314 96.29128 -5.71916 96.86546 -8.52457 curveto stroke
+gsave [0.96593 0.25882 -0.25882 0.96593 -66.67012 2.04146 ] concat 0 0 moveto
+(30) cmr10 9.96265 fshow grestore
+gsave [0.96593 0.25882 -0.25882 0.96593 -57.9826 8.11221 ] concat 0 0 moveto
+(\016) cmsy7 6.97385 fshow grestore
+94.87961 2.27965 moveto
+(') cmmi10 9.96265 fshow
+80.02643 -7.41725 moveto
+( ) cmmi10 9.96265 fshow
+showpage
+%%EOF

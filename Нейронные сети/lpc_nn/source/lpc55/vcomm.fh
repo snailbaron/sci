@@ -1,0 +1,10 @@
+c   Voicing coefficient and Linear Discriminant Analysis variables:
+c Max number of VDC's and VDC levels
+
+      integer maxvdc, mxvdcl
+      parameter (maxvdc = 10, mxvdcl = 10)
+
+c Actual number of VDC's and levels
+
+      integer nvdc, nvdcl
+      real vdc(maxvdc, mxvdcl), vdcl(mxvdcl)

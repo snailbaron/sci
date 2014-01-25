@@ -1,0 +1,100 @@
+\documentclass[12pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[russian]{babel}
+\usepackage{amsmath}
+
+\title{Энтропия}
+
+\newtheorem{theorem}{Теорема}
+
+\oddsidemargin=10mm
+\textwidth=140mm
+\topmargin=10mm
+\headheight=0mm
+\headsep=0mm
+\textheight=200mm
+
+\begin{document}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{8pt}
+
+\section{Предварительные сведения}
+
+\sloppy{
+Рассматривается множество $D^t$ деревьев вывода высоты $t$. Известны асимптотические выражения для вероятностей таких деревьев, а также математические ожидания числа применений правила $r_{ij}$ в них ($M_{ij}(t)$):
+}
+\begin{equation}
+\begin{split}
+	&P_j(t) = U^{(j)} \frac{c_j}{t^{1+\left(\frac{1}{2}\right)^{q_j-1}}} \cdot (1 + o(1)) \\
+	&M_{ij}(t) = d_i p_{ij} t^{\left(\frac{1}{2}\right)^{q^*_l-1}} \cdot (1 + o(1))
+\end{split},
+\end{equation}
+где $c_j, d_i > 0$ и
+\begin{equation}
+	q^*_l =
+	\begin{cases}
+		q_l - 1, &\text{класс } K_l \text{ --- критический} \\
+		q_l, &\text{класс } K_l \text{ --- некритический}
+	\end{cases}
+\end{equation}
+
+\section{Энтропия}
+
+Пусть $L^t$ --- множество слов языка $L_G$, которым соответствуют деревья вывода из $D^t$. Будем рассматривать грамматики с однозначным выводом, то есть, положим что каждому слову из $L^t$ соответствует единственное дерево вывода из $D^t$.
+
+По определению, энтропия языка $L^t$ есть
+\begin{equation}
+	H(L^t) = -\sum_{\alpha \in L^t} p_t(\alpha) \log p_t(\alpha),
+\end{equation}
+где $p_t(\alpha) = p(\alpha | \alpha \in L^t) = \frac{p(\alpha)}{P(L^t)}$. Используя это выражение для $p_t(\alpha)$, получаем:
+\begin{multline}
+\label{eq:entropy_1}
+	H(L^t) = - \frac{1}{P(L^t)} \sum_{\alpha \in L^t} p(\alpha) \left( \log p(\alpha) - \log P(L^t) \right) = \\
+	= \frac{\log P(L^t)}{P(L^t)} \sum_{\alpha \in L^t} p(\alpha) - \frac{1}{P(L^t)} \sum_{\alpha \in L^t} p(\alpha) \log p(\alpha) = \\
+	= \log P(L^t) - \frac{1}{P(L^t)} \sum_{\alpha \in L^t} p(\alpha) \log p(\alpha).
+\end{multline}
+
+Выразим вероятность слова $\alpha$ через вероятности правил вывода $r_{ij}$. Будем рассматривать грамматику с однозначным выводом и считать, что каждому слову $\alpha$ из $L^t$ соответствует единственное дерево $d(\alpha)$ из $D^t$, и, следовательно, единственный левый вывод $\omega(\alpha) = r_1 \cdot r_2 \cdot \ldots \cdot r_\mu$. Получаем:
+\begin{equation}
+	p(\alpha) = p(r_1) \cdot p(r_2) \cdot \ldots \cdot p(r_\mu) = \prod_{i = 1}^k \prod_{j = 1}^{n_i} p_{ij}^{q_{ij}(\alpha)},
+\end{equation}
+где $q_{ij}(\alpha)$ --- число применений правила $r_{ij}$ при выводе слова $\alpha$ (в грамматике с однозначным выводом это число определяется единственным образом). Тогда:
+\begin{multline}
+	\sum_{\alpha \in L^t} p(\alpha) \log p(\alpha) = \sum_{\alpha \in L^t} p(\alpha) \sum_{i = 1}^k \sum_{j = 1}^{n_i} q_{ij}(\alpha) \log p_{ij} = \\
+	= \sum_{i = 1}^k \sum_{j = 1}^{n_i} \log p_{ij} \sum_{\alpha \in L^t} q_{ij}(\alpha) p(\alpha)
+\end{multline}
+Пользуясь определением $M(S_{ij}(t))$, получаем:
+\begin{equation}
+	\sum_{\alpha \in L^t} p(\alpha) \log p(\alpha) = \sum_{i = 1}^k \sum_{j = 1}^{n_i} \log p_{ij} M(S_{ij}(t)) P(L^t)
+\end{equation}
+
+Подставляя это выражение в $(\ref{eq:entropy_1})$, получаем:
+\begin{equation}
+\label{eq:entropy_2}
+	H(L^t) = \log P(L^t) - \sum_{i = 1}^k \sum_{j = 1}^{n_i} M(S_{ij}(t)) \log p_{ij}
+\end{equation}
+
+По определению, $P(L^t) = P_1(t) = O(t^{-1 - \frac{1}{2}^{q_j - 1}})$, и $\log P(L^t) = O(\log t)$. Подставляя выражение для $M(S_{ij}(t)) = M_{ij}(t)$ в ($\ref{eq:entropy_2}$), получаем:
+\begin{multline}
+	H(L^t) = O(\log t) - \sum_{i = 1}^k \sum_{j = 1}^{n_i} p_{ij} log p_{ij} d_i t^{\frac{1}{2}^{q^*_l - q}} = \\
+	= \sum_{i = 1}^k \sum_{j = 1}^{n_i} H(R_i) d_i t^{\frac{1}{2}^{q^*_l - q}} (1 + o(1)), \\
+\end{multline}
+где $H(R_i) = - \sum_{j = 1}^{n_i} p_{ij} \log p_{ij}$ --- энтропия множества $R_i$ правил вывода.
+
+Обозначим $l' = max{l : l \in J}$ --- номер последнего критического класса. Элементы суммы при $i \in I_{l'}$ имеют вид $O(t^2)$, остальные имеют вид $o(t^2)$. Поэтому:
+\begin{equation}
+	H(L^t) = \sum_{i \in I_{l'}} \sum_{j = 1}^{n_i} d_i H(R_i) t^2 (1 + o(1))
+\end{equation}
+
+Сформулируем теорему:
+\begin{theorem}
+	Энтропия языка $L^t$, состоящего из слов длины $t$, порождаемых разложимой стохастической контекстно-свободной грамматикой, имеющей вид "цепочки", выражается формулой
+	\begin{equation}
+		H(L^t) \sim \sum_{i \in I_{l'}} \sum_{j = 1}^{n_i} d_i H(R_i) \cdot t^2,
+	\end{equation}
+	где $d_i > 0$, $H(R_i) = \sum_{j = 1}^{n_i} p_{ij} \log p_{ij}$ --- энтропия множества $R_i$ правил вывода с нетерминалом $A_i$ в левой части, и $l'$ --- номер критического класса, наиболее удалённого от начала цепочки.
+\end{theorem}
+
+
+\end{document}

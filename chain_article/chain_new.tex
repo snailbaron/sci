@@ -1,0 +1,149 @@
+\documentclass[12pt]{article}
+%\usepackage[T2A]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[russian]{babel}
+\usepackage{amsmath}
+\usepackage{amssymb}
+
+\oddsidemargin=0mm
+\textwidth=160mm
+\topmargin=10mm
+\headheight=0mm
+\headsep=0mm
+\textheight=220mm
+
+\renewcommand{\leq}{\leqslant}
+\renewcommand{\geq}{\geqslant}
+\renewcommand{\epsilon}{\varepsilon}
+
+\newtheorem{theorem}{Теорема}
+\newtheorem{lemma}{Лемма}
+
+\title{Исследование разложимых КС-языков, имеющих вид <<цепочки>>}
+\author{Игорь Мартынов}
+\begin{document}
+
+\clearpage
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{8pt}
+
+Для каждого из классов $K_n$ будем вектор $Q^{(n)}(t)$ --- вектор-столбец, содержащий вероятности продолжения для нетерминалов $K_n$ в порядке их нумерации. Тогда
+\begin{equation}
+	Q(t) =
+	\begin{pmatrix}
+		Q^{(1)}(t) \\
+		Q^{(2)}(t) \\
+		\vdots \\
+		Q^{(m)}(t)
+	\end{pmatrix},
+	\quad Q^{(j)}(t) \in \mathbb{R}^{k_j},
+\end{equation}
+где $k_j = \left| K_j \right|$. Тогда уравнение ($\ref{eq:basic_qi}$) можно записать в виде
+\begin{equation}
+	Q^{(n)}_i(t+1) = \sum_{i = 1}^{k_n} a^i_j Q^{(n)}_j(t) + \sum_{i = 1}^{k_{n+1}} a^i_j Q^{(n+1)}_j(t) (1 + o(1))
+\end{equation}
+или, в матричном виде,
+\begin{equation}
+	Q^{(n)}(t+1) = A_{n,n} Q^{(n)}(t) + A_{n,n+1} Q^{(n+1)}(t) (1 + o(1))
+\end{equation}
+Для всего вектора $Q(t)$ верно равенство
+\begin{equation}
+\label{eq:q_t+1_from_q_t}
+	Q(t+1) = (A - A(t)) Q(t),
+\end{equation}
+где $A(t)$ --- матрица, составленная из элементов $a_{ij} = \frac{1}{2} \sum_{l = 1}^k b^i_{jl} Q_l(t)$ ($1 \leq i,j \leq k$). В силу согласованности грамматики $Q(t) \rightarrow 0$ и, следовательно, $A(t) \rightarrow 0$ при $t \rightarrow \infty$.
+
+Докажем, что компоненты вектора $Q^{(n)}(t)$ пропорциональны некоторому вектору $U^{(n)}$. Доказательство аналогичного факта для случая двух классов принадлежит А.~Борисову. Здесь мы проведём похожие рассуждения.
+
+Зафиксируем некоторое $\tau \geq 0$. Тогда из ($\ref{eq:q_t+1_from_q_t}$) получаем
+\begin{equation}
+\label{eq:q_t+1_from_q_tau}
+	Q(t+1) = (A - A(t)) \cdot \ldots \cdot (A - A(\tau)) Q(\tau)
+\end{equation}
+Обозначим
+\begin{equation}
+	\begin{split}
+		&A^*(t) = (A - A(t)) \cdot (A - A(t-1)) \cdot \ldots \cdot (A - A(\tau + 1)) \\
+		&\tilde{A}^*_{ij} = \frac{A^*_{ij}(t)}{t^{s_{ij}}} \\
+		&\tilde{A}_{ij} = \frac{A^{(t)}_{ij}}{t^{s_{ij}}},
+	\end{split}
+\end{equation}
+где $A^{(t)}_{ij}$ --- блоки, расположенные на месте блоков $A_{ij}$ в матрице $A^t$ и $s_{ij}$ --- число критических классов в подцепочке $K_i, K_{i+1}, \ldots, K_j$.
+
+Из исследования асимптотики матрицы $A^t$ известно \cite{zhiltsova-about-matrix}, что $\tilde{A}_{ij}(t) \rightarrow \tilde{a}_{ij} U^{(i)} V^{(j)}$, где $\tilde{a}_{ij}$ --- некоторые константы, $U^{(i)}$ --- вектор-строка длины $k_i$, а $V^{(j)}$ --- вектор-столбец длины $k_j$.
+
+Выберем произвольные $\epsilon_1, \epsilon_2$, такие что $0 < \epsilon_1, \epsilon_2 < 1$. Тогда существуют функции $l(\epsilon_1)$ и $n(\epsilon_2)$, такие что
+\begin{equation}
+	\begin{split}
+		&\left| \tilde{A}_{ij}(l(\epsilon_1)) - \tilde{a}_{ij} U^{(i)} V^{(j)} \right| < \epsilon_1 E \\
+		&\forall t \geq n(\epsilon_2)\quad A(t) < \epsilon_2 A
+	\end{split}.
+\end{equation}
+
+Рассмотрим произвольный вектор-столбец $x > \mathbf{0}$ длины $k$. Тогда выполняется оценка
+\begin{equation}
+	(1 - \epsilon_2)^l A^l x^{(\tau)} \leq A^*(t) x^{(\tau)} \leq A^l x^{(\tau)},
+\end{equation}
+где $x^{(\tau)} = (A - A(\tau)) x$. Записывая это неравенство отдельно для блоков $A_{ij}$, получаем
+\begin{equation}
+	(1 - \epsilon_2)^l A_{ij}^l x^{(\tau)}_j \leq A^*_{ij}(l) x^{(\tau)}_j \leq A^{(l)}_{ij} x^{(\tau)}_j,
+\end{equation}
+откуда
+\begin{equation}
+	(1 - \epsilon_2)^l \tilde{A}_{ij}(l) x^{(\tau)} \leq \tilde{A}^*_{ij}(l) x^{(\tau)}_j \leq \tilde{A}_{ij}(l) x^{(\tau)}
+\end{equation}
+Вычитая из всех частей неравенства $\tilde{A}_{ij}(l) x^{(\tau)}_j$, получаем оценку
+\begin{equation}
+	\left| \left( \tilde{A}^*_{ij}(l) - \tilde{A}_{ij}(l) \right) x^{(\tau)}_j \right| \leq (1 - (1 - \epsilon_2)^l) \tilde{A}_{ij}(l) x^{(\tau)}
+\end{equation}
+
+Используя эту оценку, можем записать
+\begin{multline}
+	\left| \tilde{A}^*_{ij}(t) - \tilde{a}_{ij} U^{(i)} V^{(j)} x^{(\tau)}_j \right| \leq \left| \left( \tilde{A}^*_{ij}(t) - \tilde{A}_{ij}(t) \right) x^{(\tau)} \right| + \\
+	+ \left| \left( \tilde{A}_{ij}(l) - \tilde{a}_{ij} U^{(i)} V^{(j)} \right) x^{(\tau)}_j \right| \leq (1 - (1 - \epsilon_2)^l) \tilde{A}_{ij}(l) x^{(\tau)}_j + \epsilon_1 x^{(\tau)}_j \leq \\
+	\leq (1 - (1 - \epsilon_2)^l) h k_j x^{(\tau)}_j + \epsilon_1 x^{(\tau)}_j \leq \left( (1 - 1 - \epsilon_2)^l) h k_j + \epsilon_1 \right) x^*_j(\tau),
+\end{multline}
+где $h = \max_{i,j,l} \left\{ \tilde{A}_{ij}(l) \right\}$ и $x^*_j(\tau) = \max_i (x^{(\tau)}_j)_i$.
+
+Устремляем $\epsilon_2$ к нулю, затем $\epsilon_1$ к нулю таким образом, чтобы выполнялось условие
+\begin{equation}
+	l(\epsilon_1) \log(1 - \epsilon_2) \rightarrow -\infty
+\end{equation}
+
+Тогда 
+\begin{equation}
+	\left| \tilde{A}^*_{ij}(t) - \tilde{a}_{ij} U^{(i)} V^{(j)} x^{(\tau)}_j \right| \leq \epsilon x^*_j(\tau)\quad (\epsilon \rightarrow 0).
+\end{equation}
+Домножая слева на $V^{(i)}$, имеем
+\begin{equation}
+	\left| V^{(i)} \tilde{A}^*_{ij}(t) x^{(\tau)}_j - \tilde{a}_{ij} V^{(j)} x^{(\tau)}_j \right| \leq \epsilon k_i \max \left\{ (V^{(i)} \right\} x^*_j(\tau) \leq \epsilon^* V^{(j)} x^{(\tau)}_j.
+\end{equation}
+
+Отсюда,
+\begin{equation}
+	\left| \frac{\tilde{A}^*_{ij}(t) x^{(\tau)}_j}{V^{(i)} \tilde{A}^*_{ij}(t) x^{(\tau)}_j} - \frac{\tilde{a}_{ij} U^{(i)} V^{(i)} x^{(\tau)}_j}{\tilde{a}_{ij} V^{(j)} x^{(\tau)}_j} \right| = \left| \frac{\tilde{A}^*_{ij}(t) x^{(\tau)}_j}{V^{(i)} \tilde{A}^*_{ij}(t) x^{(\tau)}_j} - U^{(i)} \right| \rightarrow 0
+\end{equation}
+или же
+\begin{equation}
+	\left| \frac{A^*_{ij}(t) x^{(\tau)}_j}{V^{(i)} A^*_{ij}(t) x^{(\tau)}_j} - U^{(i)} \right| \rightarrow 0,
+\end{equation}
+откуда
+\begin{equation}
+	(A - A(t)) \cdot \ldots \cdot (A - A(\tau)) \cdot x_j = U^{(i)} V^{(i)} (A - A(t)) \cdot \ldots \cdot (A - A(\tau)) \cdot x_j \cdot (1 + o(1))
+\end{equation}
+
+Ввиду полученного выражения и ($\ref{eq:q_t+1_from_q_tau}$) компоненты каждого из векторов $Q^{(n)}(t)$ пропорциональны компонентам вектора $U^{(n)}$.
+
+
+\begin{thebibliography}{99}
+	\bibitem{fu-struct}
+	\textbf{К. Фу.} Структурные методы в распознавании образов. М.: Мир, 1977
+	\bibitem{aho-ulman-syntax}
+	\textbf{А. Ахо, Дж. Ульман} Теория синтаксического анализа, перевода и компиляции. Том 1. М.: Мир, 1978
+	\bibitem{gantmaher-matrix-theory}
+	\textbf{Гантмахер Ф. Р.} Теория матриц. --- 5-е изд., --- М.: ФИЗМАТЛИТ, 2010
+	\bibitem{zhiltsova-about-matrix}
+	\textbf{Жильцова Л. П.} О матрице первых моментов разложимой стохастической КС-грамматики. УЧЁНЫЕ ЗАПИСКИ КАЗАНСКОГО ГОСУДАРСТВЕННОГО УНИВЕРСИТЕТА, Том 151, кн. 2, 2009
+\end{thebibliography}
+
+\end{document}

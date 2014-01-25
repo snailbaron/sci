@@ -1,0 +1,40 @@
+\documentclass[12pt]{article}
+%\usepackage[T2A]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[russian]{babel}
+\usepackage{amsmath}
+\usepackage{amssymb}
+
+\oddsidemargin=0mm
+\textwidth=160mm
+\topmargin=10mm
+\headheight=0mm
+\headsep=0mm
+\textheight=220mm
+
+\renewcommand{\leq}{\leqslant}
+\renewcommand{\geq}{\geqslant}
+\renewcommand{\epsilon}{\varepsilon}
+
+\newtheorem{theorem}{Теорема}
+\newtheorem{lemma}{Лемма}
+
+\title{Исследование разложимых КС-языков, имеющих вид <<цепочки>>}
+\author{Игорь Мартынов}
+\begin{document}
+
+\clearpage
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{8pt}
+
+\begin{theorem}
+	Энтропия языка $L^t = \left\{ \alpha \in L_G : \left| \alpha \right| = t \right\}$, где $G$ --- разложимая стохастическая КС-грамматика, имеющая вид <<цепочки>>, выражается формулой
+	\begin{equation*}
+		H(L^t) \tilde \sum_{i \in I_l} \sum_{j = 1}^{k_i} d_i H(R_i) \cdot t^2,
+	\end{equation*}
+	где	$H(R_i) = - \sum_{j = 1}^{k_i} p_{ij} \log p_{ij}$ --- энтропия множества $R_i$ правил вывода с нетерминалом $A_i$ в левой части, и $l$ --- номер критического класса, наиболее удалённого от начала цепочки.
+\end{theorem}
+
+Энтропия языка $L^t$ определяется количеством правил, нетерминал в левой части которых находится в наиболее удалённом от начала цепочки критическом классе. Число правил, нетерминал в левой части которых находится в других критических классах, есть $o(t^2)$, поэтому такие правила не оказывают влияния на асимптотику энтропии. Число правил, нетерминал в левой части которых находится в докритических классах, есть $O(1)$, поэтому такие правила также не влияют на энтропию языка $L^t$.
+
+\end{document}

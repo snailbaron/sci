@@ -1,0 +1,42 @@
+%!PS
+%%BoundingBox: -103 -109 108 5 
+%%Creator: MetaPost
+%%CreationDate: 1997.06.12:1749
+%%Pages: 1
+%%EndProlog
+%%Page: 1 1
+ 0 1.19551 dtransform truncate idtransform setlinewidth pop [] 0 setdash
+ 1 setlinejoin 10 setmiterlimit
+newpath 45.29637 -27.70862 moveto
+45.29637 -10.51978 31.36208 3.41452 14.17323 3.41452 curveto
+-3.01561 3.41452 -16.9499 -10.51978 -16.9499 -27.70862 curveto
+-16.9499 -44.89746 -3.01561 -58.83176 14.17323 -58.83176 curveto
+31.36208 -58.83176 45.29637 -44.89746 45.29637 -27.70862 curveto closepath
+ stroke
+newpath 28.2593 0.04451 moveto
+44.92088 -22.88837 lineto
+39.4928 -45.82213 lineto
+9.3044 -58.44864 lineto
+-7.70895 -49.84727 lineto
+-15.9402 -35.57211 lineto
+ closepath stroke
+ 1 setlinecap
+newpath 106.43294 -107.55386 moveto
+28.2593 0.04451 lineto stroke
+newpath 106.43294 -107.55386 moveto
+-7.70895 -49.84727 lineto stroke
+newpath 25.08113 -106.71385 moveto
+44.92088 -22.88837 lineto stroke
+newpath 25.08113 -106.71385 moveto
+-15.9402 -35.57211 lineto stroke
+newpath -102.21193 -105.09131 moveto
+39.4928 -45.82213 lineto stroke
+newpath -102.21193 -105.09131 moveto
+28.2593 0.04451 lineto stroke
+ 0 0.79701 dtransform truncate idtransform setlinewidth pop
+ [3 3 ] 0 setdash
+newpath 106.43294 -107.55386 moveto
+25.08113 -106.71385 lineto
+-102.21193 -105.09131 lineto stroke
+showpage
+%%EOF
