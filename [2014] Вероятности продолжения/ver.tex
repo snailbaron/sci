@@ -1,0 +1,515 @@
+\documentclass[12pt]{article}
+\usepackage[T2A]{fontenc}
+\usepackage[cp1251]{inputenc}
+\usepackage[russian]{babel}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{scrextend}
+
+\oddsidemargin=0mm
+\textwidth=160mm
+\topmargin=0mm
+\headheight=0mm
+\headsep=0mm
+\textheight=240mm
+
+\renewcommand{\leq}{\leqslant}
+\renewcommand{\geq}{\geqslant}
+\renewcommand{\epsilon}{\varepsilon}
+
+\newtheorem{theorem}{Теорема}
+\newtheorem{lemma}{Лемма}
+
+\title{Исследование разложимых КС-языков, имеющих вид <<цепочки>>}
+\author{Игорь Мартынов}
+\begin{document}
+
+\clearpage
+%\setlength{\parindent}{0pt}
+%\setlength{\parskip}{8pt}
+
+
+
+\tableofcontents
+\newpage
+
+\section{Введение}
+При передаче и хранении информации часто возникает необходимость кодирования данных таким образом, чтобы обеспечить наибольшую степень сжатия. Сжатие данных может быть достигнуто использованием статистических данных, таких как частоты появления букв в сообщениях. Если, кроме этого, учитывать структурые свойства языка сообщений, можно дополнительно увеличить эффективность сжатия.
+
+К.~Шеннон в статье "Математическая теория связи" \cite{shennon-mts} рассматривал задачу экономного кодирования, моделируя источник сообщений автоматом с конечным числом состояний.
+
+А. А. Марков поставил задачу экономного кодирования на множестве слов, порождаемых конечным автоматом и доказал \cite{markov-coding}, что учитывая таким образом структуру источника сообщений, можно увеличить эффективность сжатия и уменьшить вычислительную сложность алгоритма кодирования.
+
+Ближайшим обобщением регулярных языков (языков, порождаемых конечными автоматами) являются контекстно-свободные языки. При рассмотрении таких языков удобно моделировать источник сообщений с помощью стохастической контекстно-свободной грамматики, и большую роль приобретает исследование вероятностных свойств таких грамматик.
+
+Л. П. Жильцова изучила задачу экономного кодирования на множестве слов контекстно-свободного языка, и построила алгоритм асимптотически оптимального кодирования с полиномиальной временной сложностью для некоторых классов грамматик \cite{zhiltsova-zakonom} \cite{zhiltsova-cost}. Кроме того, она показала, что перронов корень \cite{gantmaher-matrix-theory} матрицы первых моментов \cite{sevast-processes} грамматики существенно влияет на её вероятностные свойства и эффективность кодирования.
+
+\sloppy{
+Изучение стохастических контекстно-свободных грамматик было продолжено А.~Е.~Борисовым. Он изучил грамматику с разложимой матрицей первых моментов (разложимую грамматику), с двумя классами нетерминалов \cite{borisov-zakonom}. В частности, Борисов рассмотрел случай, когда перронов корень матрицы первых моментов грамматики равен единице. По аналогии с теорией ветвящихся процессов такой случай называется критическим.
+}
+
+В данной работе рассматриваются критический случай для разложимых грамматик, классы нетерминалов в которых расположены в виде <<цепочки>>, причём среди классов могут присутствовать как критические, так и докритические. Изучены вероятностные свойства матрицы первых моментов таких грамматик, получена асимптотика вероятностей продолжения и вероятностей деревьев вывода фиксированной высоты, а также асимптотика математических ожиданий числа применений некоторого правила в дереве вывода фиксированной высоты. Кроме того, получена асимптотика энтропии множества деревьев фиксированной высоты, которая будет использована для построения асимптотически оптимального алгоритма кодирования.
+
+\section{Основные определения}
+
+\textit{Стохастической КС-грамматикой} \cite{fu-struct} называется система $G = <V_T, V_N, R, s>$, где $V_T$ и $V_N$ --- конечные множества терминальных и нетерминальных символов (терминалов и нетерминалов) соответственно, $s \in V_N$ --- аксиома, $R$ --- множество правил. Множество $R$ можно представить в виде $R = \cup_{i = 1}^n R_i$, где $n$ --- мощность алфавита $V_N$ и $R_i = \left\{r_{i1}, \ldots, r_{i n_i}\right\}$. Каждое правило $r_{ij}$ из $R_i$ имеет вид
+\begin{equation}
+	r_{ij} : A_i \xrightarrow{p_{ij}} \beta_{ij},\qquad j = 1, \ldots, n_i,
+\end{equation}
+где $A_i \in V_N$, $\beta_{ij} \in (V_N \cup V_T)^*$ и $p_{ij}$ --- вероятность применения правила $r_{ij}$, причём
+\begin{equation}
+\label{eq:p_values}
+	0 < p_{ij} \leq 1,\qquad \sum_{j = 1}^{n_i} p_{ij} = 1.
+\end{equation}
+
+Для $\alpha, \gamma \in (V_N \cup V_T)^*$ будем обозначать $\alpha \Rightarrow \gamma$, если существуют $\alpha_1, \alpha_2 \in (V_N \cup V_T)^*$, для которых $\alpha = \alpha_1 A_i \alpha_2$, $\gamma = \alpha_1 \beta_{ij} \alpha_2$ и в грамматике имеется правило $A_i \xrightarrow{p_{ij}} \beta_{ij}$. Через $\Rightarrow_*$ обозначим рефлексивное транзитивное замыкание отношения $\Rightarrow$. Грамматика $G$ задаёт контекстно-свободный язык $L_G = \left\{ \alpha \in V_T^* : s \Rightarrow_* \alpha\right\}$.
+
+Выводом слова $\alpha$ назовём последовательность правил $\omega(\alpha) = (r_{i_1 j_1}, r_{i_2 j_2}, \ldots, r_{i_q j_q})$, с помощью последовательного применения которых слово $\alpha$ выводится из аксиомы $s$. Если при этом каждое правило применяется к самому левому нетерминалу в слове, такой вывод называется левым. Для вывода $\omega(\alpha) = (r_{i_1 j_1}, \ldots, r_{i_q j_q})$ определим величину $p(\omega(\alpha)) = p_{i_1 j_1} \cdot \ldots \cdot p_{i_q j_q}$.
+
+Важное значение имеет понятие \textit{дерева вывода} \cite{aho-ulman-syntax}. Дерево вывода для слова $\alpha$ строится следующим образом. Корень дерева помечается аксиомой $s$. Далее последовательно рассматриваются правила левого вывода слова $\alpha$. Пусть на очередном шаге рассматривается правило $A_i \xrightarrow{p_{ij}} b_{i_1} b_{i_2} \ldots b_{i_m}$, где $b_{i_l} \in (V_N \cup V_T)$ ($l = 1,\ldots,m$). Тогда из самой левой вершины-листа дерева, помеченной символом $A_i$, проводится $m$ дуг в вершины следующего яруса, которые помечаются слева направо символами $b_{i1}, \ldots, b_{i,m}$ соответственно. После построения дуг и вершин для всех правил в выводе листья дерева помечены терминальными символами (либо пустым словом $\lambda$, если применяется правило вида $A_i \xrightarrow{p_{ij}} \lambda$) и само слово получается при обходе листьев дерева слева направо. \textit{Высотой} дерева вывода будем называть максимальную длину пути от корня к листу.
+
+Обозначим $p(\alpha) = \sum \omega(\alpha)$, где сумма берётся по всем левым выводам слова $\alpha$. Грамматика $G$ называется \textit{согласованной}, если
+\begin{equation}
+\label{eq:soglas}
+	\lim_{n \rightarrow \infty} \sum_{\substack{\alpha \in L_G\\\left|\alpha\right| \leq n}} p(\alpha) = 1.
+\end{equation}
+Согласованная грамматика $G$ задаёт распределение вероятностей $P$ на множестве $L_G$, при этом $p(\alpha)$ --- вероятность слова $\alpha$. Пара $\mathcal{L} = (L_G, P)$ называется \textit{стохастическим КС-языком}. В дальнейшем будем всюду предполагать, что рассматривается согласованная грамматика.
+
+Для нетерминалов $A_i, A_j$ будем обозначать $A_i \rightarrow A_j$, если в грамматике имеется правило $A_i \xrightarrow{p_{ij}} \alpha_1 A_j \alpha_2$, где $\alpha_1, \alpha_2 \in (V_N \cup V_T)^*$. Рефлексивное транзитивное замыкание отношения $\rightarrow$ обозначим $\rightarrow_*$. Если одновременно $A_i \rightarrow_* A_j$ и $A_j \rightarrow_* A_i$, будем обозначать $A_i \leftrightarrow_* A_j$. Отношение $\leftrightarrow_*$ разбивает множество нетерминалов грамматики на классы
+\begin{equation}
+	K_1, K_2, \ldots, K_m.
+\end{equation}
+Множества номеров нетерминалов, входящих в класс $K_j$ обозначим через $I_j$. При $m \geq 2$ грамматика называется \textit{разложимой}.
+
+Обозначим $K_i \prec K_j$ , если $i \neq j$ и существуют такие $A_1 \in K_i$ и $A_2 \in K_j$, что $A_1 \rightarrow A_2$. Будем говорить, что грамматика имеет вид <<цепочки>>, если она разложима, и для множества классов выполняется соотношение $K_1 \prec K_2 \prec \ldots \prec K_m$. При этом граф, построенный на множестве классов по отношению $\prec$, имеет вид:
+
+\begin{picture}(1000, 40)
+	\put(20, 20){\circle{100}}
+	\put(14, 16){$K_{i_1}$}
+	\put(40, 20){\vector(1,0){35}}
+	\put(95, 20){\circle{100}}
+	\put(89, 16){$K_{i_2}$}
+	\put(115, 20){\vector(1,0){35}}
+	\put(170, 10){...}
+	\put(195, 20){\vector(1,0){35}}
+	\put(250, 20){\circle{100}}
+	\put(244, 16){$K_{i_m}$}
+\end{picture}
+
+Назовём класс $K$ \textit{особым}, если он содержит ровно один нетерминал $A_i$, и в грамматике отсутствует правило вида $A_i \xrightarrow{p_{ij}} \alpha_1 A_i \alpha_2$, где $\alpha_1, \alpha_2 \in (V_N \cup V_T)^*$. Не уменьшая общности, будем считать, что грамматика не имеет особых классов.
+
+
+\section{Производящие функции. Моменты}
+
+Определим многомерные производящие функции \cite{fu-struct}:
+\begin{equation*}
+\label{eq:f-def}
+	F_i(s_1, s_2, \ldots, s_k) = \sum_{j = 1}^{n_i} p_{ij} s_1^{l_1} s_2^{l_2} \ldots s_k^{l_k}\quad (1 \leq i \leq k),
+\end{equation*}
+где $n_i$ --- число правил вывода в $R_i$, и $l_m = l_m(i, j)$ --- число вхождений нетермина $A_m$ в правую часть правила $A_i \xrightarrow{p_{ij}} \beta_{ij}$.
+
+Для краткости будем обозначать
+\begin{equation*}
+\begin{split}
+	&\mathbf{s} = (s_1, s_2, \ldots s_n)^T \\
+	&F_i(\mathbf{s}) = F_i(s_1, s_2, \ldots, s_n) \\
+	&\mathbf{F}(\mathbf{s}) = (F_1(\mathbf{s}), F_2(\mathbf{s}), \ldots, F_n(\mathbf{s}))^T
+\end{split}
+\end{equation*}
+
+Производящую функцию $F_i(\mathbf{s})$ можно интерпретировать следующим образом. Выберем нетерминал $A_i$ в качестве аксиомы грамматики. Затем применим к нему случайным образом какое-нибудь правило из множетсва $R_i$ согласно распределению вероятностей на этом множестве. В полученной строке подсчитаем количество нетерминалов каждого вида и запишем в виде характеристического вектора $L = (l_1, l_2, \ldots, l_n)$, где $l_j$ --- количество нетерминалов $A_j$ в полученной строке. Каждому характеристическому вектору, который мы можем таким образом получить, функция $F_i(\mathbf{s})$ ставит в соответствие его вероятность $p_{ij}$.
+
+Степень производящей функции $(F_i(\mathbf{s}))^k$ соответствует ситуации, когда мы строим одновременно $k$ деревьев вывода из нетерминала $A_i$, в каждом дереве применяя случайным образом одно из правил вывода, и затем подсчитываем количество нетерминалов разных типов в листьях всех деревьев. В самом деле,
+\begin{equation}
+\label{eq:f-powers}
+	(F_i(\mathbf{s}))^k = \left( \sum_j p_{ij} s_1^{l^{ij}_1} \ldots s_n^{l^{ij}_n} \right)^k = \sum p_{ij_1} p_{ij_2} \ldots p_{ij_k} s_1^{l^{ij_1}_1 + \ldots + l^{ij_k}_1} \ldots s_n^{l^{ij_1}_n + \ldots l^{ij_k}_n}
+\end{equation}
+Каждое слагаемое с коэффициентом $p_{ij_1} \ldots p_{ij_k}$ соответствует случаю, когда к дереву вывода с индексом $l$ было применено правило $r_{ij_l}$ ($1 \leq l \leq k$). При этом в каждой компоненте характеристического вектора суммируется количество нетерминалов соответствующего типа в каждом из деревьев.
+
+Аналогично, выражение $F_1^{k_1}(\mathbf{s}) \cdot \ldots \cdot F_n^{k_n}(\mathbf{s})$ соответствует случаю, когда одновременно строятся деревья вывода из нетерминалов разных типов, причём деревьев с корнем $A_l$ имеется ровно $k_l$ штук.
+
+Величина
+\begin{equation*}
+	\left.\frac{\partial^n F_i(\mathbf{s})}{\partial s_{k_1} \partial s_{k_2} \cdots \partial s_{k_n}}\right|_{\mathbf{s} = \mathbf{1}}
+\end{equation*}
+где $\mathbf{1} = (1, 1, \ldots, 1)^T$, называется $n$-м моментом. Поскольку $F_i(\mathbf{s})$ является полиномом, порядок дифференцирования не имеет значения.
+
+Первые и вторые моменты будем обозначать следующим образом.
+\begin{equation}
+\label{eq:aij-bij-definition}
+\begin{split}
+	&a^i_j  = \left. \frac{\partial F_i(s_1, s_2, \ldots, s_k)}{\partial s_j} \right|_{s_1 = \ldots = s_k = 1} \\
+	&b^i_{jl} = \left. \frac{\partial^2 F_i(s_1, s_2, \ldots, s_k)}{\partial s_l \partial s_j} \right|_{s_1 = \ldots = s_k = 1}
+\end{split}
+\end{equation}
+
+Определим многомерные производящие функции $F(t, \mathbf{s})$, где $t \geq 1$, следующим образом.
+\begin{equation*}
+	F_i(t, \mathbf{s}) = \left\{
+	\begin{split}
+		&F_i(\mathbf{s}), & &t = 1 \\
+		&F_i(t-1, \mathbf{F}(\mathbf{s})), & &t > 1
+	\end{split}
+	\right.
+\end{equation*}
+
+Функцию $F_i(t, \mathbf{s})$ можно интерпретировать следующим образом. Выберем в качестве аксиомы грамматики нетерминал $A_i$ и будем строить дерево вывода. На каждом шаге в уже построенном дереве выберем какой-нибудь нетерминал $A_k$, находящийся на ярусе выше $t$, применим к нему какое-нибудь правило $r_{kj}$ из $R_k$ в соответствии с распределением вероятностей и добавим символы $\beta_{kj}$ в качестве потомков $A_k$. Будем продолжать этот процесс до тех пор, пока в дереве вывода не останется нетерминалов на ярусах выше $t$. Количество нетерминалов различного типа в полученном слове вновь обозначим характеристическим вектором $L = (l_1, l_2, \ldots, l_n)$. Тогда функция $F(t, \mathbf{s})$ ставит в соответствие каждому из возможных векторов $L$ его вероятность.
+
+Это можно показать индукцией по $t$. При $t = 1$ это верно в силу определения $F_i(\mathbf{s})$. Пусть это верно для $F_i(t-1, \mathbf{s}) = \sum_k p_k s_1^{l_1} s_2^{l_2} \ldots s_n^{l_n}$, где сумма берётся по всем возможным характеристическим векторам $(l_1, \ldots l_n)$, и $p_k$ --- вероятность соответствующего вектора. При переходе от $F_i(t-1, \mathbf{s})$ к $F_i(t, \mathbf{s})$ каждое произведение вида $p_k s_1^{l_1} \ldots s_n^{l_n}$ приобретает вид $p_k \cdot F_1^{l_1}(\mathbf{s}) \ldots F_n^{l_n}(\mathbf{s})$. Принимая во внимание представление $(\ref{eq:f-powers})$, получаем сумму, каждый компонент которой соответствует возможному характеристическому вектору.
+
+Матрица $A$, состваленная из первых моментов $a^i_j$, называется \textit{матрицей первых моментов}. Для разложимой грамматики она имеет следующий блочно-ленточный вид.
+\begin{equation}
+\label{eq:amatrix}
+	A =
+	\begin{pmatrix}
+		A_{11} & A_{12} & 0      & \cdots & 0           & 0          \\
+		0      & A_{22} & A_{23} & \cdots & 0           & 0          \\ 
+		\vdots & \vdots & \vdots & \ddots & \vdots      & \vdots     \\
+		0      & 0      & 0      & \cdots & A_{m-1,m-1} & A_{m-1, m} \\
+		0      & 0      & 0      & \cdots & 0           & A_{m,m}    \\
+	\end{pmatrix}.
+\end{equation}
+Блок $A_{ii}$ соответствует классу $K_i$ и является неразложимой неотрицательной матрицей. По определению ($\ref{eq:aij-bij-definition}$), матрицы $A_{11}, A_{22}, \ldots, A_{m,m}$ неотрицательны. Они также неразложимы, так как любой нетерминал может быть с ненулевой вероятностью выведен из любого нетерминала того же класса. Обозначим перронов корень \cite{gantmaher-matrix-theory} матрицы $A_{ii}$ через $r_i$. Тогда $r = \max\{r_1, \ldots, r_m\}$ --- перронов корень всей матрицы $A$. В данной работе рассматривается случай $r = 1$. По аналогии с теорией ветвящихся процессов \cite{sevast-processes} будем называть этот случай \textit{критическим}.
+
+Обозначим через $J$ множество индексов $i$, таких что классы $K_i$ имеют перронов корень $r_i = 1$. Будем также обозначать через $\overline{J}$ дополнение к $J$.
+
+\sloppy{
+Обозначим $s_{lh}$ (при $l \leq h$) --- число критических классов среди подцепочки $K_l, K_{l+1}, \ldots, K_h$. Разобьём последовательность классов $K_1, K_2, \ldots, K_m$ на группы $\mathcal{M}_1, \mathcal{M}_2, \ldots, \mathcal{M}_w$, где $w = s_{1m}$. Класс $K_l$ отнесём к группе $\mathcal{M}_w$ при $s_{lw} <= 1$ и к группе $M_{w-j+1}$ при $s_{lw} = j$ ($j = 2,\ldots,w$).
+
+Тогда матрицу $A$ можно представить в виде:
+\begin{equation*}
+	A =
+	\begin{pmatrix}
+		B_{11} & B_{12} & 0      & \cdots & 0           & 0          \\
+		0      & B_{22} & B_{23} & \cdots & 0           & 0          \\ 
+		\vdots & \vdots & \vdots & \ddots & \vdots      & \vdots     \\
+		0      & 0      & 0      & \cdots & B_{w-1,w-1} & B_{w-1, w} \\
+		0      & 0      & 0      & \cdots & 0           & B_{w,w}    \\
+	\end{pmatrix},
+\end{equation*}
+где матрица $B_{lh}$ находится на пересечении строк для классов из группы $\mathcal{M}_l$ и столбцов для классов из группы $\mathcal{M}_h$. Матрицы $B_{lh}$, в свою очередь, имеют вид
+\begin{equation*}
+	B_{lh} =
+	\begin{pmatrix}
+		C_{11} & C_{12} & 0      \\
+		0      & C_{22} & C_{23} \\
+		0      & 0      & C_{33} \\
+	\end{pmatrix},
+\end{equation*}
+где $C_{22}$ --- блок, стоящий на пересечении строк для $l$-го критического класса и столбцов для $h$-го критического класса. При $l = h$ этот блок является неразложимой матрицей. Блоки $C_{11}$ и $C_{33}$ стоят на пересечении строк и столбцов, соответствующих докритическим классам. При $l,h < w$ блок $B_{lh}$ имеет вид
+\begin{equation*}
+	B_{lh} =
+	\begin{pmatrix}
+		C_{11} & C_{12} \\
+		0      & C_{22} \\
+	\end{pmatrix}.
+\end{equation*}
+
+Блок, находящийся на позиции блока $B_{lh}$ в матрице $A^t$, обозначим $B^{(t)}_{lh}$.
+
+В \cite{zhiltsova-about-matrix} доказана следующая теорема.
+\begin{theorem}
+	При $t \rightarrow \infty$
+	\begin{equation*}
+		B^{(t)}_{lh} = 
+		\begin{pmatrix}
+			0 & b \cdot U^{(l)}_I V^{(h)}_{II}    & b \cdot U^{(l)}_I V^{(h)}_{III} \\
+			0 & b \cdot U^{(l)}_{II} V^{(h)}_{II} & b \cdot U^{(l)}_{II} V^{(h)}_{III} \\
+			0 & 0 & 0 \\
+		\end{pmatrix} =
+		b \cdot U^{(l)} V^{(h)} t^{s_{lh} - 1} r^t \cdot (1 + o(1)),
+	\end{equation*}
+	где $U^{(q)}$ и $V^{(q)}$ --- правый и левый собственные векторы матрицы $B_{qq}$, и $b = V^{(l)} B_{lh} U^{(h)}$.
+\end{theorem}
+
+\section{Вероятности продолжения}
+
+Вероятностью продолжения $Q_i(t)$ будем называть функцию
+\begin{equation*}
+	Q_i(t) = 1 - F_i(t, \mathbf{0})
+\end{equation*}
+По смыслу функции $F_i(t, \mathbf{s})$ вероятность продолжения $Q_i(t)$ есть вероятность того, что при построении дерева вывода из нетерминала $A_i$ случайным образом это дерево будет иметь высоту более $t$. Будем обозначать $\mathbf{Q}(t) = (Q_1(t), Q_2(t), \ldots Q_n(t))^T$.
+
+В силу согласованности грамматики $Q_i(t) \rightarrow 0$ при $t \rightarrow \infty$. В самом деле, по смыслу $F_i(t, \mathbf{s})$
+\begin{equation*}
+	F_i(t, \mathbf{0}) = \sum_{d \in D^{\leq t}} p(d) \xrightarrow[t \rightarrow \infty]{} 1
+\end{equation*}
+
+Раскладывая $F_i(\mathbf{s})$ в ряд Тейлора в окрестности $\mathbf{s} = (1, \ldots, 1)$, и учитывая равенство $F_i(1, 1, \ldots, 1) = 1$, получаем:
+\begin{equation}
+	1 - F_i(\mathbf{s}) = \sum_{j = 1}^{n_i} a^i_j(1 - s_j) - \frac{1}{2} \sum_{1 \leq j,l \leq n_i} b^i_{jl} (1 - s_j) (1 - s_l) + O\left( \left\| \mathbf{s} - \mathbf{1} \right\| ^3 \right)
+\end{equation}
+
+Подставляя в качестве $\textbf{s}$ вектор $\textbf{F}(t, s) = (F_1(t, s), F_2(t, s), \ldots, F_k(t, s))$, получаем:
+\begin{multline}
+\label{eq:basic_fi}
+	1 - F_i(t + 1, s) = \sum_{i = 1}^k a^i_j (1 - F_j(t,s)) - \frac{1}{2} \sum_{1 \leq j,l \leq k} b^i_{jl} (1 - F_j(t,s)) (1 - F_l(t,s)) + \\
+	+ O\left( \left\| \mathbf{1} - \mathbf{F}(t, \mathbf{s}) \right\| ^3 \right)
+\end{multline}
+
+Переходя от $1 - F_i(t, \mathbf{s})$ к $Q_i(t)$, получаем
+\begin{equation}
+\label{eq:basic_qi}
+	Q_i(t+1) = \sum_{i = 1}^k a^i_j Q_i(t) - \frac{1}{2} \sum_{1 \leq j,l \leq k} b^i_{jl} Q_j(t) Q_l(t) + O \left( \left\| \mathbf{Q}_j(t) \right\|^3 \right)
+\end{equation}
+
+Для каждого из классов $K_n$ будем рассматривать вектор $Q^{(n)}(t)$ --- вектор-столбец, содержащий вероятности продолжения для нетерминалов из класса $K_n$ в порядке их нумерации. Тогда
+\begin{equation}
+	Q(t) =
+	\begin{pmatrix}
+		Q^{(1)}(t) \\
+		Q^{(2)}(t) \\
+		\vdots \\
+		Q^{(m)}(t)
+	\end{pmatrix},
+	\quad Q^{(j)}(t) \in \mathbb{R}^{k_j},
+\end{equation}
+где $k_j = \left| K_j \right|$. Обозначим через $I_n$ иножество индексов нетерминалов, входящих в класс $K_n$. Используя это обозначение, уравнение ($\ref{eq:basic_qi}$) можно записать в виде
+\begin{align}
+	&Q_i(t+1) = \sum_{j \in I_n} a^i_j Q_j(t) + \sum_{i \in I_{n+1}} a^i_j Q_j(t) \cdot (1 + o(1)) & &(i \in I_n, n < m) \\
+	&Q_i(t+1) = \sum_{j \in I_m} a^i_j Q_j(t) \cdot (1 + o(1)) & &(i \in I_m)
+\end{align}
+или, используя вид ($\ref{eq:amatrix}$) матрицы первых моментов,
+\begin{equation}
+	Q^{(n)}(t+1) = A_{n,n} Q^{(n)}(t) + A_{n,n+1} Q^{(n+1)}(t) (1 + o(1))
+\end{equation}
+Для всего вектора $Q(t)$ верно равенство
+\begin{equation}
+\label{eq:q_t+1_from_q_t}
+	Q(t+1) = (A - A(t)) Q(t),
+\end{equation}
+где $A(t)$ --- матрица, составленная из элементов $a_{ij} = \frac{1}{2} \sum_{l = 1}^k b^i_{jl} Q_l(t)$ ($1 \leq i,j \leq k$). В силу согласованности грамматики $Q(t) \rightarrow 0$ и, следовательно, $A(t) \rightarrow 0$ при $t \rightarrow \infty$.
+
+Докажем, что компоненты вектора $Q^{(n)}(t)$ пропорциональны некоторому вектору $U^{(n)}$. Доказательство аналогичного факта для случая двух классов принадлежит А.~Борисову. Здесь мы проведём похожие рассуждения.
+
+Зафиксируем некоторое $\tau \geq 0$. Тогда из ($\ref{eq:q_t+1_from_q_t}$) получаем
+\begin{equation}
+\label{eq:q_t+1_from_q_tau}
+	Q(t+1) = (A - A(t)) \cdot \ldots \cdot (A - A(\tau)) Q(\tau)
+\end{equation}
+Обозначим
+\begin{equation}
+	\begin{split}
+		&A^*(t) = (A - A(t)) \cdot (A - A(t-1)) \cdot \ldots \cdot (A - A(\tau + 1)) \\
+		&\tilde{A}^*_{ij} = \frac{A^*_{ij}(t)}{t^{s_{ij}}} \\
+		&\tilde{A}_{ij} = \frac{A^{(t)}_{ij}}{t^{s_{ij}}},
+	\end{split}
+\end{equation}
+где $A^{(t)}_{ij}$ --- блоки, расположенные на месте блоков $A_{ij}$ в матрице $A^t$ и $s_{ij}$ --- число критических классов в подцепочке $K_i, K_{i+1}, \ldots, K_j$.
+
+
+Из исследования асимптотики матрицы $A^t$ известно \cite{zhiltsova-about-matrix}, что $\tilde{A}_{ij}(t) \rightarrow \tilde{a}_{ij} U^{(i)} V^{(j)}$, где $\tilde{a}_{ij}$ --- некоторые константы, $U^{(i)}$ --- вектор-строка длины $k_i$, а $V^{(j)}$ --- вектор-столбец длины $k_j$.
+
+Выберем произвольные $\epsilon_1, \epsilon_2$, такие что $0 < \epsilon_1, \epsilon_2 < 1$. Тогда существуют функции $l(\epsilon_1)$ и $n(\epsilon_2)$, такие что
+\begin{equation}
+	\begin{split}
+		&\left| \tilde{A}_{ij}(l(\epsilon_1)) - \tilde{a}_{ij} U^{(i)} V^{(j)} \right| < \epsilon_1 E \\
+		&\forall t \geq n(\epsilon_2)\quad A(t) < \epsilon_2 A
+	\end{split}.
+\end{equation}
+
+Рассмотрим произвольный вектор-столбец $x > \mathbf{0}$ длины $k$. Тогда выполняется оценка
+\begin{equation}
+	(1 - \epsilon_2)^l A^l x^{(\tau)} \leq A^*(t) x^{(\tau)} \leq A^l x^{(\tau)},
+\end{equation}
+где $x^{(\tau)} = (A - A(\tau)) x$. Записывая это неравенство отдельно для блоков $A_{ij}$, получаем
+\begin{equation}
+	(1 - \epsilon_2)^l A_{ij}^l x^{(\tau)}_j \leq A^*_{ij}(l) x^{(\tau)}_j \leq A^{(l)}_{ij} x^{(\tau)}_j,
+\end{equation}
+откуда
+\begin{equation}
+	(1 - \epsilon_2)^l \tilde{A}_{ij}(l) x^{(\tau)} \leq \tilde{A}^*_{ij}(l) x^{(\tau)}_j \leq \tilde{A}_{ij}(l) x^{(\tau)}
+\end{equation}
+Вычитая из всех частей неравенства $\tilde{A}_{ij}(l) x^{(\tau)}_j$, получаем оценку
+\begin{equation}
+	\left| \left( \tilde{A}^*_{ij}(l) - \tilde{A}_{ij}(l) \right) x^{(\tau)}_j \right| \leq (1 - (1 - \epsilon_2)^l) \tilde{A}_{ij}(l) x^{(\tau)}
+\end{equation}
+
+Используя эту оценку, можем записать
+\begin{multline}
+	\left| \tilde{A}^*_{ij}(t) - \tilde{a}_{ij} U^{(i)} V^{(j)} x^{(\tau)}_j \right| \leq \left| \left( \tilde{A}^*_{ij}(t) - \tilde{A}_{ij}(t) \right) x^{(\tau)} \right| + \\
+	+ \left| \left( \tilde{A}_{ij}(l) - \tilde{a}_{ij} U^{(i)} V^{(j)} \right) x^{(\tau)}_j \right| \leq (1 - (1 - \epsilon_2)^l) \tilde{A}_{ij}(l) x^{(\tau)}_j + \epsilon_1 x^{(\tau)}_j \leq \\
+	\leq (1 - (1 - \epsilon_2)^l) h k_j x^{(\tau)}_j + \epsilon_1 x^{(\tau)}_j \leq \left( (1 - 1 - \epsilon_2)^l) h k_j + \epsilon_1 \right) x^*_j(\tau),
+\end{multline}
+где $h = \max_{i,j,l} \left\{ \tilde{A}_{ij}(l) \right\}$ и $x^*_j(\tau) = \max_i (x^{(\tau)}_j)_i$.
+
+Устремляем $\epsilon_2$ к нулю, затем $\epsilon_1$ к нулю таким образом, чтобы выполнялось условие
+\begin{equation}
+	l(\epsilon_1) \log(1 - \epsilon_2) \rightarrow -\infty
+\end{equation}
+
+Тогда 
+\begin{equation}
+	\left| \tilde{A}^*_{ij}(t) - \tilde{a}_{ij} U^{(i)} V^{(j)} x^{(\tau)}_j \right| \leq \epsilon x^*_j(\tau)\quad (\epsilon \rightarrow 0).
+\end{equation}
+Домножая слева на $V^{(i)}$, имеем
+\begin{equation}
+	\left| V^{(i)} \tilde{A}^*_{ij}(t) x^{(\tau)}_j - \tilde{a}_{ij} V^{(j)} x^{(\tau)}_j \right| \leq \epsilon k_i \max \left\{ (V^{(i)} \right\} x^*_j(\tau) \leq \epsilon^* V^{(j)} x^{(\tau)}_j.
+\end{equation}
+
+Отсюда,
+\begin{equation}
+	\left| \frac{\tilde{A}^*_{ij}(t) x^{(\tau)}_j}{V^{(i)} \tilde{A}^*_{ij}(t) x^{(\tau)}_j} - \frac{\tilde{a}_{ij} U^{(i)} V^{(i)} x^{(\tau)}_j}{\tilde{a}_{ij} V^{(j)} x^{(\tau)}_j} \right| = \left| \frac{\tilde{A}^*_{ij}(t) x^{(\tau)}_j}{V^{(i)} \tilde{A}^*_{ij}(t) x^{(\tau)}_j} - U^{(i)} \right| \rightarrow 0
+\end{equation}
+или же
+\begin{equation}
+	\left| \frac{A^*_{ij}(t) x^{(\tau)}_j}{V^{(i)} A^*_{ij}(t) x^{(\tau)}_j} - U^{(i)} \right| \rightarrow 0,
+\end{equation}
+откуда
+\begin{equation}
+	(A - A(t)) \cdot \ldots \cdot (A - A(\tau)) \cdot x_j = U^{(i)} V^{(i)} (A - A(t)) \cdot \ldots \cdot (A - A(\tau)) \cdot x_j \cdot (1 + o(1))
+\end{equation}
+
+Ввиду полученного выражения и ($\ref{eq:q_t+1_from_q_tau}$) компоненты каждого из векторов $Q^{(n)}(t)$ пропорциональны компонентам вектора $U^{(n)}$.
+
+Оценим теперь асимптотику элементов вектора $Q^{(n)}(t)$ при $t \rightarrow \infty$.
+
+Положим $V^{(n)} Q^{(n)}(t) = Q^{(n)}_*(t)$, и домножим уравнение $(\ref{eq:basic_qi})$ скалярно на $V^{(n)}$. Заметим, что
+\begin{equation}
+\label{eq:q_uq}
+	Q^{(n)}(t) = U^{(n)} Q^{(n)}_*(t) (1 + o(1)).
+\end{equation}
+\begin{multline}
+\label{eq:q_star}
+	Q^{(n)}_*(t+1) = Q{(n)}_*(t) + V^{(n)} B_{n,n+1} U^{(n+1)} Q^{(n+1)}_*(t) - \\
+	- \frac{1}{2} \sum_{1 \leq i,j,l \leq k_n} V^{(n)}_i b^i_{jl}(n) U^{(n)}_j U^{(n)}_l \left( Q^{(n)}_*(t) \right)^2 (1 + o(1)).
+\end{multline}
+Обозначим $\delta Q^{(n)}_*(t) = Q^{(n)}_*(t+1) - Q^{(n)}_*(t)$, а также
+\begin{equation*}
+	\begin{split}
+		&b_n = V^{(n)} B_{n,n+1} U^{(n+1)} \\
+		&B_n = \sum_{1 \leq i,j,l \leq k_n} V^{(n)}_i b^i_{jl}(n) U^{(n)}_j U^{(n)}_l \\
+	\end{split}
+\end{equation*}
+Тогда уравнение $(\ref{eq:q_star})$ перепишется как
+\begin{equation}
+\label{eq:delta_q_star_q_star}
+	\delta Q^{(n)}_*(t) = b_n Q^{(n+1)}_*(t) - \frac{1}{2} B_n (Q^{(n)}_*(t))^2 (1 + o(1))
+\end{equation}
+Выражение для $\delta Q^{(n)}_*(t)$ также можно получить из $(\ref{eq:basic_qi})$, вычитая это уравнение из себя с заменой $t \rightarrow t+1$:
+\begin{multline*}
+	\delta Q^{(n)}_*(t+1) = \sum_{j = 1}^{k_n} a^i_j(n) \delta Q^{(n)}_j(t) + \sum_{j = 1}^{k_{n+1}} a^i_j(n) \delta Q^{(n+1)}_j(t) - \\
+	- \frac{1}{2} \sum_{1 \leq j,l \leq k_n} b^i_{jl}(n) \left( Q^{(n)}_j(t+1) Q^{(n)}_l(t+1) - Q^{(n)}_j(t) Q^{(n)}_l(t) \right) (1 + o(1))
+\end{multline*}
+Скалярно домножая на $V^{(n)}$, получим
+\begin{multline}
+\label{eq:delta_q_star}
+	\delta Q^{(n)}_*(t+1) = \delta Q^{(n)}_*(t) + b_n \delta Q^{(n+1)}_*(t) - \\
+	- \frac{1}{2} B_n \delta Q^{(n)}_*(t) \left( Q^{(n)}_*(t+1) + Q^{(n)}_*(t) \right) (1 + o(1))
+\end{multline}
+
+Для последнего класса
+\begin{equation}
+\label{eq:q_t_for_last_class}
+	Q^{(w)}_*(t) = c_w t^{-1} (1 + o(1)),
+\end{equation}
+что следует из неразложимого случая. Проведём рассуждение по индукции. Пусть для группы с номером $n+1$ верно
+\begin{equation*}
+	Q^{(n+1)}_*(t) = c_{n+1} t^{-\alpha} (1 + o(1)),
+\end{equation*}
+где $0 < \alpha \leq 1$. Положим
+\begin{equation*}
+	z(t) = t^{\alpha} \delta Q^{(n)}_*(t)
+\end{equation*}
+Произведя замену в уравнении $(\ref{eq:delta_q_star})$, и имея в виду, что $Q^{(n)}_*(t+1) = O(Q^{(n)}_*(t))$, получаем
+\begin{equation*}
+	\frac{z(t+1)}{(t+1)^{\alpha}} - \frac{z(t)}{t^\alpha} = b_n \delta Q^{(n+1)}_*(t) (1 + o(1)) - \frac{1}{2} B_n \frac{z(t)}{t^\alpha} \cdot 2 Q^{(n)}_*(t) (1 + o(1))
+\end{equation*}
+Преобразуем выражение в левой части уравнения:
+\begin{multline*}
+	\frac{z(t+1)}{(t+1)^\alpha} - \frac{z(t)}{t^\alpha} = \frac{t^\alpha z(t+1) - (t+1)^\alpha z(t)}{t^\alpha (t+1)^\alpha} = \\
+	= \frac{t^\alpha z(t+1) - t^\alpha \left(1 + \frac{\alpha}{t} + o\left( \frac{1}{t} \right) \right) z(t)}{t^\alpha (t+1)^\alpha} = \frac{\delta z(t)}{(t+1)^\alpha} - \frac{\alpha z(t) (1 + o(1))}{t (t + 1)^\alpha}
+\end{multline*}
+Тогда
+\begin{equation*}
+	\frac{\delta z(t)}{(t+1)^\alpha} - \frac{\alpha z(t) (1 + o(1))}{t (t+1)^\alpha} = b_n \delta Q^{(n)}_*(t) - \frac{B_n}{t^\alpha} Q^{(n)}_*(t) z(t) (1 + o(1))
+\end{equation*}
+По предположению индукции, $\delta Q^{(n+1)}_*(t) = -\frac{c_{n+1} \alpha}{t (t+1)^\alpha} (1 + o(1))$, и тогда
+\begin{equation*}
+	\frac{\delta z(t)}{(t+1)^\alpha} - \frac{\alpha z(t) (1 + o(1))}{t (t + 1)^\alpha} = -\frac{b_n \alpha c_{n+1}}{t (t+1)^\alpha} - \frac{B_n}{t^\alpha} Q^{(n)}_*(t) z(t) (1 + o(1))
+\end{equation*}
+Домножая на $(t + 1)^\alpha$, получаем
+\begin{equation*}
+	\delta z(t) - \frac{\alpha z(t)}{t} = -\frac{b_n \alpha c_{n+1}}{t} - B_n Q^{(n)}_*(t) z(t) (1 + o(1))
+\end{equation*}
+Заметим, что, в силу предположения индукции, $\frac{1}{t} \leq Q^{(n+1)}_*(t) = o(Q^{(n)}_*(t))$, поэтому можно записать
+\begin{equation}
+\label{eq:z_t}
+	\delta z(t) = -\frac{b_n \alpha c_{n+1}}{t} - B_n Q^{(n)}_*(t) (1 + o(1))
+\end{equation}
+
+Известна следующая лемма (доказательство леммы принадлежит А.~Борисову).
+\begin{lemma}
+\label{lemma:zfg}
+	Пусть последовательность z(t) (t = 1,2,\ldots) удовлетворяет рекуррентному соотношению
+	\begin{equation*}
+		\delta z(t) = f(t) - g(t) z(t),
+	\end{equation*}
+	где при $t \rightarrow \infty$ выполняются условия
+	\begin{equation*}
+		g(t) \rightarrow 0, \frac{f(t)}{g(t)} \rightarrow 0, \sum_{k = 1}^t g(k) \rightarrow \infty.
+	\end{equation*}
+	Пусть также $g(t) > 0$ при любом $t > t_0$. Тогда $z(t) \rightarrow 0$ при $t \rightarrow \infty$.
+\end{lemma}
+
+Полагая в уравнении $(\ref{eq:z_t})$ $f(t) = -\frac{b_n \alpha c_{n+1}}{t} (1 + o(1))$, $g(t) = B_n Q^{(n)}_*(t) (1 + o(1))$, замечаем, что для $z(t)$ выполняются все условия леммы $(\ref{lemma:zfg})$, и соответственно, $z(t) \rightarrow 0$ при $t \rightarrow \infty$. Из определения $z(t)$ получаем:
+\begin{equation*}
+	\delta Q^{(n)}_*(t) = o\left( \frac{1}{t^\alpha} \right).
+\end{equation*}
+Подставляя эту оценку в $(\ref{eq:delta_q_star_q_star})$, получаем
+\begin{equation*}
+	o\left( \frac{1}{t^\alpha} \right) = \frac{b_n c_{n+1}}{t^\alpha} (1 + o(1)) - \frac{B_n}{2} \left( Q^{(n)}_*(t) \right)^2 (1 + o(1))
+\end{equation*}
+Отсюда
+\begin{equation*}
+	\frac{b_n c_{n+1}}{t^\alpha} (1 + o(1)) = \frac{B_n}{2} \left( Q^{(n)}_*(t) \right)^2 (1 + o(1))
+\end{equation*}
+Тогда для $Q^{(n)}_*(t)$ получаем оценку
+\begin{equation*}
+	Q^{(n)}_*(t) = \sqrt{\frac{2 b_n}{B_n} c_{n+1} \frac{1}{t^\alpha}} (1 + o(1)) = \sqrt{\frac{2 b_n}{B_n} k_{n+1}} \cdot t^{-\frac{\alpha}{2}} (1 + o(1))
+\end{equation*}
+При этом, полагая $c_n = \sqrt{\frac{2 b_n}{B_n} c_{n+1}}$, мы остаёмся в рамках предположения индукции. Учитывая $(\ref{eq:q_t_for_last_class})$, можем записать асимптотику $Q^{(n)}_*(t)$ для произвольной группы $n$:
+\begin{multline*}
+	Q^{(n)}_*(t) = \sqrt{\frac{2 b_n}{B_n} \sqrt{\frac{2 b_{n+1}}{B_{n+1}} \cdots \sqrt{\frac{2 b_{w-1}}{B_{w-1} B_w} \cdot t^{-\left(\frac{1}{2}\right)^{w - n}}}}} = \\
+	= \prod_{k = n}^{w - 1} \left(\frac{2 b_n}{B_n}\right)^{\left(\frac{1}{2}\right)^{w - n + 1}} \cdot \left(\frac{1}{B_w}\right)^{\left(\frac{1}{2}\right)^{w - n}} \cdot t^{-\left(\frac{1}{2}\right)^{w-n}}
+\end{multline*}
+
+Учитывая $(\ref{eq:q_uq})$, получаем
+\begin{equation*}
+	\begin{split}
+		&Q_i(t) = c_n U^{(n)}_j t^{-\left(\frac{1}{2}\right)^{w-n}} \cdot (1 + o(1)) \\
+		&P_i(t) = \tilde{c}_n U^{(n)}_j t^{-1 -\left(\frac{1}{2}\right)^{w-n}} \cdot (1 + o(1))
+	\end{split}
+\end{equation*}
+где нетерминал $A_i$ находится в последнем критическом классе цепочки или в одном из предшествующих классов, $n$ --- номер группы, в которую входит класс, содержащий $A_i$, $w$ --- число групп, и
+\begin{equation*}
+	c_n = \prod_{k = n}^{w - 1} \left(\frac{2 b_n}{B_n}\right)^{\left(\frac{1}{2}\right)^{w - n + 1}} \cdot \left(\frac{1}{B_w}\right)^{\left(\frac{1}{2}\right)^{w - n}}
+\end{equation*}
+
+
+\newpage
+
+\begin{thebibliography}{99}
+	\bibitem{shennon-mts}
+	\textbf{Шеннон К.} Математическая теория связи. М.: ИЛ, 1963
+	\bibitem{markov-coding}
+	\textbf{Марков А. А.} Введение в теорию кодирования. М.: Наука, 1982
+	\bibitem{fu-struct}
+	\textbf{Фу К.} Структурные методы в распознавании образов. М.: Мир, 1977
+	\bibitem{aho-ulman-syntax}
+	\textbf{Ахо А., Ульман Дж.} Теория синтаксического анализа, перевода и компиляции. Том 1. М.: Мир, 1978
+	\bibitem{sevast-processes}
+	\textbf{Севастьянов Б. А.} Ветвящиеся процессы. --- M.: Наука, 1971 --- 436 с.
+	\bibitem{gantmaher-matrix-theory}
+	\textbf{Гантмахер Ф. Р.} Теория матриц. --- 5-е изд., --- М.: ФИЗМАТЛИТ, 2010
+	\bibitem{zhiltsova-about-matrix}
+	\textbf{Жильцова Л. П.} О матрице первых моментов разложимой стохастической КС-грамматики. УЧЁНЫЕ ЗАПИСКИ КАЗАНСКОГО ГОСУДАРСТВЕННОГО УНИВЕРСИТЕТА, Том 151, кн. 2, 2009
+	\bibitem{zhiltsova-zakonom}
+	\textbf{Жильцова Л. П.} Закономерности применения правил грамматики в выводах слов стохастического контекстно-свободного языка // Математические вопросы кибернетики. Выр. 9. М.: Наука, 2000. С. 100-126.
+	\bibitem{zhiltsova-cost}
+	\textbf{Жильцова Л. П.} О нижней оценке стоимости кодирования и асимптотически оптимальном кодировании стохастического контекстно-свободного языка // Дискретный анализ и исследование операций. Серия 1, т. 8, \No 3. Новосибирск: Издательство Института математики СО РАН, 2001. С. 26-45.
+	\bibitem{borisov-zakonom}
+	\textbf{Борисов А. Е.} Закономерности в словах стохастических контекстно-свободных языков, порождённых грамматиками с двумя классами нетерминальных символов. Вопросы экономного кодирования. // Диссертация на соискание учёной степени кандидата физико-математических наук. Нижний Новгород, 2006.
+\end{thebibliography}
+
+\end{document}
