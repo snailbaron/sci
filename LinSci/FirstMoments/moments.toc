@@ -1,3 +1,0 @@
-\select@language {russian}
-\contentsline {section}{\numberline {1}\IeC {\CYRO }\IeC {\cyrs }\IeC {\cyrn }\IeC {\cyro }\IeC {\cyrv }\IeC {\cyrn }\IeC {\cyrery }\IeC {\cyre } \IeC {\cyro }\IeC {\cyrp }\IeC {\cyrr }\IeC {\cyre }\IeC {\cyrd }\IeC {\cyre }\IeC {\cyrl }\IeC {\cyre }\IeC {\cyrn }\IeC {\cyri }\IeC {\cyrya }}{1}
-\contentsline {section}{\numberline {2}\IeC {\CYRS }\IeC {\cyrv }\IeC {\cyro }\IeC {\cyrishrt }\IeC {\cyrs }\IeC {\cyrt }\IeC {\cyrv }\IeC {\cyra } \IeC {\cyrm }\IeC {\cyra }\IeC {\cyrt }\IeC {\cyrr }\IeC {\cyri }\IeC {\cyrc }\IeC {\cyrery } \IeC {\cyrp }\IeC {\cyre }\IeC {\cyrr }\IeC {\cyrv }\IeC {\cyrery }\IeC {\cyrh } \IeC {\cyrm }\IeC {\cyro }\IeC {\cyrm }\IeC {\cyre }\IeC {\cyrn }\IeC {\cyrt }\IeC {\cyro }\IeC {\cyrv }}{3}
