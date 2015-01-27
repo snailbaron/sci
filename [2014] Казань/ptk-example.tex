@@ -1,0 +1,68 @@
+\documentclass[twoside]{article}
+\usepackage{ptk}
+
+\begin{document}
+\title[Краткое название]{Полное название статьи}
+\author{И.\,О.\,Фамилия, И.\,О.\,Фамилия, И.\,О.\,Фамилия}
+\email{author@site.ru, author2@site.ru}
+\organization{Организация, Город}
+\maketitle
+
+Это пример статьи для сборника трудов конференции, подготовленной с помощью стилевого файла
+\verb$ptk.sty$. Пакет \verb$ptk.sty$ был подготовлен на основе стилевого пакета \verb$mmro.sty$,
+созданного К.\,В.\,Воронцовым
+(см. \verb$http://www.ccas.ru/voron/download/mmrosty.zip$).
+
+Статья может содержать разделы 1-го уровня --- создаются с помощью команды \verb$\section$ ---
+и подразделы 2-го уровня --- создаются с помощью команды \verb$\paragraph$.
+
+\section{Название раздела}
+
+Теоремы, леммы, утверждения оформляются с помощью стандартных окружений:
+\begin{theorem}
+Формулировка теоремы.
+\end{theorem}
+\begin{proof}
+Выключные формулы без номеров оформляются так:
+\[
+\left(\frac{a+b\sqrt{5}}{2}\right)\left(\frac{a-b\sqrt{5}}{2}\right) = \frac{a^2-5b^2}{4}.
+\]
+
+А с номерами вот так:
+\begin{equation}
+(a+b)^n = \sum_{k=0}^n {n\choose k} a^{n-k} b^k. \label{f_example}
+\end{equation}
+
+Если формула пронумерована, как, например, (\ref{f_example}),
+на нее должна быть ссылка в тексте.
+\end{proof}
+
+\paragraph{Подраздел.}
+Источники в библиографии должны идти в порядке появления ссылок на них.
+Ссылки вставляются автоматически. Например, \cite{bibBook,bibArticle,bibArticle2}.
+
+О других возможностях по оформлению можно прочитать в документации к пакету \verb$mmro.sty$.
+
+Работа выполнена при поддержке РФФИ, проект \No\,00-00-00000.
+
+\begin{thebibliography}{1}
+\bibitem{bibBook}
+    \BibAuthor{Автор\;И.\,О.}
+    Название книги. "---
+    М.:~Издательство, 2014. "--- 314~с.
+\bibitem{bibArticle}
+    \BibAuthor{Автор\;И.\,О., Соавтор\;И.\,О.}
+    \BibTitle{Название журнальной статьи}~//
+    Название журнала. "--- 2007. "--- Т.\,38, \No\,5. "--- С.\,54--62.
+\bibitem{bibArticle2}
+    \BibAuthor{Author\;N.\,P., Coauthor\;N.\,P.}
+    \BibTitle{Paper title}~//
+    Journal. "--- 2021. "--- V.\,38, \No\,5. "--- P.\,54--62.
+\bibitem{bibProceedings}
+    \BibAuthor{Автор\;И.\,О.}
+    \BibTitle{Название статьи из сборника}~//
+    Название конференции или сборника. "---
+    Город:~Издательство, 2007. "--- С.\,5--6.
+\end{thebibliography}
+
+\end{document}

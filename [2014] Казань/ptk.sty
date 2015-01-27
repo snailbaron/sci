@@ -1,0 +1,1085 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%                  Стилевой файл для трудов конференции                     %%
+%%                   Проблемы теоретической кибернетики                      %%
+%%                 Создан на основе mmro.sty К.В.Воронцова                   %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%                 copyleft (GPL)       К.В.Воронцов, 2007                   %%
+%%                 copyleft (GPL)       Н.Ю.Золотых,  2010                   %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{ptk}[07/12/2010]
+
+% Опция draft: выводить замечания, доп.информацию в оглавлении, статистику
+\newif\ifdraft\draftfalse
+\DeclareOption{draft}{\drafttrue}
+
+\ProcessOptions
+
+\RequirePackage[cp1251]{inputenc}
+%\RequirePackage[T2A]{fontenc}
+\RequirePackage{amssymb}
+\RequirePackage{amsmath}
+\RequirePackage{mathrsfs}
+\RequirePackage{euscript}
+\RequirePackage[russian]{babel}
+\RequirePackage{array}
+\RequirePackage{theorem}
+\RequirePackage[ruled]{algorithm}
+\RequirePackage[noend]{algorithmic}
+\RequirePackage[all]{xy}
+\RequirePackage{graphicx}
+\RequirePackage{color}
+%\RequirePackage[footnotesize]{caption2}
+\RequirePackage{ifthen}
+\RequirePackage{url}
+%\RequirePackage{html}
+%\RequirePackage[colorlinks,urlcolor=blue]{hyperref}
+\RequirePackage{makeidx}
+\RequirePackage{pb-diagram}
+\RequirePackage{cite}
+
+\renewcommand{\baselinestretch}{1}
+%\renewcommand{\baselinestretch}{1.1} %для печати с большим интервалом
+
+ \textwidth=12.5cm
+ \oddsidemargin=1.6cm
+ \evensidemargin=1.6cm
+ \topmargin=0.5cm
+ \textheight=19.6cm
+
+\headsep=5mm
+
+\marginparwidth=36pt
+\parindent=3.5ex
+\tolerance=3000
+\hbadness=2000
+%\flushbottom
+\raggedbottom
+% подавить эффект "висячих стpок"
+\clubpenalty=10000
+\widowpenalty=10000
+
+% Печать во весь лист
+% INTERFACE
+\def\MinMargins{
+    \textheight=240mm
+    \textwidth=160mm
+    \oddsidemargin=5mm
+    \evensidemargin=5mm
+    \marginparwidth=36pt
+    \topmargin=-10mm
+    \footnotesep=3ex
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Оформление заголовков статей
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newlength\vskipBeforeTitle
+\newlength\vskipAfterTitle
+
+% Настройки заголовка статьи
+% INTERFACE
+\setlength\vskipBeforeTitle{4.5ex}
+\setlength\vskipAfterTitle{2ex}
+\newcommand\typeTitle[1]{\Large\rmfamily\bfseries #1}
+\newcommand\typeAuthor[1]{\normalsize\itshape\bfseries #1}
+\newcommand\typeOrganization[1]{\small #1}
+\newcommand\typeEmail[1]{\small\ttfamily #1}
+\newcommand\typeTocAuthorTitle[2]{{\unstretchspaces\itshape #1}\\ #2}
+
+% сделать неразрывные пробелы ещё и нерастяжимыми (например между фамилией и инициалами авторов)
+\newcommand\unstretchspaces{\catcode`~=\active\def~{\;}} 
+
+% Вывод заголовка
+\def\maketitle{%
+    \@BeginDocument
+    \vskip\vskipBeforeTitle\noindent
+    \parbox{\textwidth}{%
+        \begin{center}%
+            \vskip-1.5ex%
+            {\typeTitle\@title}\\
+            \vskip1ex%
+            {\typeAuthor\@author}%
+            \ifthenelse{\equal{\@email}{}}{}{\\\vskip0.5ex{\typeEmail\@email}}%
+            \ifthenelse{\equal{\@organization}{}}{}{\\\vskip0.5ex{\typeOrganization\@organization}}%
+        \end{center}%
+        \vskip-1.5ex\vskip\vskipAfterTitle
+    }%
+    % обработать список фамилий авторов, занести каждую в алфавитный указатель
+    %\newcommand\@trim[1]{\@ifnextchar\ \@gobble\relax#1}%
+    \@for\@indx@elem:=\@author\do{%
+        \index{\@indx@elem}%
+    }%
+    % в чистовом режиме записать в оглавление только авторов и название
+    \addcontentsline{toc}{mmrotitle}{%
+        \typeTocAuthorTitle{\@author}{\@title}%
+    }%
+    % в черновом режиме дописать в оглавление:
+    % имя файла, имена рецензентов, отметки о прохождении корректуры и рецензирования
+    \ifdraft{%
+        \ifthenelse{\equal{\@paper@corrected}{+}}%
+            {\addtocontents{toc}{\protect\par\protect\nopagebreak$\bigstar$\quad
+                \textsl{Статья прошла корректуру}}}%
+            {}%
+        \ifthenelse{\equal{\@paper@reviewed}{+}}%
+            {\addtocontents{toc}{\protect\par\protect\nopagebreak$\bigstar\bigstar$\quad
+                \textsl{Статья прошла рецензирование}}}%
+            {}%
+        \ifthenelse{\equal{\@paper@accepted}{+}}%
+            {\addtocontents{toc}{\protect\par\protect\nopagebreak$\bigstar\bigstar\bigstar$\quad
+                \textsl{Статья принята в печать}}}%
+            {}%
+        \ifthenelse{\equal{\@paper@accepted}{?}}%
+            {\addtocontents{toc}{\protect\par\protect\nopagebreak$\maltese$\quad
+                \textbf{Статью желательно доработать}}}%
+            {}%
+        \ifthenelse{\equal{\@paper@accepted}{!}}%
+            {\addtocontents{toc}{\protect\par\protect\nopagebreak$\maltese\maltese$\quad
+                \textbf{Статья не может быть принята без доработки}}}%
+            {}%
+        \ifthenelse{\equal{\@paper@accepted}{-}}%
+            {\addtocontents{toc}{\protect\par\protect\nopagebreak$\maltese\maltese\maltese$\quad
+                \textbf{Статья отвергнута}}}%
+            {}%
+        \addtocontents{toc}{%
+            \protect\par\protect\url{\@paper@name.TeX}%
+            \protect\ifthenelse{\protect\equal{\@reviewers@list}{}}%
+                {}%
+                {\quad(рецензенты и корректоры: \texttt{\@reviewers@list})%
+            }%
+        }%
+    }\fi
+    % сформировать колонтитулы
+    \markboth{\@author@short}{\@title@short}%
+    \par\nobreak\@afterheading
+}
+\def\@clear@title{%
+    \gdef\@author@short{}%
+    \gdef\@title@short{}%
+    \gdef\@author{}%
+    \gdef\@title{}%
+    \gdef\@organization{}%
+    \gdef\@email{}%
+}
+\renewcommand{\title}[2][]{\@clear@title
+    \gdef\@title{#2}%    {\uppercase{#2}}
+    \ifthenelse{\equal{#1}{}}%
+        {\gdef\@title@short{{#2}}}%
+        {\gdef\@title@short{{#1}}}%
+}
+\renewcommand{\author}[2][]{
+    \gdef\@author{#2}
+    \ifthenelse{\equal{#1}{}}%
+        {\gdef\@author@short{{#2}}}%
+        {\gdef\@author@short{{#1 и~др.}}}%
+}
+\newcommand{\organization}[1]{\gdef\@organization{{#1}}}
+\newcommand{\email}[1]{\gdef\@email{{#1}}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Переопределение колонтитулов
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newcommand\type@chapter@code{%
+    \ifthenelse{\equal{\@chapter@code}{}}{}{\typeChapterCode{\@chapter@code}}
+}
+\renewcommand{\ps@headings}{%
+    \renewcommand{\@oddfoot}{}%
+    \renewcommand{\@oddhead}{\parbox{\textwidth}{\footnotesize
+        \rightmark\hfill\type@chapter@code\quad\thepage\\[-2ex]\hrule}}%
+    \renewcommand{\@evenfoot}{}%
+    \renewcommand{\@evenhead}{\parbox{\textwidth}{\footnotesize
+        \thepage\quad\type@chapter@code\hfill\leftmark\\[-2ex]\hrule}}%
+}
+%\renewcommand{\ps@empty}{%
+%    \renewcommand{\@oddfoot}{}%
+%    \renewcommand{\@oddhead}{}%
+%    \renewcommand{\@evenfoot}{}%
+%    \renewcommand{\@evenhead}{}%
+%}
+%\let\ps@plain=\ps@empty
+\pagestyle{empty}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Оформление разделов
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Настройка разделов
+% INTERFACE
+%\newcommand\typeSection[1]{%
+%    \medskip
+%    \begin{flushleft}
+%        %\hangindent=3.5ex\hangafter=-5
+%        \noindent%
+%        {\normalfont\large\rmfamily\bfseries #1}%
+%    \end{flushleft}%
+%    \nobreak\par\nobreak\smallskip\nobreak
+%}
+\newcommand\typeSection[1]{%
+    \bigskip%\hangindent=3.5ex\hangafter=-3%
+    \noindent
+    {\normalfont\large\rmfamily\bfseries #1}%
+    \par\nobreak\medskip
+}
+% INTERFACE
+\newcommand\typeParagraph[1]{%
+    \smallskip{\normalfont\rmfamily\bfseries #1 }%
+}
+% INTERFACE
+%\newcommand\typeChapter[3]{%
+%    \hrule\vskip1pt\hrule height2pt\vskip4ex\noindent
+%    {\normalfont\LARGE\rmfamily\bfseries #3\raggedright\par}
+%    \vskip2ex\hrule height2pt\vskip1pt\hrule\vskip-1ex
+%    {\footnotesize\flushright Код раздела: #1 (#2)\par}
+%    \vskip6ex
+%}
+\newcommand\typeChapter[3]{%
+    %\hrule\vskip1pt\hrule height2pt\vskip4ex\noindent
+    {\normalfont\huge\rmfamily\bfseries\centering #3\par}
+    %\vskip1ex\hrule height2pt\vskip1pt\hrule\vskip-1ex
+    %{\footnotesize\flushright Код раздела: #1 (#2)\par}
+    \vskip8ex
+}
+% INTERFACE
+\newcommand\typeChapterCode[1]{{\footnotesize Проблемы теоретической кибернетики}}
+
+% Разделы
+\renewcommand\section[1]{\par\typeSection{#1}\@afterheading}
+\renewcommand\subsection[1]{\par\typeSection{#1}\@afterheading}
+\renewcommand\subsubsection[1]{\par\typeSection{#1}\@afterheading}
+\renewcommand\paragraph[1]{\par\typeParagraph{#1}\nobreak}
+\renewcommand\subparagraph[1]{\par\typeParagraph{#1}\nobreak}
+
+% Начало новой главы
+\def\newchapterpage{%
+    \pagestyle{headings}
+    \ifthenelse{\isodd{\thepage}}%s
+        {\newpage~\thispagestyle{empty}\newpage}    % \renewcommand{\@evenhead}{}
+        {\newpage}%
+    \thispagestyle{empty}%
+}
+\def\chaptercode#1{\gdef\@chapter@code{#1}}
+\chaptercode{??}
+% INTERFACE
+\def\chapter#1#2#3{%
+    \newchapterpage
+    \typeChapter{#1}{#2}{#3}
+    \addcontentsline{toc}{mmrochapter}{{\normalfont\rmfamily\bfseries #3}\protect\chaptercode{#1}}%
+    \addtocontents{toc}{\protect\nopagebreak}%
+    \addcontentsline{tos}{mmrochapter}{#3}% для краткого оглавления
+    \markboth{#3}{#3}%
+    \chaptercode{#1}%
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Оформление оглавления
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\renewcommand\contentsname{Содержание}
+
+% вёрстка одного пункта оглавления
+\newcommand\l@mmrotitle{\smallskip\@dottedtocline{1}{0ex}{3ex}}
+\newcommand\l@mmrochapter{\vskip2em\@dottedtocline{0}{0ex}{3ex}}
+
+% переопределение команды генерации оглавления
+\renewcommand\tableofcontents{%
+    \if@twocolumn\@restonecoltrue\onecolumn\else\@restonecolfalse\fi
+    \par\noindent{\normalfont\Large\rmfamily\bfseries\contentsname}\nopagebreak\par\bigskip
+    \def\@chapter@code{}%
+    \markboth{\contentsname}{\contentsname}%
+    \@starttoc{toc}%
+    \if@restonecol\twocolumn\fi
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Оформление алфавитного указателя авторов
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\renewenvironment{theindex}{%
+    \if@twocolumn\@restonecolfalse\else\@restonecoltrue\fi
+    \columnseprule \z@
+    \columnsep 35\p@
+    \twocolumn[{\normalfont\Large\rmfamily\bfseries Алфавитный указатель}\vskip2em]%
+    \markboth{Алфавитный указатель}{Алфавитный указатель}%
+    \parindent\z@
+    \parskip\z@ \@plus .3\p@\relax
+    \flushright
+    \let\item\@idxitem
+}{%
+    \if@restonecol\onecolumn\else\clearpage\fi
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Оформление библиографии, в каждой статье отдельно
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Оформление элементов пункта библиографии
+% INTERFACE
+%\def\BibUrl#1{\\{\footnotesize\url{http://#1}}}
+\def\BibAuthor#1{\emph{#1}}
+\def\BibTitle#1{#1}
+%\def\BibTitle#1{}  % Возможно, названия потом уберут везде
+\def\BibUrl#1{{\small\url{#1}}}
+\def\BibHttp#1{{\small\url{http://#1}}}
+\def\BibFtp#1{{\small\url{ftp://#1}}}
+\def\typeBibItem{\small\sloppy}
+
+% Переопределение горизонтальных и вертикальных промежутков в списке литературы
+\renewenvironment{thebibliography}[1]
+    {\section{\bibname}%
+        \list{\@biblabel{\@arabic\c@enumiv}}{%
+            \settowidth\labelwidth{\@biblabel{#1}}%
+            \leftmargin\labelwidth
+            \advance\leftmargin by 1ex%
+            \topsep=0pt\parsep=3pt\itemsep=0ex%
+            \@openbib@code
+            \usecounter{enumiv}%
+            \let\p@enumiv\@empty
+            \renewcommand\theenumiv{\@arabic\c@enumiv}%
+        }%
+        \typeBibItem
+%        \clubpenalty4000%
+%        \@clubpenalty\clubpenalty
+%        \widowpenalty4000%
+%        \sfcode`\.\@m%
+    }{%
+        \def\@noitemerr{\@latex@warning{Empty `thebibliography' environment}}%
+        \endlist
+    }
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Решение проблемы с конфликтом одноимённых меток, определённых в разных статьях
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Счётчик статей в сборнике для доопределения меток
+\newcounter{PaperNo}
+\def\thePaperNo{\arabic{PaperNo}}
+
+% Доопределение меток в ссылках (добавление :\thePaperNo: в стандартные определения)
+\let\globallabel\label
+\let\globalltx@label\ltx@label
+\let\globalref\ref
+\let\globalpageref\pageref
+\let\globalcitex\@citex
+\let\globalbibitem\bibitem
+\def\mmro@label#1{\globallabel{#1:\thePaperNo:}}
+\def\mmro@ref#1{\globalref{#1:\thePaperNo:}}
+\def\mmro@pageref#1{\globalpageref{#1:\thePaperNo:}}
+\def\mmro@bibitem#1{\globalbibitem{#1:\thePaperNo:}}
+\def\mmro@citex[#1]#2{%
+  \let\@citea\@empty
+  \@cite{\@for\@citeb:=#2\do
+    {\@citea\def\@citea{,\penalty\@m\ }%
+     \edef\@citeb{\expandafter\@firstofone\@citeb\@empty:\thePaperNo:}%
+     \if@filesw\immediate\write\@auxout{\string\citation{\@citeb}}\fi
+     \@ifundefined{b@\@citeb}{\mbox{\reset@font\bfseries ?}%
+       \G@refundefinedtrue
+       \@latex@warning{Citation `\@citeb' on page \thepage \space undefined}}%
+       {\hbox{\csname b@\@citeb\endcsname}}}}{#1}%
+}
+
+% Переопределение команд работы с ссылками на локальные метки
+% INTERFACE
+\newcommand\SetPrivateLabeling{%
+    \let\label\mmro@label
+    \let\ltx@label\mmro@label % для корректной работы AmSLaTeX
+    \let\ref\mmro@ref
+    \let\pageref\mmro@pageref
+    \let\@citex\mmro@citex
+    \let\bibitem\mmro@bibitem
+}
+
+% При необходимости можно откатить изменения всех команд, работающих с метками
+% INTERFACE
+\newcommand\RestoreDefaultLabeling{
+    \let\label\globallabel
+    \let\ltx@label\globalltx@label
+    \let\ref\globalref
+    \let\pageref\globalpageref
+    \let\@citex\globalcitex
+    \let\bibitem\globalbibitem
+}
+
+% Действия, которые делаются в начале каждой статьи
+% (как в сборнике, так и при отдельной компиляции)
+\newcommand{\@BeginDocument}{
+    \pagestyle{headings}%
+    % Переопределение списков с меньшими интервалами (слегка экономим бумагу)
+    \renewcommand{\@listi}{%
+        \topsep=\smallskipamount % вокруг списка
+        \parsep=0pt% между абзацами внутри пункта
+        \parskip=0pt% между абзацами
+        \itemsep=0pt% между пунктами
+        \itemindent=0pt% абзацный выступ
+        \labelsep=1.5ex% расстояние до метки
+        \leftmargin=3.5ex% отступ слева
+        \rightmargin=0pt} % отступ справа
+    \renewcommand{\@listii}{\@listi\topsep=0pt}%
+    \renewcommand{\@listiii}{\@listii}%
+    \renewcommand{\@listiv}{\@listii}%
+    \renewcommand{\labelitemi}{---}%
+    \renewcommand{\labelitemii}{---}%
+    \renewcommand{\labelitemiii}{---}%
+    \renewcommand{\labelitemiv}{---}%
+    \renewcommand{\theenumii}{\asbuk{enumii}}%
+    % Обнуление счётчиков
+    \setcounter{equation}{0}%
+    \setcounter{table}{0}%
+    \setcounter{figure}{0}%
+    \setcounter{algorithm}{0}%
+    \setcounter{footnote}{0}%
+    \setcounter{theorem}{0}%
+    \setcounter{corollary}{0}%
+    \setcounter{definition}{0}%
+    \setcounter{hypothesis}{0}%
+    \setcounter{problem}{0}%
+    \setcounter{example}{0}%
+    \setcounter{remark}{0}%
+    \setcounter{proposition-rm}{0}%
+    \setcounter{Theorem}{0}%
+    \setcounter{Corollary}{0}%
+    \setcounter{Def}{0}%
+    \setcounter{Hypothesis}{0}%
+    \setcounter{Problem}{0}%
+    \setcounter{Example}{0}%
+    \setcounter{Remark}{0}%
+    \setcounter{State-rm}{0}%
+% счётчик замечаний рецензента
+    \setcounter{mmroReviewerNote}{0}%
+    % счётчик статей
+    \refstepcounter{PaperNo}%
+    \hyphenation{ммро рффи}%
+}
+
+% Действия, которые делаются в конце каждой статьи
+% (только для сборника; при отдельной компиляции статьи всё это не нужно)
+\newcommand\@EndDocument{%
+    % архивируются статьи, прошедшие корректуру и/или содержащие \REVIEWERNOTE
+    \ifthenelse{\equal+{\@paper@corrected}\or\not\equal{\themmroReviewerNote}{0}}{%
+        \@write@corrauthors@bat{\ZipAdd \@paper@name \@paper@name.tex \@paper@name.pdf}%
+        \@for\@pix@elem:=\@paper@pixlist\do{%
+            \@write@corrauthors@bat{\ZipAdd \@paper@name \@pix@elem}%
+        }%
+    }{}%
+    % в оглавление вставляется отметка о количестве замечаний рецензента
+    \ifthenelse{\equal{\themmroReviewerNote}{0}}{}{%
+        \ifdraft{% если черновая печать
+            \addtocontents{toc}{%
+                \protect\par
+                \protect\nopagebreak$\checkmark\kern-1.36ex\checkmark$\quad
+                \textsl{В текст статьи включены замечания рецензента: \themmroReviewerNote}}%
+        }\fi
+    }%
+    % пишется информация в текстовый файл для базы статей
+    \@write@papers@table{%
+        \@paper@name|% имя файла
+        \@chapter@code|% код раздела
+        \@title|% название статьи
+        \@author|% авторы или список авторов через запятую
+        \@organization|% организация
+        \@email|% адрес или список адресов, как их указали авторы
+        \@reviewers@list|% список рецензентов и корректоров
+        \@paper@corrected|% + прошла корректуру / - не прошла
+        \@paper@reviewed|% + прошла рецензирование / - не прошла
+        \@paper@accepted|% + принята в печать / ? желательна доработка / ! необходима доработка / - не принята
+        \themmroReviewerNote % количество замечаний \REVIEWERNOTE, вставленных рецензентами в текст статьи
+    }%
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Вставка статей, отслеживание файлов, сборка пакетов для авторов и рецензентов
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Вспомогательные файлы, генерируемые при компиляции сборника
+\newwrite\@papers@table
+\newwrite\@reviewers@bat
+\newwrite\@authors@bat
+\newwrite\@corrauthors@bat
+
+% Команда добавления файла в архив, записываемая в bat-файлы
+% INTERFACE
+\newcommand\ZipAdd[1]{rar a #1.rar }
+%\newcommand\ZipAdd[1]{zzip -add #1.zip }
+
+% Окружение для вставки статей целиком
+\newenvironment{papers}{
+    \gdef\@paper@name{}%
+    \gdef\@paper@pixlist{}%
+    \renewcommand{\documentclass}[2][0]{\relax}%
+    \renewcommand{\usepackage}[2][0]{\relax}%
+    \renewcommand\RestoreDefaultLabeling{\relax}%
+    \ifdraft\relax\else\NOREVIEWERNOTES\fi
+    \chaptercode{}
+    \gdef\typeChapterCode##1{(##1)}
+    \renewenvironment{document}{\SetPrivateLabeling}{\@EndDocument}%
+    % создание файла со списком всех статей papers.tab
+    \immediate\openout\@papers@table=_papers.tab
+    \gdef\@write@papers@table##1{%
+        \immediate\write\@papers@table{##1}%
+    }%
+    % создание файла reviewers.bat
+    \immediate\openout\@reviewers@bat=reviewers.bat
+    \gdef\@write@reviewers@bat##1{%
+        \immediate\write\@reviewers@bat{##1}%
+    }%
+    % создание файла authors.bat
+    \immediate\openout\@authors@bat=authors.bat
+    \gdef\@write@authors@bat##1{%
+        \immediate\write\@authors@bat{##1}%
+    }%
+    % создание файла corr-authors.bat
+    % архивируются только статьи, прошедшие корректуру и/или содержащие \REVIEWERNOTE
+    \immediate\openout\@corrauthors@bat=corr-authors.bat
+    \gdef\@write@corrauthors@bat##1{%
+        \immediate\write\@corrauthors@bat{##1}%
+    }%
+}{%
+    \chaptercode{}
+}
+
+\def\@paper@name{\jobname}% имя текущей статьи
+\def\@paper@pixlist{}% список картинок в статье
+\def\@reviewers@list{}% список рецензентов и корректоров для текущей статьи
+\def\@@reviewer{*}% рецензент, для которого собирается полный текст; по умолчанию все рецензенты
+
+% подсчет числа статей
+\newcounter{mmroTotal}
+\newcounter{mmroCorrected}
+\newcounter{mmroReviewed}
+\newcounter{mmroAccepted}
+\newcounter{mmroMayBeCompleted}
+\newcounter{mmroMustBeCompleted}
+\newcounter{mmroRejected}
+\def\@paper@corrected{-}
+\def\@paper@reviewed{-}
+\def\@paper@accepted{+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Команда включения статьи в сборник с отметками о текущем состоянии статьи:
+% \paper123{автор}[рецензент]
+%       1   ={+/-}  -статья прошла/нет корректуру
+%        2  ={+/-}  -статья прошла/нет рецензирование
+%         3 ={+/-/?/!}  -статья принята/отвергнута/может/должна быть доработана
+% при включении статей полагается: ?=+  !=-
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Включать в сборник статьи только с этим набором отметок (* для всех)
+% INTERFACE
+\def\FILTER#1#2#3{%
+    \gdef\@@corrected{#1}%
+    \gdef\@@reviewed{#2}%
+    \gdef\@@accepted{#3}%
+    \@ifnextchar[\@FILTER@reviewer\relax%
+}
+\def\@FILTER@reviewer[#1]{\gdef\@@reviewer{#1}}
+\ifdraft
+    {\FILTER***}
+\else
+    {\FILTER**+}
+\fi
+
+% Команда для вставки статьи целиком
+% INTERFACE
+\def\paper#1#2#3#4{%
+    \gdef\@paper@corrected{#1}
+    \gdef\@paper@reviewed{#2}
+    \gdef\@paper@accepted{#3}
+    \gdef\@paper@name{#4}\refstepcounter{mmroTotal}%
+    \gdef\@paper@pixlist{}
+    \ifthenelse{\equal+{#1}}{\refstepcounter{mmroCorrected}}{}%
+    \ifthenelse{\equal+{#2}}{\refstepcounter{mmroReviewed}}{}%
+    \ifthenelse{\equal+{#3}}{\refstepcounter{mmroAccepted}}{}%
+    \ifthenelse{\equal?{#3}}{\refstepcounter{mmroMayBeCompleted}}{}%
+    \ifthenelse{\equal!{#3}}{\refstepcounter{mmroMustBeCompleted}}{}%
+    \ifthenelse{\equal-{#3}}{\refstepcounter{mmroRejected}}{}%
+    \@write@authors@bat{\ZipAdd \@paper@name \@paper@name.tex \@paper@name.pdf}%
+    \@ifnextchar[\@paper@ii\@paper@i
+}
+\def\@paper@i{%
+    \gdef\@reviewers@list{}%
+    \ifthenelse{\equal{\@@reviewer}{}\or\equal{\@@reviewer}{*}}{\@paper}{}%
+    \gdef\@paper@name{}%
+}
+\newboolean{bReviewer}
+\def\@paper@ii[#1]{%
+    \gdef\@reviewers@list{#1}%
+    \setboolean{bReviewer}{false}%
+    \@for\@reviewer@name:=\@reviewers@list\do{%
+        \ifthenelse{\equal{\@@reviewer}{\@reviewer@name}}
+            {\setboolean{bReviewer}{true}}%
+            {}%
+    }%
+    \ifthenelse{\boolean{bReviewer}\or\equal{\@@reviewer}{*}}{%
+        \@paper
+        \@for\@reviewer@name:=\@reviewers@list\do{%
+            \ifthenelse{\equal{\@@reviewer}{\@reviewer@name}\or\equal{\@@reviewer}{*}}
+                {\@write@reviewers@bat{\ZipAdd \@reviewer@name \@paper@name.tex \@paper@name.pdf}}%
+                {}%
+        }%
+    }{}%
+    \gdef\@paper@name{}%
+}
+\def\@paper{%
+    \begingroup
+    \gdef\@paper@accepted@{\@paper@accepted}%
+    \ifthenelse{\equal?{\@paper@accepted}}{\gdef\@paper@accepted@{+}}{}% всё-таки включаем
+    \ifthenelse{\equal!{\@paper@accepted}}{\gdef\@paper@accepted@{-}}{}% пока не пришла доработка, не включаем
+    \ifthenelse{%
+        \(\equal{\@paper@corrected}{\@@corrected}\or \equal{\@@corrected}{*}\) \and
+        \(\equal{\@paper@reviewed}{\@@reviewed}\or  \equal{\@@reviewed}{*}\) \and
+        \(\equal{\@paper@accepted@}{\@@accepted}\or  \equal{\@@accepted}{*}\)
+    }%
+        {\input{\@paper@name}}%
+        {}%
+    \endgroup
+}
+
+% Занести имя включаемого графического файла в архивы и огравление
+\newcommand\@include@graphics@file[1]{%
+    % каждому рецензенту добавить данный графический файл в архив
+    \@for\@reviewer@name:=\@reviewers@list\do{%
+        \ifthenelse{\equal{\@@reviewer}{\@reviewer@name}\or\equal{\@@reviewer}{*}}
+            {\@write@reviewers@bat{\ZipAdd \@reviewer@name #1}}%
+            {}%
+    }%
+    % сформировать список всех включаемых графических файлов
+    \ifthenelse{\equal{\@paper@name}{}}{}{%
+        \@write@authors@bat{\ZipAdd \@paper@name #1}%
+        \xdef\@old@paper@pixlist{\@paper@pixlist}
+        \ifthenelse{\equal{\@old@paper@pixlist}{}}%
+            {\gdef\@paper@pixlist{#1}}%
+            {\xdef\@paper@pixlist{\@old@paper@pixlist,#1}}%
+    }
+    % в черновом режиме в оглавление вставляются отметки о включённых графических файлах
+    \ifdraft{%
+        \addtocontents{toc}{\protect\par\protect\nopagebreak$\blacksquare$\quad\protect\url{#1}}%
+    }\fi
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Поддержка рецензирования и корректуры
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newcounter{mmroReviewerNote}
+\newcounter{mmroTotalReviewedPapers}
+\newcounter{mmroTotalReviewerNotes}
+\newcounter{mmroFinalReviewerNotes}
+
+% Проглотить следующий пробел
+\def\gobblespace{\@ifnextchar\ {\hspace{-1ex}}\relax}
+
+% Вставка замечания рецензента
+\newcommand\typeREVIEWERNOTE[1]{{%
+    \itshape\bfseries%\color{red}%
+    \marginpar{\raisebox{-1ex}{%\color{red}%
+        $\checkmark\!_{\themmroReviewerNote}$%
+    }}%
+    \{#1\}
+}\gobblespace}
+\newcommand\REVIEWERNOTE[1]{%
+    \refstepcounter{mmroReviewerNote}%
+    \refstepcounter{mmroTotalReviewerNotes}%
+    \ifthenelse{\equal{\themmroReviewerNote}{1}}%
+        {\refstepcounter{mmroTotalReviewedPapers}}%
+        {}%
+    \@type@REVIEWERNOTE{#1}%
+}
+
+% Итоговое замечание в конце отрецензированной статьи
+\newcommand\typeFINALREVIEWERNOTE{%
+    \par\noindent
+    \begin{minipage}{\textwidth}\parindent=3.5ex
+        \par\bigskip\hrule\nopagebreak\bigskip
+        Всего сделано замечаний: \themmroReviewerNote.
+        \par\medskip
+        Уважаемые авторы!
+        \par\medskip
+        Ваша статья, скорее всего, уже прошла стадию корректуры.
+        Убедительная просьба сохранить редакторские правки
+        при подготовке финальной версии статьи.
+        Для этого, пожалуйста,
+        исправляйте присланный Вам вариант статьи, а~не~Ваш исходный вариант.
+        \par
+        Рецензенты могли вставлять свои замечания прямо в~текст статьи
+        с~помощью команды \texttt{\char"5C REVIEWERNOTE}.
+        Удалять их из~документа не~нужно.
+        При печати сборника они не~будут видны.
+        \par
+        Чтобы распечатать статью, скрыв замечания рецензентов,
+        включите в~преамбулу команду
+        \texttt{\char"5C NOREVIEWERNOTES}.
+        \par\nopagebreak\medskip\hrule\nopagebreak\bigskip
+    \end{minipage}
+}
+\newcommand\FINALREVIEWERNOTE{%
+    \refstepcounter{mmroFinalReviewerNotes}%
+    \ifthenelse{\equal{\@paper@name}{\jobname}}{% если печать отдельного файла
+        \@type@FINALREVIEWERNOTE
+    }{}%
+}
+
+% Три типа итоговых замечаний с~окончательным решением о принятии/доработке/отказе
+\newcommand\typeACCEPTNOTE{\par
+    {\itshape\bfseries 
+    Статья принята к~публикации в~сборнике.}\par
+}
+\newcommand\typeAMENDNOTE{\par
+    {\itshape\bfseries 
+    Статья принята к~публикации в~сборнике, однако желательна её доработка.}\par
+}
+\newcommand\typeREJECTNOTE{\par
+    {\itshape\bfseries 
+    Статья может быть принята к~публикации в~сборнике только после существенной переработки.}\par
+}
+
+\newcommand\ACCEPTNOTE{%
+    \refstepcounter{mmroFinalReviewerNotes}%
+    \ifthenelse{\equal{\@paper@name}{\jobname}}{% если печать отдельного файла
+        \@type@ACCEPTNOTE
+    }{}%
+}
+\newcommand\AMENDNOTE{%
+    \refstepcounter{mmroFinalReviewerNotes}%
+    \ifthenelse{\equal{\@paper@name}{\jobname}}{% если печать отдельного файла
+        \@type@AMENDNOTE
+    }{}%
+}
+\newcommand\REJECTNOTE{%
+    \refstepcounter{mmroFinalReviewerNotes}%
+    \ifthenelse{\equal{\@paper@name}{\jobname}}{% если печать отдельного файла
+        \@type@REJECTNOTE
+    }{}%
+}
+
+\newcommand\@type@REVIEWERNOTE[1]{\typeREVIEWERNOTE{#1}}
+\newcommand\@type@FINALREVIEWERNOTE{\typeFINALREVIEWERNOTE}
+\newcommand\@type@ACCEPTNOTE{\par\bigskip\hrule\nopagebreak\bigskip\typeACCEPTNOTE\typeFINALREVIEWERNOTE}
+\newcommand\@type@AMENDNOTE{\par\bigskip\hrule\nopagebreak\bigskip\typeAMENDNOTE\typeFINALREVIEWERNOTE}
+\newcommand\@type@REJECTNOTE{\par\bigskip\hrule\nopagebreak\bigskip\typeREJECTNOTE\typeFINALREVIEWERNOTE}
+
+% Отмена вывода всех рецензентских замечаний 
+\newcommand\NOREVIEWERNOTES{%
+    \renewcommand\@type@REVIEWERNOTE[1]{\gobblespace}
+    \renewcommand\@type@FINALREVIEWERNOTE{\gobblespace}
+    \renewcommand\@type@ACCEPTNOTE{\gobblespace}
+    \renewcommand\@type@AMENDNOTE{\gobblespace}
+    \renewcommand\@type@REJECTNOTE{\gobblespace}
+}
+
+% Полная статистика по всему сборнику
+\newcommand\@type@FINALSTAT{%
+    \newpage\chaptercode{}
+    %\bigskip\hrule\vskip1pt\hrule height2pt\bigskip
+    {\normalfont\Large\rmfamily\bfseries Итоговая статистика статей}
+    \vskip2em
+    \par
+    Всего подано статей: \themmroTotal.
+    \par
+    Статей, прошедших корректуру: \themmroCorrected.
+    \\\par
+    Статей, прошедших рецензирование: \themmroReviewed.
+    \par
+    Всего статей c \texttt{\char"5C REVIEWERNOTE}: \themmroTotalReviewedPapers\
+    (всего сделано замечаний: \themmroTotalReviewerNotes).
+    \par
+    Всего статей с \texttt{\char"5C FINALREVIEWERNOTE}: \themmroFinalReviewerNotes.
+    \\\par
+    Статей, отмеченных как принятых в~печать: \themmroAccepted.
+    \par
+    Статей, которые желательно доработать: \themmroMayBeCompleted.
+    \par
+    Статей, которые не могут быть опубликованы без доработки: \themmroMustBeCompleted.
+    \par
+    Статей, которые уже точно отброшены: \themmroRejected.
+    \\\par
+    Статей в~этой версии сборника: \thePaperNo.
+    \par
+    Всего иллюстраций в~этой версии сборника: \thePictureNo.
+}
+% INTERFACE
+\newcommand\FINALSTAT{%
+    \ifdraft\@type@FINALSTAT\fi
+}
+
+\newcounter{TodoCount}
+\def\thevkTodoCount{\arabic{TodoCount}}
+% INTERFACE
+\newcommand\TODO[1]{{%
+    \small\color{red}%
+    \marginpar{\raisebox{-1ex}{\color{red}ToDo$^{\refstepcounter{TodoCount}\theTodoCount}$}}%
+    \{#1\}
+}}
+%\renewcommand\TODO[1]{\gobblespace}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Для включения графиков пакетом graphicx
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\DeclareGraphicsRule{.wmf}{bmp}{}{}
+\DeclareGraphicsRule{.emf}{bmp}{}{}
+\DeclareGraphicsRule{.bmp}{bmp}{}{}
+\DeclareGraphicsRule{.png}{bmp}{}{}
+% Для подписей на рисунках, вставляемых includegraphics
+\def\XYtext(#1,#2)#3{\rlap{\kern#1\lower-#2\hbox{#3}}}
+
+% Переопределение вставки графики
+\newcounter{PictureNo}
+\let\IncludeGraphics=\includegraphics
+\renewcommand\includegraphics[2][]{%
+    \IncludeGraphics[#1]{#2}%
+    \refstepcounter{PictureNo}%
+    % если идёт вёрстка сборника, включить картинку в архивы
+    \ifthenelse{\equal{\@paper@name}{\jobname}}%
+        {}%
+        {\@include@graphics@file{#2}}%
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Плавающие иллюстрации
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\setcounter{topnumber}{9}
+\setcounter{totalnumber}{9}
+\renewcommand\topfraction{1.0}
+\renewcommand\textfraction{0.0}
+\renewcommand\floatpagefraction{0.01} % float-страниц быть вообще не должно - это чтобы их лучше видеть ;)
+\setlength\floatsep{2ex}
+\setlength\textfloatsep{2.5ex}
+\setlength\intextsep{2.5ex}
+\setlength\abovecaptionskip{2ex}
+
+\def\@caption@left@right@skip{\leftskip=3.5ex\rightskip=3.5ex}
+\def\nocaptionskips{\def\@caption@left@right@skip{}}
+
+\renewcommand\@makecaption[2]{%
+    \vskip\abovecaptionskip
+    \sbox\@tempboxa{\small\textbf{#1.} #2}%
+    \ifdim\wd\@tempboxa >\hsize
+        {\@caption@left@right@skip\small\textbf{#1.} #2\par}
+    \else
+        \global\@minipagefalse
+        \hb@xt@\hsize{\hfil\box\@tempboxa\hfil}%
+    \fi
+    %\vskip\belowcaptionskip
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Некоторые переопределения для унификации математики
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\renewcommand{\geq}{\geqslant}
+\renewcommand{\leq}{\leqslant}
+\renewcommand{\ge}{\geqslant}
+\renewcommand{\le}{\leqslant}
+\renewcommand{\emptyset}{\varnothing}
+\renewcommand{\kappa}{\varkappa}
+\renewcommand{\phi}{\varphi}
+\renewcommand{\epsilon}{\varepsilon}
+
+\renewcommand{\vec}[1]{\mathbf{#1}}
+\renewcommand{\complement}{\mathsf{C}}
+\newcommand{\T}{^{\text{\rm т}}}
+
+\newcommand\myop[1]{\mathop{\operator@font #1}\nolimits}
+\newcommand\mylim[1]{\mathop{\operator@font #1}\limits}
+
+\renewcommand\lim{\mylim{lim}}
+\renewcommand\limsup{\mylim{lim\,sup}}
+\renewcommand\liminf{\mylim{lim\,inf}}
+\renewcommand\max{\mylim{max}}
+\renewcommand\min{\mylim{min}}
+\renewcommand\sup{\mylim{sup}}
+\renewcommand\inf{\mylim{inf}}
+\newcommand\argmin{\mylim{arg\,min}}
+\newcommand\argmax{\mylim{arg\,max}}
+\newcommand\Tr{\myop{tr}}
+\newcommand\rank{\myop{rank}}
+\newcommand\diag{\myop{diag}}
+\newcommand\sign{\mylim{sign}}
+\newcommand\const{\myop{const}}
+
+% теория вероятностей
+\newcommand{\erf}{\myop{erf}}
+\newcommand{\Expect}{\mathsf{E}}
+\newcommand{\Var}{\mathsf{D}}
+\newcommand\Normal{\mathcal{N}}
+\newcommand{\cond}{\mspace{3mu}{|}\mspace{3mu}}
+
+\def\QQ{\mathbb{Q}}
+\def\RR{\mathbb{R}}
+\def\NN{\mathbb{N}}
+\def\ZZ{\mathbb{Z}}
+\def\LL{\mathbb{L}}
+\def\II{\mathbb{I}}
+\def\DD{\mathbb{D}}
+
+\def\cL{\mathscr{L}}
+\def\cF{\mathscr{F}}
+\def\cG{\mathscr{G}}
+\def\cB{\mathscr{B}}
+\def\cK{\mathscr{K}}
+
+\def\cJ{\mathcal{J}}
+\def\cN{\mathcal{N}}
+
+\def\fF{\mathfrak{F}}
+\def\fI{\mathfrak{I}}
+\def\fM{\mathfrak{M}}
+\def\fR{\mathfrak{R}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Перечни
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Нумерованный перечень со скобками
+\newenvironment{enumerate*}
+{%
+    \begingroup
+    \renewcommand{\@listi}{%
+        \topsep=\smallskipamount % вокруг списка
+        \parsep=0pt% между абзацами внутри пункта
+        \parskip=0pt% между абзацами
+        \itemsep=0pt% между пунктами
+        \itemindent=0ex% абзацный выступ
+        \labelsep=1.5ex% расстояние до метки
+        \leftmargin=7ex% отступ слева
+        \rightmargin=0pt} % отступ справа
+    \begin{enumerate}%
+    \renewcommand\labelenumi{\theenumi)}%
+}{%
+    \end{enumerate}%
+    \endgroup
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Новые теоремоподобные окружения
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\theoremstyle{plain}
+% Шаманские притоптывания, чтобы ставить точку после номера теоремы
+\gdef\th@plain{\normalfont
+    \def\@begintheorem##1##2{%
+        \item[\hskip\labelsep\theorem@headerfont ##1\ ##2. ]}%
+    \def\@opargbegintheorem##1##2##3{%
+        \item[\hskip\labelsep\theorem@headerfont ##1\ ##2 (##3). ]}%
+}
+% Теоремы наклонным шрифтом
+\theorempreskipamount=\smallskipamount
+\theorempostskipamount=\smallskipamount
+\theorembodyfont{\rmfamily\slshape}
+\newtheorem{theorem}{Теорема}
+\newtheorem{lemma}[theorem]{Лемма}
+\newtheorem{proposition}[theorem]{Утверждение}
+\newtheorem{corollary}{Следствие}
+\newtheorem{Theorem}{Теорема}
+\newtheorem{Lemma}[Theorem]{Лемма}
+\newtheorem{State}[Theorem]{Утверждение}
+\newtheorem{Corollary}{Следствие}
+\newtheorem{Def}{Определение}
+\newtheorem{Definition}{Определение}
+% Теоремы прямым шрифтом
+\theorembodyfont{\rmfamily}
+\newtheorem{definition}{Определение}
+\newtheorem{axiom}{Аксиома}
+\newtheorem{hypothesis}{Гипотеза}
+\newtheorem{problem}{Задача}
+\newtheorem{example}{Пример}
+\newtheorem{remark}{Замечание}
+\newtheorem{proposition-rm}{Утверждение}
+\newtheorem{Axiom}{Аксиома}
+\newtheorem{Hypothesis}{Гипотеза}
+\newtheorem{Problem}{Задача}
+\newtheorem{Example}{Пример}
+\newtheorem{Remark}{Замечание}
+\newtheorem{State-rm}{Утверждение}
+
+\newcommand{\qedsymb}{\rule{0.2em}{0.5em}}
+\newenvironment{proof}{\noindent{\itshape Доказательство. }}{\ \hfill\qedsymb\par\smallskip}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Оформление алгоритмов в пакетах algorithm, algorithmic
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% переопределения (русификация) управляющих конструкций:
+\newcommand{\algKeyword}[1]{{\bf #1}}
+\renewcommand{\algorithmicrequire}{\rule{0pt}{2.5ex}\algKeyword{Вход:}}
+\renewcommand{\algorithmicensure}{\algKeyword{Выход:}}
+\renewcommand{\algorithmicend}{\algKeyword{конец}}
+\renewcommand{\algorithmicif}{\algKeyword{если}}
+\renewcommand{\algorithmicthen}{\algKeyword{то}}
+\renewcommand{\algorithmicelse}{\algKeyword{иначе}}
+\renewcommand{\algorithmicelsif}{\algorithmicelse\ \algorithmicif}
+\renewcommand{\algorithmicendif}{\algorithmicend\ \algorithmicif}
+\renewcommand{\algorithmicfor}{\algKeyword{для}}
+\renewcommand{\algorithmicforall}{\algKeyword{для всех}}
+\renewcommand{\algorithmicdo}{}
+\renewcommand{\algorithmicendfor}{\algorithmicend\ \algorithmicfor}
+\renewcommand{\algorithmicwhile}{\algKeyword{пока}}
+\renewcommand{\algorithmicendwhile}{\algorithmicend\ \algorithmicwhile}
+\renewcommand{\algorithmicloop}{\algKeyword{цикл}}
+\renewcommand{\algorithmicendloop}{\algorithmicend\ \algorithmicloop}
+\renewcommand{\algorithmicrepeat}{\algKeyword{повторять}}
+\renewcommand{\algorithmicuntil}{\algKeyword{пока}}
+%\renewcommand{\algorithmiccomment}[1]{{\footnotesize // #1}}
+\renewcommand{\algorithmiccomment}[1]{{\quad\sl // #1}}
+
+% Мои дополнительные команды для описания алгоритмов
+\newcommand{\Procedure}[1]{{\tt #1}}
+\newcommand{\Proc}[1]{\text{\tt #1}}
+\def\BEGIN{\\[1ex]\hrule\vskip 1ex}
+\def\PARAMS{\renewcommand{\algorithmicrequire}{\algKeyword{Параметры:}}\REQUIRE}
+\def\END{\vskip 1ex\hrule\vskip 1ex}
+%\def\RETURN{\algKeyword{вернуть} }
+\def\EXIT{\algKeyword{выход}}
+\def\IFTHEN#1{\STATE\algorithmicif\ #1 {\algorithmicthen}}
+\def\PROCEDURE#1{\medskip\STATE\algKeyword{ПРОЦЕДУРА} \Procedure{#1}}
+
+% Ещё несколько переопределений для алгоритмов
+\renewcommand{\listalgorithmname}{Список алгоритмов}
+\floatname{algorithm}{Алгоритм}
+\floatplacement{algorithm}{!t}
+
+% чтобы поставить точечку после номера алгоритма в \caption:
+\renewcommand\floatc@ruled[2]{\vskip2pt\textbf{#1.} #2\par}
+
+% чтобы можно было ссылаться на шаги алгоритма
+\newenvironment{Algorithm}[1][t]%
+    {\begin{algorithm}[#1]\begin{algorithmic}[1]%
+        \renewcommand{\ALC@it}{%
+            \refstepcounter{ALC@line}% удивительно, почему это не сделал Peter Williams?
+            \addtocounter{ALC@rem}{1}%
+            \ifthenelse{\equal{\arabic{ALC@rem}}{1}}{\setcounter{ALC@rem}{0}}{}%
+            \item}}%
+    {\end{algorithmic}\end{algorithm}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Рисование нейронных сетей и диаграмм
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newenvironment{network}%
+    {\catcode`"=12\begin{xy}<1ex,0ex>:}%
+    {\end{xy}\catcode`"=13}
+\def\nnNode"#1"(#2)#3{\POS(#2)*#3="#1"}
+\def\nnLink"#1,#2"#3{\POS"#1"\ar #3 "#2"}
+\def\nnSig{%
+    \underline{{}^\sigma\:\mathstrut}\vrule%
+    \overline{\phantom{()}}}
+\def\nnTheta{%
+    \underline{{}^\theta\:\mathstrut}\vrule%
+    \overline{\phantom{()}}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%   П Р О Ч Е Е
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Для таблиц: невидимая вертикальная линейка немного расширяет заголовок
+\newcommand{\headline}{\hline\rule{0pt}{2.5ex}}
+
+% Выделение - всегда курсивом
+\renewcommand\emph[1]{\textit{#1}}
+
+% Перенос знака операции на следующую строку
+\newcommand\brop[1]{#1\discretionary{}{\hbox{$#1$}}{}}

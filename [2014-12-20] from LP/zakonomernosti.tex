@@ -1,0 +1,1062 @@
+\documentclass[12pt,russian]{article}
+%\documentstyle{article}
+\usepackage{amsmath,amssymb,latexsym}
+\usepackage[russian]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage[T2A]{fontenc}
+%\setlength{\topmargin}{15mm} \setlength{\headheight}{0pt}
+%\setlength{\headsep}{0pt} \setlength{\topskip}{0pt}
+
+
+\topmargin=13mm           % веpхнее поле свеpх одного дюйма (до колонтитула)
+\textwidth=160mm           % шиpина текста
+\oddsidemargin=0.6cm % отступ от левого однодюймового поля
+\textheight=235mm % высота текста, pассчитываемая так:
+\headsep=0mm % pасстояние от колонтитула (хоть и пустого) до текста
+\hoffset=0mm % сдвиг всей стpаницы впpаво
+\voffset=-10mm % сдвиг всей стpаницы вниз
+\begin{document}
+%\setcounter{page}{44}
+
+%{\large
+
+%\pagestyle{empty}
+%\vspace*{15mm}
+
+\sloppy {
+\section{Закономерности в деревьях вывода слов стохастического КС-языка
+}
+
+\vspace*{3mm}
+
+\medskip
+
+Для доказательства основного результата раздела предварительно докажем две леммы.
+
+Через $R_X(n)$ обозначим выражение
+$$
+\prod_{j=1}^k \left(1-Q_j(n)\right)^{x_j}-
+\prod_{j=1}^k \left(1-Q_j(n-1)\right)^{x_j},
+$$
+где $X=(x_1, \ldots, x_k)$ --- целочисленный неотрицательный вектор, $Q_j(n)$ --- вероятности продолжения ($j=1,\ldots,k$), $k$ --- общее число нетерминалов в грамматике.
+
+\medskip
+
+\textbf{Лемма 4}.
+{\em
+При $n \rightarrow \infty$
+$$
+\sum_{l=1}^k x_l P(D_l^{n}) \cdot (1+\varphi_l(n-1)) \cdot
+\prod_{j=1}^k \left(1-Q_j(n-1)\right)^{x_j}
+\le R_X(n) \le
+$$
+%$$
+\begin{equation}
+\sum_{l=1}^k x_l P(D_l^{n}) \cdot (1+\varphi_l(n)) \cdot
+\prod_{j=1}^k \left(1-Q_j(n)\right)^{x_j}, %\eqno (3.1.3)
+\label{30}
+\end{equation}
+%$$
+где $\varphi_l(n)=\frac{Q_l(n)}{1-Q_l(n)}.$
+\/}
+
+\medskip
+
+{\bf Доказательство.}
+
+Проведем доказательство индукцией по $k.$
+При $k=1$ имеем:
+$$
+R_X(n)=(1-Q_1(n))^{x_1}-(1-Q_1(n-1))^{x_1}=
+$$
+$$
+\left((1-Q_1(n))-(1-Q_1(n-1))\right)\cdot
+\sum_{l=0}^{x_1-1} \left(1-Q_1(n)\right)^{x_1-1-l}\cdot
+\left(1-Q_1(n-1)\right)^l.
+$$
+Так как
+$$(1-Q_1(n))-(1-Q_1(n-1))=Q_1(n-1)-Q_1(n)=P(D_1^n),
+$$
+то
+$$
+R_X(n)=P(D_1^n)\cdot
+\sum_{l=0}^{x_1-1} \left(1-Q_1(n)\right)^{x_1-1-l}\cdot
+\left(1-Q_1(n-1)\right)^l.
+$$
+Положим $\varphi_j(n)=\frac{1}{1-Q_j(n)}-1=\frac{Q_j(n)}{1-Q_j(n)}$
+$(j=1, \ldots,k).$
+Поскольку $Q_1(n-~1)~\ge~Q_1(n),$
+можно записать систему неравенств
+$$
+P(D_1^n)\cdot (1+\varphi_1(n-1))\cdot x_1 \cdot (1-Q_1(n-1))^{x_1}
+\le R_X(n)\le
+$$
+$$
+P(D_1^n)\cdot (1+\varphi_1(n))\cdot x_1 \cdot (1-Q_1(n))^{x_1}.
+$$
+Таким образом, доказана справедливость (\ref{30}) для $k=1.$
+
+Предположим, что соотношения (\ref{30}) справедливы при $k-1.$
+Добавим к $R_X(n)$ и вычтем слагаемое
+$\left(1-Q_k(n)\right)^{x_k}\prod_{j=1}^{k-1} \left(1-Q_j(n-1)\right)^{x_j}.$
+Тогда
+$$
+R_X(n)=
+\prod_{j=1}^k \left(1-Q_j(n)\right)^{x_j}-
+\left(1-Q_k(n)\right)^{x_k}\prod_{j=1}^{k-1} \left(1-Q_j(n-1)\right)^{x_j}+
+$$
+$$
+\left(1-Q_k(n)\right)^{x_k}\prod_{j=1}^{k-1}\left(1-Q_j(n-1)\right)^{x_j}-
+\prod_{j=1}^{k} \left(1-Q_j(n-1)\right)^{x_j}=
+$$
+$$
+\left(1-Q_k(n)\right)^{x_k} \cdot
+\left[ \prod_{j=1}^{k-1}\left(1-Q_j(n)\right)^{x_j}
+-\prod_{j=1}^{k-1} \left(1-Q_j(n-1)\right)^{x_j} \right]+
+$$
+$$
+\left(\left(1-Q_k(n)\right)^{x_k} -\left(1-Q_k(n-1)\right)^{x_k} \right)
+\cdot \prod_{j=1}^{k-1} \left(1-Q_j(n-1)\right)^{x_j} .
+$$
+
+Очевидно, 
+$$
+P(D_k^n)\cdot (1+\varphi_k(n-1))\cdot x_k \cdot (1-Q_k(n-1))^{x_k}
+\le
+\left(1-Q_k(n)\right)^{x_k} -\left(1-Q_k(n-1)\right)^{x_k} \le
+$$
+$$
+P(D_k^n)\cdot (1+\varphi_k(n))\cdot x_k \cdot (1-Q_1(n))^{x_k} ,
+$$
+так как доказательство этого факта полностью совпадает с доказательством
+(\ref{30}) при $k=1.$
+Кроме того, выражение в квадратных скобках есть $R_X(n)$ при $k-1.$ Поэтому
+$$
+R_X(n) \le
+\left(1-Q_k(n)\right)^{x_k} \cdot
+\sum_{l=1}^{k-1} x_l P(D_l^{n})\cdot (1+\varphi_l(n)) \cdot
+\prod_{j=1}^{k-1} \left(1-Q_j(n)\right)^{x_j}+
+$$
+$$
+P(D_k^{n}) \cdot (1+\varphi_k(n)) \cdot x_k
+\cdot \left(1-Q_k(n)\right)^{x_k}
+\cdot \prod_{j=1}^{k-1} \left(1-Q_j(n-1)\right)^{x_j}\le
+$$
+$$
+\prod_{j=1}^k \left(1-Q_j(n) \right)^{x_j} \cdot
+\sum_{l=1}^k x_l P(D_l^{n})\cdot (1+\varphi_l(n)).
+$$
+Аналогично доказывается неравенство
+$$
+R_X(n) \ge
+\prod_{j=1}^k \left(1-Q_j(n-1) \right)^{x_j} \cdot
+\sum_{l=1}^k x_l P(D_l^{n})\cdot (1+\varphi_l(n-1)).
+$$
+
+Лемма доказана.
+
+Заметим, что в доказательстве леммы 
+не используется вид функции $Q_j(n),$ а используется лишь условие $Q_j(n-1) \ge Q_j(n).$
+\medskip
+
+
+\textbf {Лемма 5.}
+{\em
+%%\begin{lemma}[3.1.4]
+Пусть $X=(x_1,\ldots,x_k)$ -- неотрицательный целочисленный вектор и $n$ --
+натуральное число. Тогда при $n \rightarrow \infty$
+$$
+R_X(n)=
+\left(1+\psi_X(n)\right)
+\sum_{l=1}^k x_l P(D_l^{n}),
+$$
+где $-\tilde{c}_1 n^{q_1^{*}-1}r^n \cdot \sum x_j \le \psi_X(n)\le \tilde{c}_2n^{q_1^{*}-1 }r^n $ и
+$\tilde{c}_1$ и $\tilde{c}_2$ -- некоторые положительные константы.%%\end{lemma}
+\/}
+
+\medskip
+
+{\bf Доказательство.}
+
+Найдем верхнюю оценку для $R_X(n).$
+Используя (\ref{30}), можно записать, что
+$$
+R_X(n)\le
+\prod_{j=1}^k \left(1-Q_j(n) \right)^{x_j}
+\sum_{l=1}^k x_l P(D_l^{n})\cdot (1+\varphi_l(n)).
+$$
+Заметим, что $\prod_{j=1}^k \left(1-Q_j(n) \right)^{x_j}\le 1$
+и $1+\varphi_l(n)=\frac{1}{1-Q_l(n)}.$
+Поэтому
+$$
+R_X(n)\le
+\sum_{l=1}^k x_l P(D_l^{n})\cdot \frac{1}{1-Q_l(n)}.
+$$
+Применим теорему 2 для $Q_l(n),$ учитывая, что $q^{*}_1 =\max_{{\cal M}_i}\{ q^{*}_i\}.$
+Тогда при $n \rightarrow \infty$
+$$
+R_X(n)\le \sum_{l=1}^k x_l P(D_l^{n})\cdot
+(1+\tilde{c}_2 n^{q^{*}_1-1 } r^n )
+, \,\, \mbox{где}\, \, \tilde{c}_2>0.
+$$
+
+Получим теперь нижнюю оценку для $R_X(n).$ Используя (\ref{30}), можно записать, что
+$$
+R_X(n)\ge
+\prod_{j=1}^k \left(1-Q_j(n-1)\right)^{x_j}
+\sum_{l=1}^k x_l P(D_l^{n})\cdot (1+\varphi_l(n-1)).
+$$
+
+Для оценки выражения
+$\prod_{j=1}^k \left(1-Q_j(n-1) \right)^{x_j} $
+используем следующее равенство, доказанное в [Севаст?]:
+%$$
+\begin{equation}
+(1-y_1)^{n_1} \ldots (1-y_k)^{n_k}=
+1- \Delta_1, \,\,
+\mbox{где} \,\, 0 \le \Delta_1 \le \sum_{j}n_j y_j .
+\label{50}
+\end{equation}
+%$$
+Применяя (\ref{50}), получаем, что
+$$
+R_X(n)\ge
+\left(1-\sum_{j=1}^k x_j Q_j(n-1) \right)
+\sum_{l=1}^k x_l P(D_l^{n})\cdot \left(1+\varphi_l(n-1)\right).
+$$
+Так как $\left(1+\varphi_l(n-1)\right)
+=\frac{1}{1-Q_l(n-1)} \ge 1,$ то
+$$
+R_X(n)\ge
+\left(1-\sum_{j=1}^k x_j Q_j(n-1) \right) \sum_{l=1}^k x_l P(D_l^{n}) \ge
+\left(1-\tilde{c}_1 n^{q^{*}_1-1} r^{n}\sum_{j=1}^k x_j\right) \sum_{l=1}^k x_l P(D_l^{n})
+$$
+для некоторой положительной константы $\tilde{c}_1.$
+
+Лемма доказана.
+
+\nopagebreak
+\medskip
+
+%Пусть ${\cal L}$ --- язык, порожденный стохастической КС-грамматикой $G.$
+Будем полагать, как и ранее, что аксиомой исходной грамматики $G$
+является нетерминал $A_1.$
+Рассмотрим $D^t_1$ --- множество деревьев из $D_1$ высоты $t.$
+Для $d \in D_1^t$ через $p_t(d)$ будем обозначать условную вероятность дерева $d,$ т.е. $p_t(d)=\frac{p(d)}{P(D_1^t)}.$
+
+\medskip
+
+Через $M_i(t,\tau)$ обозначим условное математическое ожидание числа вершин
+на ярусе $\tau$, помеченных нетерминалом $A_i,$ в деревьях вывода высоты $t.$
+
+Для нетерминала $A_l \in K_j$ положим $q_l'=q_j$ и $s_{1l}'=s_{1j}.$
+
+%Введем обозначения:
+%$f_{il}=\frac{d_l \cdot g_{il}^1}{d_1}$ и $f_{i}=\frac {d_i \cdot c_{1i}}{d_1},$ где
+% $d_l$ -- 
+\medskip
+
+\textbf {Теорема 3.}
+{\em Пусть $G$ --- стохастическая КС-грамматика с разложимой
+матрицей первых моментов, для которой перронов корень $r<1$ , и $D^t_1$ -- множество деревьев вывода
+высоты $t.$
+
+Тогда для любого $i \in \{1, \ldots, k\}$ при $\tau \rightarrow \infty $
+и $t-\tau \rightarrow \infty $
+выполняется асимптотическое равенство
+$$
+M_i(t,\tau)\sim
+\sum_{l =1}^k \frac{f_{il} \cdot (t-\tau)^{q_l'-1}\cdot \tau^{\delta_{il}^1}}{t^{q_1-1}}+ \frac {f_i \cdot(t-\tau)^{q_i'-1} \cdot \tau^{s_{1i}'-1} }{t^{q_1-1}},
+$$
+в котором $f_{il},$ $f_{i}$ - неотрицательные константы и $\delta_{il}^1$ определено в $(\ref{50}).$
+%и $N_i$ -- множество номеров $l,$ удовлетворяющих следующим условиям:
+
+%1) нетерминал $A_l$ принадлежит классу $K_{j_1}$ с $j_1\in J_{MAX},$
+
+%2) $K_{j_1} \prec_* K_{j_2},$ где $A_i \in K_{j_2}.$
+}
+
+\medskip
+
+\textbf {Доказательство.}
+Представим $M_i(t,\tau)$ в виде
+$$
+M_i(t,\tau)=\sum_{d \in D^t_1} p_t(d) z_{i}(d,\tau)=\frac{1}{P(D_1^t)}\sum_{d \in D^t_1} p(d) z_{i}(d,\tau),
+$$
+где $z_i (d,\tau)$ --  число вершин на ярусе $\tau$ дерева $d,$
+помеченных $A_i.$
+
+Рассмотрим неотрицательный целочисленный вектор $X=(x_1,\ldots,x_k),$
+который будем называть далее вектором нетерминалов.
+Используя вектор $X,$ мы можем записать, что
+$$
+M_i(t,\tau)= \frac{1}{P(D_1^t)}\sum_{X \ne 0} \Delta_X,
+$$
+где $\Delta_X$ -- вклад в математическое ожидание тех деревьев вывода
+из $D^t_1$, которые на ярусе $\tau$ содержат $x_j$ вершин, помеченных
+нетерминалом $A_j$ $(j=1,\ldots, k).$ Множество таких деревьев обозначим
+через $D_X^t(\tau).$
+
+Пусть $d \in D_X^t(\tau).$ Выделим в $d$ поддерево $d_0$ и последовательность
+поддеревьев $(d_1,$ $d_2, \ldots d_n),$ где $n=\sum_{l=1}^k x_l.$
+Поддерево $d_0$ получено из $d$ удалением всех вершин на ярусах
+$\tau+1,$ $\tau+2, \ldots, t$ и инцидентных им дуг. Последовательность
+$(d_1,$ $d_2, \ldots d_n)$ образуют все поддеревья, корни которых расположены
+на ярусе $\tau$ дерева $d.$
+При этом корни поддеревьев $d_1,$ $d_2, \ldots d_m$ расположены в дереве $d$
+последовательно в порядке обхода вершин яруса $\tau$ слева направо, и каждое
+дерево $d_l$ $(l=1,\ldots,n)$ содержит все дуги и вершины дерева $d,$
+лежащие на путях от корня $d_l$ к листьям дерева $d.$
+
+Выделим в $D_X^t(\tau)$ множество деревьев, имеющих в качестве поддерева
+$d_0$ одно и то же дерево. Обозначим это множество через $D_0.$
+Нетрудно понять, что
+\begin{equation}
+P\left(D_0\right)=
+p(d_0)\cdot
+\left(\prod_{l=1}^k (1-Q_l(t-\tau))^{x_l} -
+\prod_{l=1}^k (1-Q_l(t-\tau-1))^{x_l}\right),  
+\label{31}
+\end{equation}
+где $Q_l(n)$ --- суммарная вероятность деревьев из множества $D_l$,
+высота которых больше $n,$ и, следовательно,
+$\left(1-Q_l(n)\right)$ -- суммарная вероятность деревьев из
+$D_l,$ высота которых не превосходит~$n.$
+
+Обозначим через $\delta_1(X)$ выражение
+$\prod_{l=1}^k (1-Q_l(t-\tau))^{x_l} $
+и через $\delta_2(X)$ --- выражение
+$ \prod_{l=1}^k (1-Q_l(t-\tau-1))^{x_l}.$
+
+В (\ref{31}) величина $p(d_0)\cdot\delta_1(X) $
+есть суммарная вероятность деревьев, определяемых поддеревом $d_0,$
+высота которых не превосходит $t,$ так как каждое поддерево с корнем
+на ярусе $\tau$ имеет высоту, не превосходящую $(t-\tau).$
+
+Вторая величина $p(d_0)\cdot\delta_2(X) $
+есть суммарная вероятность деревьев, определяемых поддеревом $d_0,$
+высота которых не превосходит $(t-\tau-1).$
+
+Разность этих величин равна, очевидно, суммарной вероятности
+деревьев высоты $t$, определяемых деревом $d_0,$ и значение
+$\delta_1(X)-\delta_2(X)$ не зависит от порядка следования
+вершин на ярусе $\tau,$ помеченных нетерминалами. Поэтому
+$$
+P(D_X^t(\tau))=\sum_{d_0} p(d_0)\cdot \left(\delta_1(X)-\delta_2(X)\right) =
+\left(\delta_1(X)-\delta_2(X)\right)\sum_{d_0}p(d_0),
+$$
+где суммирование ведется по всем возможным поддеревьям $d_0$
+деревьев из $D_X^t(\tau).$
+
+Для каждой вершины, помеченной некоторым нетерминалом $A_l,$
+суммарная вероятность возможных деревьев с корнем в этой вершине
+и листьями, помеченными только терминалами, равна $P(D_l).$
+Ввиду согласованности исходной грамматики $P(D_l)=1$ для любого $l$.
+Поэтому $\sum_{d_0}p(d_0)$ равна вероятности деревьев вывода из $D_1,$ имеющих $x_l$ вершин на ярусе
+$\tau$, помеченных нетерминалом $A_l$ $(l=1,\ldots,k):$
+$$
+\sum_{d_0}p(d_0)=
+\sum_{d_0}p(d_0) \cdot P(D_1)^{x_1} \cdot P(D_2)^{x_2}\cdot \ldots
+\cdot P(D_k)^{x_k}=
+\sum_{d \in D_X(\tau)}p(d),
+$$
+где $D_X(\tau)$ --- множество деревьев из $D_1,$ имеющих $x_j$ вершин на ярусе
+$\tau,$ помеченных $A_j \,\, (j=1,\ldots,k).$
+
+Будем обозначать $\sum_{d \in D_X(\tau)}p(d)$ через $P_X(\tau).$ 
+Таким образом,
+$$
+M_i(t,\tau)=\frac{1}{P(D^t_1)} \sum_{X \ne 0} P_X(\tau)\cdot
+\left(\delta_1(X)-\delta_2(X)\right)\cdot x_{i}.
+$$
+
+Ранее величина $\left(\delta_1(X)-\delta_2(X)\right)$ была обозначена
+через $R_X(t-\tau).$
+Применим лемму 5 для представления $R_X(t-\tau).$ Получим, что
+$$
+M_i(t,\tau)=\frac{1}{P(D^t_1)} \sum_{X \ne 0} P_X(\tau)\cdot x_{i}\cdot
+\left(1+\psi_X(t-\tau)\right)
+\sum_{l=1}^k x_l P(D_l^{t-\tau})=
+$$
+$$
+\sum_{l=1}^k\frac{P(D_l^{t-\tau})}{P(D^t_1)}
+\sum_{X \ne 0} P_X(\tau)\cdot x_{i}\cdot
+x_{l}\cdot\left(1+\psi_X(t-\tau)\right).
+$$
+
+Отдельно вычислим
+$S_1=
+\sum_{X \ne 0} P_X(\tau)\cdot x_{i}x_{l} $
+и
+$S_2=
+\sum_{X \ne 0} P_X(\tau)\cdot x_{i}\cdot x_{l} \cdot \psi_X(t-\tau).$
+
+Используя первые и вторые моменты, мы можем записать, что
+$S_1=b^1_{il}(\tau)$ при $i \ne l$ и
+$S_1=b^1_{ii}(\tau)+a^1_i(\tau)$ при $l=i.$
+
+Учитывая оценку из леммы 5 для $\psi_X(n)$ и используя
+первые три момента, получим нижнюю и верхнюю
+оценки для $S_2:$
+$$
+S_2 =
+\sum_{X \ne 0} P_X(\tau)\cdot x_{i}\cdot x_{l} \cdot \psi_X(t-\tau)\ge
+$$
+$$
+-c_2 \tau^{q^{*}_1-1} r^{\tau} \sum_{X \ne 0} P_X(\tau)\cdot x_{i}\cdot x_{l} \cdot
+\sum_j x_{j}=- c_2 \tau^{q^{*}_1-1} r^{\tau}\sum_j c^{1*}_{ilj}(\tau),
+$$
+где
+$$
+c^{1*}_{ilj}(\tau)=c^{1}_{ilj}(\tau)
+\,\, \mbox { при} \,\, i \ne l, \,\,i \ne j \,\,\mbox { и}\,\, j \ne l,
+$$
+$$
+c^{1*}_{iii}(\tau)=c^{1}_{iii}(\tau)+3 b^1_{ii}(\tau)-a^1_{i}(\tau),
+$$
+и
+$$
+c^{1*}_{ijj}(\tau)=c^{1}_{ijj}(\tau)+b^1_{ij}(\tau),\,\,
+c^{1*}_{iij}(\tau)=c^{1}_{iij}(\tau)+b^1_{ij}(\tau).
+$$
+Применяя оценки для первых трех моментов, получим, что
+$S_2 \ge -c \cdot\tau^{2 q^{*}_1-2} r^{2 \tau},$
+где $c$ --- некоторая положительная константа.
+
+С другой стороны,
+$$
+S_2  \le c_1 \tau^{q^{*}_1-1} r^{\tau}
+\sum_{X \ne 0} P_X(\tau)\cdot x_{i}\cdot x_{l}= c_1\tau^{q^{*}_1-1} r^{\tau}\cdot S_1.
+$$
+Так как $S_1=b^1_{il}(\tau)$ при $i \ne l$ и $S_1=b^1_{ii}(\tau)+a^1_i(\tau),$
+то, с учетом оценок для моментов, получаем, что $S_2=O(\tau^{2q^{*}_1-2}r^{2\tau}).$
+
+Вернемся к вычислению $M_i(t,\tau):$
+$$
+M_i(t,\tau)=
+%$$
+%$$
+\sum_{l\ne i} \frac{P(D_l^{t-\tau})}{P(D^t_1)}
+b^1_{il}(\tau)+ \frac{P(D_i^{t-\tau})}{P(D^t_1)}
+\left(b^1_{ii}(\tau)+a^1_i(\tau) \right)+
+\sum_{l=1}^k\frac{P(D_l^{t-\tau})}{P(D^t_1)} \cdot O\left(\tau^{2q^{*}_1-2}r^{2\tau}\right).
+$$
+
+Раскрывая моменты и используя лемму 5, после
+несложных преобразований получим, что
+$$
+M_i(t,\tau)=
+$$
+$$
+\sum_{l=1}^{k} \frac{d_l \cdot(1-r)\cdot (t-\tau)^{q_l'-1} \cdot r^{t-\tau-1} \cdot (1+\phi_l(t-\tau))}
+{d_1 \cdot (1-r)\cdot t^{q_1-1} \cdot r^{t-1} \cdot (1+\phi_1(t))}\cdot
+\left(g_{il}^1 \cdot r^{\tau}\cdot \tau^{\delta_{il}^1}  \left(1+\psi_{il}(\tau)\right)\right)+
+$$
+$$
+\frac{d_i \cdot (1-r) \cdot (t-\tau)^{q_i'-1} r^{t-\tau-1}(1+\phi_i(t-\tau)) \cdot c_{1i}\cdot 
+\tau^{s_{1i}'-1} r^{\tau}(1+\varphi_{1i}(n)(\tau))}
+{d_1\cdot (1-r)\cdot t^{q_1-1}r^{t-1} \cdot(1+\phi_1(t))}+ O\left(\tau^{2q^{*}_1-2}r^{2\tau}\right),
+$$
+где $\phi_i(n)=o(1),$ $\psi_{il}(n)=o(1),$ $\varphi_{1i}(n)=o(1),$ $q_l'=q_j$ для $A_l \in K_j,$ и $s_{1i}'=s_{1m}$ для  $A_i \in K_m.$
+
+Отсюда следует, что
+\begin{equation}
+M_i(t,\tau)=
+ \frac{1}{d_1}\left(\sum_{l=1}^{k} \frac{d_l \cdot g_{il}^1 \cdot (t-\tau)^{q_l'-1}\cdot \tau^{\delta_{il}^1}}{t^{q_1-1}}+ \right.
+\label{32}
+\end{equation}
+$$
+\left.
+ \frac {d_i \cdot c_{1i}\cdot(t-\tau)^{q_i'-1} \cdot \tau^{s_{1i}'-1} }{t^{q_1-1}}\right) \left(1+\xi(\tau,t-\tau)\right),
+$$
+где $\xi(\tau,t-\tau) \rightarrow 0$ при $\tau,t-\tau\rightarrow \infty.$ Теорема доказана. 
+
+%$$
+%\delta_i=\frac {d_i \cdot c_{1i}}{d_1} \cdot \frac{(t-\tau)^{q_i'-1} \cdot \tau^{s_{1i}'-1} }{t^{q_1-1}} ,
+%$$
+%если $A_i \in K_{j},$ $j \in J,$ и $K_{j}$ принадлежит некоторому максимальному пути; $\delta_i=0$ в противном случае.
+\medskip
+
+Рассмотрим подробнее слагаемые в (\ref{32}).
+Определяющими в сумме являются те значения $l,$ для которых $g_{il}^1>0$ и $q_l'~+~\delta_{il}^1~=~q_1.$ Равенство справедливо при одновременном выполнении следующих условий:
+
+1) нетерминал $A_l$ принадлежит классу $K_{j_1}$ с $j_1\in J_{MAX},$
+
+2) $A_i \in K_{j_2},$ для которого $K_{j_1} \prec_* K_{j_2}.$
+
+Обозначим $N_i$ множество номеров $l,$ для которых выполняются условия 1) и 2).
+
+Отметим, что слагаемое $\frac {d_i \cdot c_{1i}\cdot(t-\tau)^{q_i'-1} \cdot \tau^{s_{1i}'-1} }{t^{q_1-1}} $ влияет на значение $M_i(t,\tau)$ при 
+$s_{1i}'~+~q_i'~-~1~=~q_1.$ Это равенство выполняется в случае, если $A_i \in K_{j_2},$ где $j_2\in J_{MAX}.$
+Поэтому равенство (\ref{32}) при $N_i \ne \emptyset$ можно записать в виде
+$$
+M_i(t,\tau)=
+ \left(\sum_{l \in N_i} \frac{f_{il} \cdot (t-\tau)^{q_l'-1}\cdot \tau^{\delta_{il}^1}}{t^{q_1-1}}+ \frac {f_i \cdot(t-\tau)^{q_i'-1} \cdot \tau^{s_{1i}'-1} }{t^{q_1-1}}\right) \left(1+\xi(\tau,t-\tau)\right),
+$$
+где $f_{il}=\frac{d_l \cdot g_{il}^1}{d_1},$ $f_{i}=\frac {d_i \cdot c_{1i}}{d_1}$ и $\xi(\tau,t-\tau) \rightarrow 0$ при $\tau,t-\tau\rightarrow \infty.$
+Очевидно, $M_i(t,\tau)\le O(1/t)$ при $N_i = \emptyset.$ 
+Поэтому справедливо
+
+\medskip
+\textbf{Следствие.}
+{\em
+$$
+1) M_i(t,\tau)=
+ \left(\sum_{l \in N_i} \frac{f_{il} \cdot (t-\tau)^{q_l'-1}\cdot \tau^{\delta_{il}^1}}{t^{q_1-1}}+ \frac {f_i \cdot(t-\tau)^{q_i'-1} \cdot \tau^{s_{1i}'-1} }{t^{q_1-1}}\right) \left(1+\xi(\tau,t-\tau)\right)
+$$
+при $N_i \ne \emptyset;$
+
+$2)\,\,\, M_i(t,\tau)\le O(1/t)$ при $N_i = \emptyset$.
+
+}
+
+\medskip
+
+Пусть $r_{ij}$ --- произвольное правило грамматики $G.$
+Через $s_l^{(ij)}$ обозначим число нетерминалов $A_l$
+в правой части правила $r_{ij}.$
+Условное математическое ожидание числа применений правила $r_{ij}$
+в деревьях вывода высоты $t$ на ярусе $\tau$ будем обозначать через
+$M_{ij}(t,\tau).$
+
+\medskip
+
+\textbf {Теорема 4.} 
+{\em Пусть $G$ --- стохастическая КС-грамматика с разложимой
+матрицей первых моментов, для которой перронов корень $r<1$ , и $D^t_1$ -- множество деревьев вывода
+высоты $t.$
+
+Тогда при $\tau \rightarrow \infty $ и $t-\tau \rightarrow \infty $
+выполняется следующее асимптотическое равенство:
+$$
+M_{ij}(t,\tau)\sim \frac{p_{ij}}{t^{q_1-1}} \left(\sum_{l =1}^k f_{il} \cdot (t-\tau)^{q_l'-1}\cdot \tau^{\delta_{il}^1}+ 
+\frac{1}{{r }} \sum_{m=1}^k f_m\cdot s_m^{(ij)}\cdot
+ (t-\tau)^{q_m'-1}\tau^{s_{1i}'-1}\right).
+$$
+}
+В формулировке теоремы $p_{ij}$ --- вероятность правила $r_{ij},$ задаваемая в исходной грамматике,
+$s_m^{(ij)}$ -- число нетерминалов $A_m$ в правой части правила $r_{ij},$
+а величины $q_l',$ $\delta_{il}^1,$ $f_{il}$ и $f_m$
+имеют тот же смысл, что и в теореме 3.
+
+\medskip
+
+\textbf {Доказательство.} \nopagebreak
+%Представим $M_{ij}(t,\tau)$ в виде
+%$$
+%M_{ij}(t,\tau)=\sum_{d \in D^t_1} p_t(d) z_{ij}(d,\tau),
+%$$
+Обозначим $z_{ij}(d,\tau)$ число вершин на ярусе $\tau$ дерева $d,$
+помеченных нетерминалом $A_i,$ к которым применено правило $r_{ij}.$
+Используя неотрицательный целочисленный вектор $X=(x_1,\ldots,x_k),$ можно записать, что
+$$
+M_{ij}(t,\tau)= \sum_{X \ne 0}
+\sum_{d \in D_X^t(\tau)} p_t(d) z_{ij}(d,\tau),
+$$
+где $D_X^t(\tau)$ введено в доказательстве теоремы 3.
+
+Представим $z_{ij}(d,\tau)$ в виде суммы случайных величин
+$I_1+I_2+ \ldots+I_{x_i},$
+где $I_m=1,$ если к $m$-й по порядку вершине среди вершин,
+помеченных нетерминалом $A_m$ на ярусе $\tau,$
+применено правило $r_{ij},$ и $I_m=0$ в противном случае
+$(m=1,2, \ldots, x_i).$
+Тогда
+$$
+M_{ij}(t,\tau)= \sum_{X \ne 0}
+\sum_{d \in D_X^t(\tau)} p_t(d)\cdot (I_1+I_2+\ldots +I_{x_i}).
+$$
+Очевидно, что случайные величины $I_m$ $(m=1,2, \ldots, x_i)$ --
+одинаково распределены на $D_X^t(\tau),$ поэтому
+$$
+M_{ij}(t,\tau)=\frac{1}{P(D^t_1)}\sum_{X \ne 0}
+P\left(D_{X,1}^t(\tau)\right) \cdot x_i,
+$$
+где $P(D_{X,1}^t(\tau))$ -- суммарная вероятность тех деревьев
+из $D_X^t(\tau),$ в которых правило $r_{ij}$ применено к первой по порядку
+вершине на ярусе $\tau,$ помеченной $A_i.$
+
+Подсчитаем вероятность $P\left(D_{X,1}^t(\tau)\right):$
+$$
+P\left(D_{X,1}^t(\tau)\right)=p_{ij} \cdot
+P_X(\tau) \times
+%$$
+%$$
+\left[\prod_{m=1}^k \left(1-Q_m(t-\tau)\right)^{x_m^{\prime}}\cdot
+\prod_{m=1}^k \left(1-Q_m(t-\tau-1)\right)^{s_m^{(ij)}}- \right.
+$$
+%$$
+\begin{equation}
+\left. \prod_{m=1}^k \left(1-Q_m(t-\tau-1)\right)^{x_m^{\prime}}\cdot
+\prod_{m=1}^k \left(1-Q_m(t-\tau-2)\right)^{s_m^{(ij)}}\right].
+%$$
+\label{33}
+\end{equation}
+Здесь $X^{\prime}=(x_1^{\prime},\ldots,x_k^{\prime})=
+(x_1,\ldots,x_{i-1},x_i-1,x_{i+1},\ldots, x_k)$ и
+$S=(s_1^{(ij)}, \ldots, s_k^{(ij)}),$ где $s_m^{(ij)}$ равно
+числу нетерминалов $A_m$ в правой части правила $r_{ij}$ $(m=1,\ldots, k).$
+Величина $P_X(\tau)$ имеет тот же смысл, что и в доказательстве теоремы 3.
+Выражение в квадратных скобках в (\ref{33})
+аналогично выражению $R_X(t-\tau).$  При этом
+с помощью множителей $\left(1-Q_m(t-\tau-1)\right)^{s_m^{(ij)}}$ и
+$\left(1-Q_m(t-\tau-2)\right)^{s_m^{(ij)}}$
+учитывается тот факт, что к первому нетерминалу $A_i$ на ярусе $\tau$
+применено правило $r_{ij},$ которому на ярусе $\tau+1$ соответствует
+$s_m^{(ij)}$ вершин, помеченных нетерминалом $A_m$ $(m=1, \ldots, k).$
+
+Проведем несложные преобразования в (\ref{33}):
+$$
+P\left(D_{X,1}^t(\tau)\right)=p_{ij} \cdot P_X(\tau) \cdot
+\frac{1}{1-Q_i(t-\tau)}\cdot \prod_{m=1}^k \left(1-Q_m(t-\tau-1)\right)
+^{s_m^{(ij)}}\times
+$$
+$$
+\left[\prod_{m=1}^k \left(1-Q_m(t-\tau)\right)^{x_m}-
+\frac{1-Q_i(t-\tau)}{1-Q_i(t-\tau-1)}\times \right.
+$$
+$$
+\left. \prod_{m=1}^k \left(\left(1-Q_m(t-\tau-1)\right)^{x_m} \cdot
+\frac{\left(1-Q_m(t-\tau-2)\right)^{s_m^{(ij)}}}
+{\left(1-Q_m(t-\tau-1)\right)^{s_m^{(ij)}}}\right)\right].
+$$
+Очевидно, что
+$$
+\frac{1-Q_i(t-\tau)}{1-Q_i(t-\tau-1)}=
+1+\frac{Q_i(t-\tau-1)-Q_i(t-\tau)}{1-Q_i(t-\tau-1)}=
+$$
+$$
+1+\frac{P(D_i^{t-\tau})}{1-Q_i(t-\tau-1)}=
+1+P(D_i^{t-\tau})+\frac{P(D_i^{t-\tau})\cdot Q_i(t-\tau-1) }{1-Q_i(t-\tau-1)}.
+$$
+
+Применим теорему 2 и следствие из нее для оценки $Q_i(t-\tau-1)$ и $P(D_i^{t-\tau})$.
+Получим, что
+$$
+\frac{1-Q_i(t-\tau)}{1-Q_i(t-\tau-1)}= 1+P(D_i^{t-\tau})+O((t-\tau)^{2(q_1-1)}\cdot r^{2(t-\tau)}).
+$$
+
+Проводя аналогичные преобразования и учитывая, что $s_m^{(ij)}$ -- константа,
+определяемая правой частью правила $r_{ij},$ мы можем записать, что
+$$
+\prod_{m=1}^k \frac{(1-Q_m(t-\tau-2))^{s_m^{(ij)}}}
+{(1-Q_m(t-\tau-1))^{s_m^{(ij)}}}=
+%\prod_{m=1}^k\left(1+
+%\frac{P(D_m^{t-\tau-1})}
+%{1-Q_m(t-\tau-1)}\right)^{s_m^{(ij)}}=
+%$$
+%$$
+1-\sum_{m=1}^k s_m^{(ij)}\cdot P\left(D_m^{t-\tau-1}\right)+
+O\left((t-\tau)^{2(q_1-1)}\cdot r^{2(t-\tau)}\right).
+$$
+Поэтому
+$$
+P\left(D^t_{X,1}(\tau)\right)=
+p_{ij} \cdot P_X(\tau) \cdot
+\left(1+O\left((t-\tau)^{q_1-1}\cdot r^{t-\tau}\right)\right)
+\left[\prod_{m=1}^k \left(1-Q_m(t-\tau)\right)^{x_m}- \right.
+$$
+$$
+\prod_{m=1}^k \left(1-Q_m(t-\tau-1)\right)^{x_m} \cdot
+\left(1+P(D_i^{t-\tau})+O((t-\tau)^{2(q_1-1)}\cdot r^{2(t-\tau)})\right) \times
+$$
+$$
+\left.\left(1-\sum_{m=1}^k s_m^{(ij)}\cdot P\left(D_m^{t-\tau-1}\right)+
+O\left((t-\tau)^{2(q_1-1)}\cdot r^{2(t-\tau)}\right)\right)\right]=
+$$
+$$
+p_{ij} \cdot P_X(\tau) \left[ R_X(t-\tau) + 
+%p_{ij} \cdot P_X(\tau)
+ \prod_{m=1}^k \left(1-Q_m(t-\tau-1)\right)^{x_m} \times
+\right.
+$$
+$$
+\left.\left(\sum_{m=1}^k s_m^{(ij)}P(D_m^{t-\tau-1})-P(D_i^{t-\tau}) \right)\right]
+\cdot
+\left(1+O\left((t-\tau)^{q_1-1}\cdot r^{t-\tau}\right)\right).
+$$
+(Здесь $R_X(t-\tau)$ -- величина, рассмотренная в лемме 4.)
+
+Вернемся к вычислению $M_{ij}(t,\tau),$
+учитывая оценку $$
+\prod_{m=1}^k \left(1-Q_m(t-\tau-1)\right)^{x_m}=
+1- O\left((t-\tau)^{q_1-1}\cdot r^{t-\tau}\sum_{m=1}^k x_m\right),
+$$
+следующую из (\ref{50}).
+Тогда
+$$
+M_{ij}(t,\tau)=
+\frac{1}{P(D_1^t)} \left[\sum_{X \ne 0} p_{ij} \cdot P_X(\tau) \cdot R_X(t-\tau)\cdot x_i+ \right.
+\left(\sum_{m=1}^k s_m^{(ij)} P\left(D_m^{t-\tau-1}\right)-
+P\left(D_i^{t-\tau}\right)\right)\times
+$$
+$$
+\left.\sum_{X \ne 0} p_{ij} \cdot P_X(\tau) \cdot x_i 
+\cdot \left(1- O\left((t-\tau)^{q_1-1}\cdot r^{t-\tau}\sum_{m=1}^k x_m\right)\right)\right]\cdot
+\left(1+O\left((t-\tau)^{q_1-1}\cdot r^{t-\tau}\right)\right).
+$$
+Величина
+$$
+\frac{1}{P(D_1^t)} \cdot
+\sum_{X \ne 0} P_X(\tau) \cdot R_X(t-\tau)\cdot x_i
+$$
+есть $M_i(t,\tau)$ из теоремы 3, и
+$$
+\sum_{X \ne 0} P_X(\tau) \cdot x_i=
+a_i^1(\tau)=c_{1i}\cdot \tau^{s_{1i}'-1}r^{\tau}(1+o(1)),
+$$
+где $a_i^1 (\tau)$ -- элемент матрицы $A^{\tau},$
+$A$ -- матрица первых моментов, и 
+%$c_{1i}$ и 
+$s_{1i}'$ имеет тот же смысл, что и в теореме 3.
+
+Кроме того,
+$$
+\sum_{X \ne 0} P_X(\tau) \cdot x_i \cdot O\left((t-\tau)^{q_1-1}\cdot r^{t-\tau}\sum_{m=1}^k x_m\right)=
+$$
+$$
+O\left((t-\tau)^{q_1-1}\cdot r^{t-\tau}\right)\sum_{m=1}^k b^1_{im}(\tau)=
+O\left(\tau^{q_1-1} \cdot (t-\tau)^{q_1-1 }r^{t}\right),
+$$
+где $b^1_{im}(\tau)$ -- вторые моменты.
+Следовательно,
+$$
+M_{ij}(t,\tau)= \left(M_i(t,\tau)\cdot p_{ij} +
+\frac{p_{ij} \cdot c_{1i}\cdot \tau^{s_{1i}'-1}r^{\tau}\cdot (1+o(1)) }{P(D_1^t)} \times \right.
+$$
+$$
+\left. \left(\sum_{m=1}^k s_m^{(ij)}\cdot
+P(D_m^{t-\tau-1})- P(D_i^{t-\tau}) \right)\right)
+\cdot \left(1+ O\left((t-\tau)^{q_1-1} r^{t-\tau}\right)\right).
+$$
+
+Применяя теорему 3 к $M_i(t,\tau)$ и формулу (\ref{24}) к $P(D_m^{n}),$ после проведения несложных преобразований
+$M_{ij}(t,\tau)$ можем представить в следующем виде:
+$$
+M_{ij}(t,\tau)=
+\frac{p_{ij}}{t^{q_1-1}} \left(\sum_{l =1}^k f_{il} \cdot (t-\tau)^{q_l'-1}\cdot \tau^{\delta_{il}^1}+ 
+\frac{1}{{r }} \sum_{m=1}^k f_m\cdot s_m^{(ij)}\cdot
+ (t-\tau)^{q_m'-1}\tau^{s_{1i}'-1}\right)+
+$$
+$$
+\xi^1_{ij}(t)+\xi^2_{ij}(\tau)+\xi^3_{ij}(t-\tau),
+$$
+где $\xi^1_{ij}(t)=o(1)$, $\xi^2_{ij}(\tau)=o(1)$ и
+$\xi^3_{ij}(t-\tau)=o(1).$
+
+Обозначим сумму $\xi^1_{ij}(t)+\xi^2_{ij}(\tau)+\xi^3_{ij}(t-\tau)$ через
+$\xi_{ij}(t,\tau).$ 
+Очевидно, $\xi_{ij}(t,\tau) \rightarrow 0$ при
+$\tau \rightarrow \infty$ и $t-\tau \rightarrow \infty.$
+Поэтому 
+$$
+M_{ij}(t,\tau) =
+$$
+%$$
+\begin{equation}
+\frac{p_{ij}}{t^{q_1-1}} \left(\sum_{l =1}^k f_{il} \cdot (t-\tau)^{q_l'-1}\cdot \tau^{\delta_{il}^1}+ 
+\frac{1}{{r }} \sum_{m=1}^k f_m\cdot s_m^{(ij)}\cdot
+ (t-\tau)^{q_m'-1}\tau^{s_{1i}'-1}\right)+ \xi_{ij}(t,\tau). 
+%$$
+\label{34}
+\end{equation}
+Теорема доказана.
+
+\medskip
+
+Сделаем несколько выводов из теоремы 4.
+
+1. $M_{ij}(t,\tau)$ ограничено константой
+при $\tau \rightarrow \infty,$ $t-\tau \rightarrow \infty.$
+
+2. Величина $\sum_{m=1}^k f_m \cdot s_m^{(ij)}\cdot
+ (t-\tau)^{q_m'-1}\tau^{s_{1i}'-1}$ имеет большее значение для тех правил, которые
+содержат в правой части большее количество нетерминальных символов.
+
+3. Величина $\sum_{l \in N_i} f_{il} \cdot (t-\tau)^{q_l'-1}\cdot \tau^{\delta_{il}^1}$ имеет одно и то же значение для всех
+правил грамматики с одинаковой левой частью $A_i.$
+
+\medskip
+
+Пусть $S_{ij}(t)=q_{ij}(t,0)+q_{ij}(t,1)+\ldots +q_{ij}(t,t-1),$
+где $q_{ij}(t,\tau)$ --- число правил $r_{ij}$ на ярусе $\tau$ в дереве
+из $D_1^t$; $S_{ij}(t)$ --- число правил $r_{ij}$ в дереве вывода из $D_1^t$.
+
+Рассмотрим случайную величину $\frac{S_{ij}(t)}{t}$ --- среднее число правил $r_{ij}$,
+приходящееся на один ярус дерева вывода из $D_1^t.$
+
+\medskip
+???
+
+\textbf{Теорема 5.}
+{\em Пусть $G$ --- стохастическая КС-грамматика с разложимой
+матрицей первых моментов, для которой перронов корень $r<1$ , и $D^t_1$ -- множество деревьев вывода
+высоты $t.$
+
+Тогда при $t \rightarrow \infty $ выполняется следующее асимптотическое равенство:
+$$
+M\left(\frac{S_{ij}(t)}{t}\right) \sim w_{ij},
+$$
+где $w_{ij}$ - константа, определяемая грамматикой $G.$}
+\medskip
+
+{\bf Доказательство.}
+
+Разобьем $S_{ij}(t)$ на три части:
+$$
+S_{ij}(t)=S_{ij}^{(1)}(t)+S_{ij}^{(2)}(t)+S_{ij}^{(3)}(t),
+$$
+где
+$$
+S_{ij}^{(1)}(t)=q_{ij}(t,0)+\ldots+q_{ij}(t,\tau_0-1),
+$$
+$$
+S_{ij}^{(2)}(t)=q_{ij}(t,\tau_0)+\ldots+q_{ij}(t,t-\tau_0-1),
+$$
+$$
+S_{ij}^{(3)}(t)=q_{ij}(t,t-\tau_0)+\ldots+q_{ij}(t,t-1),
+$$
+и положим $\tau_0=\lfloor \log\log t \rfloor$ (здесь и далее логарифм
+берется по основанию 2).
+Число слагаемых в $S_{ij}^{(1)}(t)$ и в $S_{ij}^{(3)}(t)$ равно
+$\lfloor \log\log t \rfloor,$ а в $S_{ij}^{(2)}(t)$ равно
+$t-2 \lfloor \log\log t \rfloor.$
+
+Найдем математические ожидания $M\left(S_{ij}^{(1)}(t)\right),$
+$M\left(S_{ij}^{(2)}(t)\right)$ и
+$M\left(S_{ij}^{(3)}(t)\right).$
+
+Величину $M\left(S_{ij}^{(1)}(t)\right)$ можно представить в следующем виде:
+$$
+M\left(S_{ij}^{(1)}(t)\right)=M_{ij}(t,0)+M_{ij}(t,1)+\ldots +
+M_{ij}(t,\tau_0-1).
+$$
+
+Число правил $r_{ij}$ на ярусе $\tau$ в дереве из $D_1^t$ обозначим $q_{ij}(t,\tau).$
+Оценим $q_{ij}(t,\tau)$ для $\tau < \tau_0.$
+Обозначим через $k_{max}$ максимальное число нетерминалов в~правой части правил грамматики $G.$ Тогда
+$q_{ij}(t,\tau)\leq k_{max}^{\tau}< k_{max}^{\tau_0}.$
+Поэтому
+$
+M_{ij}(t,\tau)< k_{max}^{\tau_0}
+$
+и
+$$
+M\left(S_{ij}^{(1)}(t)\right)\leq k_{max}^{\tau_0}  \tau_0\leq
+k_{max}^{\log \log t}
+  \log \log t=\log^{c_1} t \,  \log \log t \leq \log^{c_2} t,
+$$
+где $c_1=\log k_{max},$ $\, c_2=c_1+1.$
+
+Для $t-\tau_0 \leq \tau < t$ имеем:
+$$
+M_{ij}(t,\tau)\leq M_{i}(t,\tau) =
+\frac 1 {P(D^t)} \sum_{X} P_X(\tau)   R_X(t-\tau)   x_i \leq
+\frac{1}{P(D^t)} \sum_{X} P_X(\tau)   x_i=
+$$
+$$
+\frac{1}{P(D^t)}  a^1_{i}(\tau)\le
+O\left(\frac{\tau^{q_1-1}}{t^{q_1-1}\cdot r^{t-\tau}}\right)\le O\left(\frac 1{r^{t-\tau}}\right).
+$$
+Поэтому
+$$
+M\left(S_{ij}^{(3)}(t)\right) \leq
+\sum_{t-\tau_0}^{t-1} O\left(\frac{1}{r^{t-\tau}}\right)
+=O\left(\frac {\tau_0}{r^{\tau_0}}\right)
+=O\left(\frac {\log \log t}{r^{\log \log t}}\right)=O\left(\log ^{c_3} t\right)
+$$
+для некоторой константы $c_3>0.$
+
+Для $\tau,$ удовлетворяющего условию
+$\tau_0 \leq \tau \leq t-\tau_0-1,$ применим теорему 4:
+$$
+M\left(S_{ij}^{(2)}(t)\right)=
+\sum_{\tau=\lfloor \log\log t \rfloor}^{t-\lfloor \log\log t \rfloor-1} 
+\frac{p_{ij}}{t^{q_1-1}} \left(\sum_{l =1}^k f_{il} \cdot (t-\tau)^{q_l'-1}\cdot \tau^{\delta_{il}^1}+ \right.
+$$
+$$
+\left. \frac{1}{{r }} \sum_{m=1}^k f_m\cdot s_m^{(ij)}\cdot
+(t-\tau)^{q_m'-1}\tau^{s_{1i}'-1}\right)+
+\sum_{\tau=\lfloor \log\log t \rfloor}^{t-\lfloor \log\log t \rfloor-1} \xi(t,\tau). 
+$$
+
+Оценим величину
+$
+\delta=\frac{1}{t^{n_1+n_2}}\cdot \sum_{\tau=\lfloor \log\log t \rfloor}^{t-\lfloor \log\log t \rfloor-1}
+(t-\tau)^{n_1}\cdot \tau^{n_2}:
+$ 
+$$
+\delta=
+\sum_{\tau=\lfloor \log\log t \rfloor}^{t-\lfloor \log\log t \rfloor-1} \left(1-\frac{\tau}{t}\right)^{n_1} \left(\frac{\tau}{t}\right)^{n_2}=
+$$
+$$
+\sum_{\tau=\lfloor \log\log t \rfloor}^{t-\lfloor \log\log t \rfloor-1} 
+\sum_{n=0}^{n_1} (-1)^{n} C_{n_1}^n \left( \frac{\tau}{t} \right)^{n+n_2} =
+\left(\sum_{n=0}^{n_1} (-1)^{n} C_{n_1-1}^n \cdot \frac{t}{n+n_2+1}  \right)\cdot (1+o(1)).
+$$
+Очевидно, величина $\sum_{n=0}^{n_1} (-1)^{n} C_{n_1-1}^n \cdot \frac{1}{n+n_2+1}$ является константой, зависящей от $n_1$ и $n_2,$ обозначим ее $\alpha(n_1,n_2)$.
+Применяя обозначение $\alpha(n_1,n_2),$ мы можем записать:
+$$
+\delta=\alpha(n_1,n_2)\cdot t\cdot (1+o(1)).
+$$
+Применим полученную оценку к вычислению $M\left(S_{ij}^{(2)}(t)\right),$ учитывая равенства 
+$q_l'~+~\delta_{il}^1~=~q_1$ и $q_i'+s'_{1i}-1=q_1:$
+$$
+M\left(S_{ij}^{(2)}(t)\right)=p_{ij}\cdot
+\left[\sum_{l =1}^k f_{il} \cdot \alpha(q_l'-1,\delta_{il}^1)+ 
+\frac{1}{{r }} \sum_{m=1}^k f_m\cdot s_m^{(ij)}\cdot
+\alpha(q_m'-1,s_{1i}'-1)\right]t \cdot(1+o(1)).
+$$
+Константу в квадратных скобках обозначим $w_{ij}.$
+
+Применяя полученные оценки для $M\left(S_{ij}^{(1)}(t)\right),$
+$M\left(S_{ij}^{(2)}(t)\right)$ и
+$M\left(S_{ij}^{(3)}(t)\right),$ находим, что при $t \rightarrow \infty$
+$$
+M\left(\frac{S_{ij}(t)}{t}\right)=w_{ij}+o(1)+
+O\left(\frac{\log^{c_2} t}{t}\right) +
+O\left(\frac{\log ^{c_3} t}{t}\right)=w_{ij}+o(1).
+$$
+
+Теорема доказана.
+
+\medskip
+???
+
+\section {
+Энтропия и нижняя оценка стоимости кодирования}
+
+Пусть $L$ - стохастический язык, т.е. язык, на множестве слов которого задано распределение вероятностей.
+
+%Пусть $G$ - стохастическая КС-грамматика с однозначным выводом, т.е. грамматика, в которой каждое слово порождаемого языка $L$ имеет единственное дерево вывода.
+Под энтропией стохастического языка $L$ будем понимать величину
+$$
+H(L)=-\lim_{N \rightarrow \infty} \sum_{\alpha \in L, \left|\alpha\right|\le N} p(\alpha) \log p(\alpha).
+$$
+Если энтропия конечна, будем применять запись $H(L)=-\sum_{\alpha \in L} p(\alpha) \log p(\alpha).$
+
+Кодированием языка $L$ назовем инъективное отображение
+$$
+f:  L \rightarrow \{ 0,1 \}^+.
+$$
+
+В качестве $L$ рассмотрим язык, порождаемый стохастической КС-грамматикой с однозначным выводом, т.е. грамматикой, в которой каждое слово из $L$ имеет единственное дерево вывода.
+Через $L^t$ обозначим множество всех слов из $L,$ каждое из которых имеет дерево вывода высоты $t.$ Для $\alpha \in L^t$ через $p_t(\alpha)$
+обозначим условную вероятность появления слова $\alpha,$ т.е.
+$p_t(\alpha)=\frac{p(\alpha)}{P(L^t)}.$
+В силу однозначности вывода $P(L^t)=P(D^t_1).$
+
+Стоимостью кодирования $f$ назовем величину
+\begin{equation}
+C(L,f)= \lim_{t \rightarrow \infty}
+ \frac {\sum_{ \alpha \in L^t} p_t(\alpha) \cdot
+ |f(\alpha)|}
+ {\sum_{ \alpha \in L^t} p_t(\alpha) \cdot | \alpha|} 
+\label{40}
+\end{equation}
+(здесь $|x|$ -длина последовательности $x$).
+
+Величина $C(L,f)$ характеризует число двоичных разрядов,
+приходящихся на кодирование одного символа слова языка.
+
+Через $F(L)$ обозначим класс всех
+инъективных отображений из $L$ в $ \{ 0,1 \}^+,$ для которых
+существует $C(L,f).$
+
+Стоимостью оптимального кодирования языка $L$ назовем величину
+$$
+C_0(L)= \inf_{f \in F(L)} C(L,f).
+$$
+
+Предварительно получим асимптотическую формулу для энтропии множества слов $L^t.$ По определению имеем 
+$$
+H(L^t)=-\sum_{\alpha \in L^t} p_t(\alpha) \log p_t(\alpha).
+$$
+Следовательно, 
+$$
+H(L^t)=-\sum_{\alpha \in L^t} p_t(\alpha)\left( \log p(\alpha)-\log P( L^t)\right)=
+$$
+$$
+\frac{1}{P(L^t)}\cdot \left( -\sum_{\alpha \in L^t} p(\alpha) \log p(\alpha) \right)+\log P(L^t).
+$$
+
+Для слова $\alpha$ обозначим через $q_{ij}(\alpha)$ число применений правила $r_{ij}$ при его выводе. Вероятность слова $\alpha$ равна
+$p(\alpha)=\prod_{i=1}^k \prod_{j=1}^{n_i} (p_{ij})^{q_{ij}}.$ Следовательно, $\log p(\alpha)= \sum_{i=1}^k \sum_{j=1}^{n_i} q_{ij}(\alpha) \log p_{ij}.$ Поэтому 
+$$
+H(L^t) = \frac{1}{P(L^t)} \cdot \left( -\sum_{\alpha \in L^t} p(\alpha) \cdot \sum_{i=1}^k \sum_{j=1}^{n_i} q_{ij}(\alpha) \log p_{ij} \right)+ \log P(L^t)=
+$$
+$$
+\frac{1}{P(L^t)} \cdot \left( - \sum_{i=1}^k \sum_{j=1}^{n_i} \log p_{ij} \cdot \sum_{\alpha \in L^t} p(\alpha) q_{ij}(\alpha)  \right)+ 
+\log P(L^t).
+$$
+Очевидно, что $\sum_{\alpha \in L^t} p(\alpha) q_{ij}(\alpha) = {P(L^t)}\cdot M(S_{ij}(t)).$
+Используя теорему 5, выражение для энтропии можно переписать в виде
+$$
+H(L^t) = -t\cdot (1+o(1))\sum_{i=1}^k \sum_{j=1}^{n_i} w_{ij}\log p_{ij} + 
+\log P(L^t).
+$$
+Ввиду однозначности вывода, с использованием (\ref{24}), имеем 
+$$
+\log P(L^t)=\log P(D^t_1)=t \log r+O(\log t).
+$$ 
+Поэтому 
+$$
+H(L^t) =t \cdot \left( \log r - \sum_{j=1}^{n_i} w_{ij}\log p_{ij}\right)+o(t).
+$$
+Полученный результат сформулируем в виде следующей теоремы.
+
+\medskip
+
+\textbf {Теорема 6.}
+{\em Пусть $G$ --- однозначная стохастическая КС-грамматика с разложимой
+матрицей первых моментов, для которой перронов корень $r<1,$ и
+$L^t$ - множество всех слов из $L,$ порождаемого $G,$ с деревьями вывода высоты $t.$ Тогда
+$$
+H(L^t) =t \cdot \left( \log r - \sum_{j=1}^{n_i} w_{ij}\log p_{ij}\right)+o(t),
+$$
+где $w_{ij}$ определяются теоремой $5$.
+}
+
+\medskip
+
+Таким образом, энтропия $H(L^t)$ линейно зависит от высоты $t$ дерева вывода, как и в неразложимом случае [Дискр.ан 2001].
+
+Используя энтропию, оценим стоимость оптимального кодирования $C_0(L).$
+Обозначим через $f^*$ кодирование множества $L^t,$ минимизирующее величину 
+$$
+M_t(f)=\sum_{\alpha \in L^t} p_t(\alpha)\cdot \left|f(\alpha)\right|.
+$$
+Очевидно, для любого кодирования $f \in F(L)$ верно неравенство $M_t(f) \ge M_t(f^*).$ Оценим  $M^*(L^t)=M_t(f^*),$ используя следующую теорему, доказанную в [Борисов].
+
+\medskip
+
+\textbf {Теорема 7.}
+{\em Пусть $L_k$ -- последовательность стохастических языков, для которой $H(L_k) \rightarrow \infty$ при $k \rightarrow \infty.$ Тогда 
+$$
+\lim_{k \rightarrow \infty} \frac{M^*(L_k)}{H(L_k)}=1.
+$$ 
+}
+\medskip
+
+Поскольку  $H(L)^t \rightarrow \infty$ при $t \rightarrow \infty,$ из теоремы 7 следует, что $M_t(f^*)/H(L^t) \rightarrow 1$ при $t \rightarrow \infty.$ 
+
+Найдем величину $\sum_{ \alpha \in L^t} p_t(\alpha) \cdot | \alpha|.$ Пусть правило $r_{ij}$ содержит в правой части $l_{ij}$ терминальных символов. Очевидно, $\left|\alpha\right|=\sum_{ij} q_{ij}(\alpha)\cdot l_{ij}.$ Поэтому 
+$$
+\sum_{ \alpha \in L^t} p_t(\alpha) \cdot | \alpha|=\sum_{ij} l_{ij} M(S_{ij}(t))= t\cdot \sum_{ij} l_{ij} w_{ij} +o(t).
+$$
+Следовательно, справедлива
+
+\medskip
+
+{\bf Теорема 8.} 
+{\em 
+Пусть $L$ - стохастический КС-язык, порожденный разложимой стохастической КС~-~грамматикой с однозначным выводом, для которой перронов корень $r$ матрицы первых моментов меньше $1$. Тогда стоимость любого кодирования $f \in F(L)$ удовлетворяет неравенству
+$$
+C(L,f) \ge C_0(L)= \frac {\log r-\sum_{ij} w_{ij}\log p_{ij}}{\sum_{ij} l_{ij} w_{ij}}.
+$$
+}
+
+\medskip
+}
+
+\end{document}
