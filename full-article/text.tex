@@ -1,0 +1,204 @@
+\documentclass[12pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[russian]{babel}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{scrextend}
+\usepackage{tikz}
+
+\begin{document}
+
+\section{Основные определения}
+
+\textit{Стохастической КС-грамматикой} \cite{fu-struct} называется система $G = <V_T, V_N, R, s>$, где $V_T$ и $V_N$ --- конечные множества терминальных и нетерминальных символов (терминалов и нетерминалов) соответственно, $s \in V_N$ --- аксиома, $R$ --- множество правил. Множество $R$ можно представить в виде $R = \cup_{i = 1}^n R_i$, где $n$ --- мощность алфавита $V_N$ и $R_i = \left\{r_{i1}, \ldots, r_{i n_i}\right\}$. Каждое правило $r_{ij}$ из $R_i$ имеет вид
+\begin{equation}
+	r_{ij} : A_i \xrightarrow{p_{ij}} \beta_{ij},\qquad j = 1, \ldots, n_i,
+\end{equation}
+где $A_i \in V_N$, $\beta_{ij} \in (V_N \cup V_T)^*$ и $p_{ij}$ --- вероятность применения правила $r_{ij}$, причём
+\begin{equation}
+\label{eq:p_values}
+	0 < p_{ij} \leq 1,\qquad \sum_{j = 1}^{n_i} p_{ij} = 1.
+\end{equation}
+
+% Вывод слова
+Для $\alpha, \gamma \in (V_N \cup V_T)^*$ будем говорить, что $\gamma$ выводится из $\alpha$ (и обозначать $\alpha \Rightarrow \gamma$), если существуют $\alpha_1, \alpha_2 \in (V_N \cup V_T)^*$, для которых $\alpha = \alpha_1 A_i \alpha_2$, $\gamma = \alpha_1 \beta_{ij} \alpha_2$ и в грамматике имеется правило $A_i \xrightarrow{p_{ij}} \beta_{ij}$. Через $\Rightarrow_*$ обозначим рефлексивное транзитивное замыкание отношения $\Rightarrow$. Грамматика $G$ задаёт контекстно-свободный язык $L_G = \left\{ \alpha \in V_T^* : s \Rightarrow_* \alpha\right\}$. Будем говорить, что слово $\alpha$ \textit{выводимо} грамматикой $G$, если $\alpha \in L_G$.
+
+\textit{Выводом} слова $\alpha$ назовём последовательность правил $\omega(\alpha) = (r_{i_1 j_1}, r_{i_2 j_2}, \ldots, r_{i_q j_q})$, с помощью последовательного применения которых слово $\alpha$ выводится из аксиомы $s$. Если при этом каждое правило применяется к самому левому нетерминалу в слове, такой вывод называется левым. Для вывода $\omega(\alpha) = (r_{i_1 j_1}, \ldots, r_{i_q j_q})$ определим величину $p(\omega(\alpha)) = p_{i_1 j_1} \cdot \ldots \cdot p_{i_q j_q}$.
+
+Каждое слово, выводимое грамматикой $G$, имеет \textit{дерево вывода} \cite{aho-ulman-syntax}. Дерево вывода для слова $\alpha$ строится следующим образом. Корень дерева помечается аксиомой $s$. Далее последовательно рассматриваются правила левого вывода слова $\alpha$. Пусть на очередном шаге рассматривается правило $A_i \xrightarrow{p_{ij}} b_{i_1} b_{i_2} \ldots b_{i_m}$, где $b_{i_l} \in (V_N \cup V_T)$ ($l = 1,\ldots,m$). Тогда из самой левой вершины-листа дерева, помеченной символом $A_i$, проводится $m$ дуг в вершины следующего яруса, которые помечаются слева направо символами $b_{i1}, \ldots, b_{i,m}$ соответственно. После построения дуг и вершин для всех правил в выводе листья дерева помечены терминальными символами (либо пустым словом $\lambda$, если применяется правило вида $A_i \xrightarrow{p_{ij}} \lambda$) и само слово получается при обходе листьев дерева слева направо. \textit{Высотой} дерева вывода будем называть максимальную длину пути от корня к листу.
+
+\hrulefill
+
+\textbf{Пример}
+
+\begin{footnotesize}
+	
+Рассмотрим пример КС-грамматики $G$, задающей язык арифметических выражений $+, *$ без скобок с параметрами $a$ и $b$.
+
+\begin{equation}
+\begin{array}{lcl}
+	G & = & <V_N, V_T, S, R> \\
+	V_N & = & \{S, T, M\} \\
+	V_T & = & \{+, *, a, b\} \\
+\end{array}
+\end{equation}
+
+Множество $R$ правил вывода содержит правила:	
+\begin{equation}
+\begin{array}{lclcl}
+	r_{11} & : & S & \rightarrow & T \\
+	r_{12} & : & S & \rightarrow & T + S \\
+	r_{21} & : & T & \rightarrow & M \\
+	r_{22} & : & T & \rightarrow & M * T \\
+	r_{31} & : & M & \rightarrow & a \\
+	r_{32} & : & M & \rightarrow & b	
+\end{array}
+\end{equation}
+
+Рассмотрим слово $\alpha = a + b * a + b$, выводимое грамматикой $G$. Левый вывод этого слова имеет вид:
+\begin{equation}
+	\omega_l(\alpha) = (r_{12}, r_{21}, r_{32}, \ldots)
+\end{equation}
+
+Последовательно применяя правила левого вывода к аксиоме $S$ грамматики, получим слово $\alpha$:
+\begin{multline}
+	S \rightarrow T + S \rightarrow M + S \rightarrow a + S \rightarrow a + T + S \rightarrow a + M * T + S \rightarrow \\
+	\rightarrow a + b * T + S \rightarrow a + b * M + S \rightarrow a + b * a + S \rightarrow \\
+	\rightarrow a + b * a + T \rightarrow a + b * a + M \rightarrow a + b * a + b
+\end{multline}
+
+Дерево вывода, построенное по $\omega_l(\alpha)$, имеет вид:
+
+% Set the overall layout of the tree
+\tikzstyle{level 1}=[level distance=1cm, sibling distance=3cm]
+\tikzstyle{level 2}=[level distance=1cm, sibling distance=2cm]
+\tikzstyle{level 3}=[level distance=1cm, sibling distance=1cm]
+
+
+\begin{tikzpicture}[grow=down]
+\node {S}
+child {
+	node {T}
+	child {
+		node {M}
+		child {
+			node {a}
+		}
+	}
+}
+child {
+	node {+}
+}
+child {
+	node {S}
+	child {
+		node {T}
+		child {
+			node {M}
+			child {
+				node {b}
+			}
+		}
+		child {
+			node {*}
+		}
+		child {
+			node {T}
+			child {
+				node {M}
+				child {
+					node {a}
+				}
+			}
+		}
+	}
+	child {
+		node {+}
+	}
+	child {
+		node {S}
+		child {
+			node {T}
+			child {
+				node {M}
+				child {
+					node {b}
+				}
+			}
+		}
+	}
+};
+\end{tikzpicture}
+
+\end{footnotesize}
+
+\hrulefill
+
+Обозначим $p(\alpha) = \sum p(\omega_l(\alpha))$, где сумма берётся по всем левым выводам слова $\alpha$. Грамматика $G$ называется \textit{согласованной}, если
+\begin{equation}
+\label{eq:soglas}
+	\lim_{n \rightarrow \infty} \sum_{\substack{\alpha \in L_G\\\left|\alpha\right| \leq n}} p(\alpha) = 1.
+\end{equation}
+Согласованная грамматика $G$ задаёт распределение вероятностей $P$ на множестве $L_G$, при этом $p(\alpha)$ --- вероятность слова $\alpha$. Пара $\mathcal{L} = (L_G, P)$ называется \textit{стохастическим КС-языком}. В дальнейшем будем всюду предполагать, что рассматривается согласованная грамматика.
+
+Будем говорить, что нетерминал $A_j$ \textit{непосредственно выводится} из нетерминала $A_i$, и обозначать $A_i \rightarrow A_j$, если в грамматике имеется правило $A_i \xrightarrow{p_{ij}} \alpha_1 A_j \alpha_2$, где $\alpha_1, \alpha_2 \in (V_N \cup V_T)^*$. Рефлексивное транзитивное замыкание отношения $\rightarrow$ обозначим $\rightarrow_*$. Будем говориь, что нетерминал $A_j$ \textit{выводится} из $A_i$, если $A_i \rightarrow_* A_j$. Если одновременно $A_i \rightarrow_* A_j$ и $A_j \rightarrow_* A_i$, будем обозначать $A_i \leftrightarrow_* A_j$. Отношение эквивалентности $\leftrightarrow_*$ разбивает множество нетерминалов грамматики на классы
+\begin{equation}
+	K_1, K_2, \ldots, K_m.
+\end{equation}
+Множества номеров нетерминалов, входящих в класс $K_j$ обозначим через $I_j$. Грамматика называется \textit{разложимой} при $m \geq 2$, и \textit{неразложимой} в противном случае.
+
+Будем говорить, что класс $K_j$ \textit{непосредственно следует} за классом $K_i$, и обозначать $K_i \prec K_j$, если $i \neq j$ и существуют такие $A_1 \in K_i$ и $A_2 \in K_j$, что $A_1 \rightarrow A_2$. Рефлексивное транзитивное замыкание отношения $\prec$ обозначим $\prec_*$, и будем говорить, что класс $K_j$ \textit{следует} за классом $K_i$, если $K_i \prec_* K_j$. Отношение $\prec_*$ задаёт частичный порядок на множестве классов $K_1, \ldots, K_m$.
+
+Назовём класс $K$ \textit{особым}, если он содержит ровно один нетерминал $A_i$, и в грамматике отсутствует правило вида $A_i \xrightarrow{p_{ij}} \alpha_1 A_i \alpha_2$, где $\alpha_1, \alpha_2 \in (V_N \cup V_T)^*$. В дальнейшем всюду будем предполагать, что грамматика не содержит особых классов.
+
+\section{Производящие функции}
+
+Пусть $\alpha \in (V_N \cup V_T)^*$ --- слово в объединённом алфавите терминальных и нетерминальных символов. Через $l_i(\alpha)$ будем обозначать число нетерминалов $A_i$ в слове $\alpha$, а через $l(\alpha)$ --- характеристический вектор $(l_1(\alpha), l_2(\alpha), \ldots, l_k(\alpha))$.
+
+Введём вероятностные производящие функции $F_i(\textbf{s})$:
+\begin{equation}
+	 F_i(\textbf{s}) = F_i(s_1, s_2, \ldots, s_k) = \sum_{j = 1}^{n_i} p_{ij} s_1^{l_1} s_2^{l_2} \cdot \ldots \cdot s_k^{l_k},
+\end{equation}
+где суммирование происходит по всем правилам вывода $r_{ij}$ из $R_i$, и $l_s = l_s(\beta_{ij})$ --- число нетерминалов $A_s$ в правой части $\beta_{ij}$ правила $r_{ij}$.
+
+\hrulefill
+
+\begin{footnotesize}
+Производящие функции $F_i(\textbf{s})$ содержат информацию о том, с какой вероятностью мы можем получить слово с тем или иным характеристическим вектором в результате однократного применения случайного правила $r_{ij}$ к нетерминалу $A_i$. При этом правило выбирается в соответствии с распределением вероятностей $p_{ij}$. Если в $F_i(\textbf{s})$ присутствует слагаемое вида $p s_1^{l_1} \ldots s_k^{l_k}$, значит слово с характеристическим вектором $l = (l_1, \ldots, l_k)$ будет получено с вероятностью $p$.
+\end{footnotesize}
+
+\hrulefill
+
+Для удобства будем обозначать $\textbf{F}(\textbf{s}) = (F_1(\textbf{s}), \ldots, F_k(\textbf{s}))$.
+
+\section{Моменты}
+
+
+
+\section{Вероятности продолжения}
+
+\begin{thebibliography}{99}
+	\bibitem{shennon-mts}
+	\textbf{Шеннон К.} Математическая теория связи. М.: ИЛ, 1963
+	\bibitem{markov-coding}
+	\textbf{Марков А. А.} Введение в теорию кодирования. М.: Наука, 1982
+	\bibitem{fu-struct}
+	\textbf{Фу К.} Структурные методы в распознавании образов. М.: Мир, 1977
+	\bibitem{aho-ulman-syntax}
+	\textbf{Ахо А., Ульман Дж.} Теория синтаксического анализа, перевода и компиляции. Том 1. М.: Мир, 1978
+	\bibitem{sevast-processes}
+	\textbf{Севастьянов Б. А.} Ветвящиеся процессы. --- M.: Наука, 1971 --- 436 с.
+	\bibitem{gantmaher-matrix-theory}
+	\textbf{Гантмахер Ф. Р.} Теория матриц. --- 5-е изд., --- М.: ФИЗМАТЛИТ, 2010
+	\bibitem{zhiltsova-about-matrix}
+	\textbf{Жильцова Л. П.} О матрице первых моментов разложимой стохастической КС-грамматики. УЧЁНЫЕ ЗАПИСКИ КАЗАНСКОГО ГОСУДАРСТВЕННОГО УНИВЕРСИТЕТА, Том 151, кн. 2, 2009
+	\bibitem{zhiltsova-zakonom}
+	\textbf{Жильцова Л. П.} Закономерности применения правил грамматики в выводах слов стохастического контекстно-свободного языка // Математические вопросы кибернетики. Выр. 9. М.: Наука, 2000. С. 100-126.
+	\bibitem{zhiltsova-cost}
+	\textbf{Жильцова Л. П.} О нижней оценке стоимости кодирования и асимптотически оптимальном кодировании стохастического контекстно-свободного языка // Дискретный анализ и исследование операций. Серия 1, т. 8, \No 3. Новосибирск: Издательство Института математики СО РАН, 2001. С. 26-45.
+	\bibitem{borisov-zakonom}
+	\textbf{Борисов А. Е.} Закономерности в словах стохастических контекстно-свободных языков, порождённых грамматиками с двумя классами нетерминальных символов. Вопросы экономного кодирования. // Диссертация на соискание учёной степени кандидата физико-математических наук. Нижний Новгород, 2006.
+\end{thebibliography}
+
+
+\end{document}
