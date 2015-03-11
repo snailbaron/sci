@@ -4,6 +4,7 @@
 \usepackage{amsmath}
 \usepackage{amssymb}
 \usepackage{scrextend}
+\usepackage{textcomp}
 \usepackage{tikz}
 
 \begin{document}
@@ -73,7 +74,6 @@
 \tikzstyle{level 1}=[level distance=1cm, sibling distance=3cm]
 \tikzstyle{level 2}=[level distance=1cm, sibling distance=2cm]
 \tikzstyle{level 3}=[level distance=1cm, sibling distance=1cm]
-
 
 \begin{tikzpicture}[grow=down]
 \node {S}
@@ -171,7 +171,50 @@ child {
 
 Для удобства будем обозначать $\textbf{F}(\textbf{s}) = (F_1(\textbf{s}), \ldots, F_k(\textbf{s}))$.
 
-\section{Моменты}
+Введём производящие функции $F_i(t, \textbf{s})$ с параметром $t$:
+
+\begin{equation}
+	F_i(t, \textbf{s}) = F_i(t, s_1, s_2, \ldots, s_k) = \left\{
+	\begin{array}{ll}
+		F_i(t-1, F(\textbf{s})), & \text{при}\; t > 1 \\
+		F_i(\textbf{s}), & \text{при}\; t = 1
+	\end{array}
+	\right.
+\end{equation}
+
+\hrulefill
+
+\begin{footnotesize}
+Производящие функции $F_i(t, \textbf{s})$ содержат информацию о том, с какой вероятностью мы можем получить слово с определённым характеристическим вектором $l = (l_1, l_2, \ldots, l_k)$ в результате построения $t$ ярусов дерева вывода с корнем в нетерминале $A_i$.
+\end{footnotesize}
+
+\hrulefill
+
+\section{Моменты. Матрица первых моментов грамматики}
+
+Величины
+\begin{equation}
+	a^i_j = \left.\frac{\partial F_i(\textbf{s})}{\partial s_j}\right|_{\textbf{s} = \textbf{1}}
+\end{equation}
+называеются \textit{первыми моментами}, и определяют математическое ожидание числа нетерминалов $A_j$ в слове, полученном в результате однократного применения случайного правила вывода к нетерминалу $A_i$.
+
+Аналогично введём величины $a^i_j(t)$:
+\begin{equation}
+	a^i_j(t) = \left.\frac{\partial F_i(t, \textbf{s})}{\partial s_j}\right|_{\textbf{s} = \textbf{1}}
+\end{equation}
+Величины $a^i_j(t)$ определяют математическое ожидание числа нетерминалов $A_j$ в слове, полученном в результате построения $t$ ярусов дерева вывода из нетерминала $A_i$.
+
+Мы будем также рассматривать вторые $b^i_{jl}$ и третьи $c^i_{jln}$ моменты
+\begin{equation}
+	b^i_{jl} = \frac{\partial^2 F_i(\textbf{s})}{\partial s_l \partial s_j},\qquad c^i_{jln} = \frac{\partial^3 F_i(\textbf{s})}{\partial s_n \partial s_l \partial s_j},
+\end{equation}
+а также величины $b^i_{jl}(t)$, $c^i_{jln}(t)$:
+\begin{equation}
+	b^i_{jl}(t) = \frac{\partial^2 F_i(t, \textbf{s})}{\partial s_l \partial s_j},\qquad c^i_{jln}(t) = \frac{\partial^3 F_i(t, \textbf{s})}{\partial s_n \partial s_l \partial s_j},
+\end{equation}
+
+Матрица $A$, составленная из элементов $a^i_j$, называется \textit{матрицей первых моментов} грамматики.
+
 
 
 
@@ -195,7 +238,7 @@ child {
 	\bibitem{zhiltsova-zakonom}
 	\textbf{Жильцова Л. П.} Закономерности применения правил грамматики в выводах слов стохастического контекстно-свободного языка // Математические вопросы кибернетики. Выр. 9. М.: Наука, 2000. С. 100-126.
 	\bibitem{zhiltsova-cost}
-	\textbf{Жильцова Л. П.} О нижней оценке стоимости кодирования и асимптотически оптимальном кодировании стохастического контекстно-свободного языка // Дискретный анализ и исследование операций. Серия 1, т. 8, \No 3. Новосибирск: Издательство Института математики СО РАН, 2001. С. 26-45.
+	\textbf{Жильцова Л. П.} О нижней оценке стоимости кодирования и асимптотически оптимальном кодировании стохастического контекстно-свободного языка // Дискретный анализ и исследование операций. Серия 1, т. 8, \textnumero 3. Новосибирск: Издательство Института математики СО РАН, 2001. С. 26-45.
 	\bibitem{borisov-zakonom}
 	\textbf{Борисов А. Е.} Закономерности в словах стохастических контекстно-свободных языков, порождённых грамматиками с двумя классами нетерминальных символов. Вопросы экономного кодирования. // Диссертация на соискание учёной степени кандидата физико-математических наук. Нижний Новгород, 2006.
 \end{thebibliography}
