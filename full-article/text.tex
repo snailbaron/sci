@@ -6,8 +6,15 @@
 \usepackage{scrextend}
 \usepackage{textcomp}
 \usepackage{tikz}
+\usepackage{theorem}
+
+\newtheorem{theorem}{Теорема}
+\newtheorem{statement}{Утверждение}
+\newtheorem{lemma}{Лемма}
 
 \begin{document}
+
+
 
 \section{Основные определения}
 
@@ -215,10 +222,129 @@ child {
 
 Матрица $A$, составленная из элементов $a^i_j$, называется \textit{матрицей первых моментов} грамматики.
 
+Будем предполагать, что классы $K_1, \ldots, K_m$ грамматики упорядочены таким образом, что $K_i \prec_* K_j$ при $i < j$. Тогда матрица $A$ первых моментов примет вид:
 
+\begin{equation}
+	A =
+	\begin{pmatrix}
+		A_{11} & A_{12} & A_{13} & \cdots & A_{1,m-1} & A_{1,m} \\
+		0 & A_{22} & A_{23} & \cdots & A_{2,m-1} & A_{2,m} \\
+		\vdots & \vdots & \vdots & \ddots & \vdots & \vdots \\
+		0 & 0 & 0 & \cdots & A_{m-1,m-1} & A_{m-1,m} \\
+		0 & 0 & 0 & \cdots & 0 & A_{m,m}
+	\end{pmatrix}
+\end{equation}
 
+Каждая диагональная подматрица $A_{ii}$ неразложима \cite{gantmaher-matrix-theory}, и соответствует классу $K_i$ нетерминалов. Заметим, что грамматика является неразложимой тогда и только тогда, когда неразложима её матрица первых моментов.
+
+Перронов корень \cite{gantmaher-matrix-theory} матрицы $A$ первых моментов обозначим через $r$.
+
+\begin{statement}
+	Пусть $G$ --- согласованная стохастическая КС-грамматика с матрицей первых моментов $A$. Тогда перронов корень $r$ матрицы $A$ не превосходит $1$.
+\end{statement}
+
+Перроновы корни диагональных блоков $A_{11}, A_{22}, \ldots, A_{m,m}$ обозначим через $r_1, r_2, \ldots, r_m$ соответственно. Очевидно, $r = \max \{r_1, r_2, \ldots, r_m\}$. Обозначим через $\mathcal{K}_r$ множество классов $K_j$, таких что $r_j = r$.
+
+Для пары классов $K_i, K_j$ рассмотрим все возможные подцепочки классов $K_{l_1} \prec K_{l_2} \prec \ldots \prec K_{l_n}$, такие что $n \geq 1$ и $l_1 = i$ и $l_n = j$. Через $s_{ij}$ обозначим максимальное число классов из $\mathcal{K}_r$ в подцепочке, по всем таким подцепочкам. Если классы $K_i$ и $K_j$ не связаны ни одной подцепочкой, будем считать что значение $s_{ij}$ не определено.
+
+\hrulefill
+\begin{footnotesize}
+	
+\textbf{Пример}
+
+\end{footnotesize}
+\hrulefill
+
+Поскольку любой класс связан хотя бы одной подцепочкой с $K_1$, значение $s_{1i}$ определено для любого класса $K_i$. Дополнительно переупорядочим классы так, что $s_{1i} \leq s_{1j}$ при $i < j$, и при $s_{1i} = s_{1j}$ $i < j$, если $K_i \in \mathcal{K}_r$ и $K_j \notin \mathcal{K}_r$. Таким образом, меньшие номера $i$ имеют классы $K_i$ с меньшим значением $s_{1i}$, а при равных значениях --- классы из $\mathcal{K}_r$.
+
+Разделим классы $K_1, \ldots, K_m$ на группы $\mathcal{M}_1, \ldots, \mathcal{M}_w$:
+\begin{equation}
+	\begin{array}{lcl}
+		\mathcal{M}_1 & = & \{K_i : s_{1i} \leq 1 \} \\
+		\mathcal{M}_j & = & \{K_i : s_{1i} = j \}, j > 1
+	\end{array}
+\end{equation}
+
+С учётом этого разбиения, матрица $A$ имеет вид:
+\begin{equation}
+	A =
+	\begin{pmatrix}
+		B_{11} & B_{12} & \cdots & B_{1,w} \\
+		0 & B_{22} & \cdots & B_{2,w} \\
+		\vdots & \vdots & \ddots & \vdots \\
+		0 & 0 & \cdots & B_{w,w}
+	\end{pmatrix},
+\end{equation}
+где диагональные блоки $B_{ii}$ соответствуют группам $\mathcal{M}_i$.
+
+Дополнительно обозначим $s_{ln}^* = \max \{s_{ij} : K_i \in \mathcal{M}_l, K_j \in \mathcal{M}_n$.
+
+Известна \cite{zhiltsova-about-matrix} следующая теорема.
+
+\begin{theorem}
+	Пусть $G$ --- разложимая КС-грамматика с матрицей первых моментов $A$, и классы $K_1, K_2, \ldots, K_m$ нетерминалов разбиты на группы $\mathcal{M}_1, \mathcal{M}_2, \ldots, \mathcal{M}_w$ в соответствии с данными выше определениями. Тогда
+	\begin{equation}
+		A^t =
+		\begin{pmatrix}
+			B_{11}^t & B_{12}^{(t)} & \cdots & B_{1w}^{(t)} \\
+			0 & B_{22}^t & \cdots & B_{2w}^{(t)} \\
+			\vdots & \vdots & \ddots & \vdots \\
+			0 & 0 & \cdots & B_{ww}^t
+		\end{pmatrix},
+	\end{equation}
+	где диагональные блоки $B_{ii}^t$ соответствуют группам $\mathcal{M}_i$, и
+	\begin{equation}
+		B_{ij}^{(t)} \sim H_{ij} \cdot t^{s_{ij}^* - 1} \cdot r^t,
+	\end{equation}
+	где $H_{ij} = U^{(i)} \cdot V^{(j)}$.
+\end{theorem}
 
 \section{Вероятности продолжения}
+
+Величины $Q_i(t) = 1 - F_i(t, 0)$ называются \textit{вероятностями продолжения} \cite{sevast-processes}. Заметим, что $Q_i(t) \rightarrow 0 (t \rightarrow \infty)$ в силу согласованности грамматики.
+
+Разложим функцию $F_i(s_1, s_2, \ldots, s_k)$ в ряд Тейлора в окрестности $\textbf{1} = (1, 1, \ldots, 1)$, предполагая $t \rightarrow \infty$:
+\begin{multline}
+	F_i(\textbf{s}) = F_i(\textbf{1}) + \sum_{j = 1}^k \frac{\partial F_i(\textbf{1})}{\partial s_j} (s_j - 1) + \frac{1}{2} \sum_{j, l = 1}^k \frac{\partial^2 F_i(\textbf{1})}{\partial s_j \partial s_l} (s_j - 1) (s_l - 1) + \\
+	+ o(\max \left|s_i - 1\right|) = \\
+	= 1 + \sum_{j = 1}^k a^i_j (s_j - 1) + \frac{1}{2} \sum_{j,l = 1}^k b^i_{jl} (s_j - 1) (s_l - 1) + o(\max \left|s_i - 1\right|)
+\end{multline}
+
+Подставляя $F_j(t-1, 0)$ вместо $s_j$, получаем:
+\begin{multline}
+	F_i(\textbf{F}(t-1, \textbf{0})) = F_i(t, \textbf{0}) = 1 + \sum_{j = 1}^k a^i_j (F_j(t-1, 0) - 1) + \\
+	+ \frac{1}{2} \sum_{j,l = 1}^k b^i_{jl} (F_j(t-1, 0) - 1) (F_l(t-1, 0)- 1) + \\
+	+ o(\max \left| F_i(t-1, 0) - 1 \right|),
+\end{multline}
+откуда
+\begin{equation}
+	Q_i(t) = \sum_{j = 1}^k a^i_j Q_i(t-1) - \frac{1}{2} \sum_{j,l = 1}^k b^i_{jl} Q_j(t-1) Q_l(t-1) + O(\max (Q_i(t))^3)
+\end{equation}
+
+Обозначим $I_j = \{ i : A_i \in K_j \}$, и $I_{>j} = \{ i : A_i \in K_l, l > j \}$. Тогда:
+\begin{align}
+	& Q_i(t) = \sum_{j \in I_m} a^i_j Q_j(t-1) + o(Q_j(t-1)), & i \in I_m \\
+	& Q_i(t) = \sum_{j \in I_n} a^i_j Q_j(t-1) + \sum_{j \in I_{>n}} a^i_j Q_j(t) + o(Q_i(t)), & i \in I_n, n < m
+\end{align}
+
+\begin{align}
+	& Q^{(i)}(t) = B_{ii} Q^{(i)}(t-1) (1 + o(1)), & i = m \\
+	& Q^{(i)}(t) = B_{ii} Q^{(i)}(t-1) + B_{i,i+1} Q^{(i+1)} + \ldots + B_{i,w} Q^{(w)} + o(\ldots), & i < m
+\end{align}
+
+\begin{statement}
+	Компоненты вектора $Q^{(i)}(t)$ пропорциональны вектору $U^{(i)}$:
+	\begin{equation}
+		\frac{Q^{(i)}(t)}{Q^*(t)} \sim U^{(i)}
+	\end{equation}
+\end{statement}
+Откуда
+\begin{equation}
+	Q_i(t) = U^{(l)}_i Q^*(t) (1 + o(1)),
+\end{equation}
+Заметим, что не для всех $i$ величины $Q_i(t)$ могут иметь асимптотику $Q^*(t)$ (в случае, если $U^{(l)}_i = 0$).
+
+
 
 \begin{thebibliography}{99}
 	\bibitem{shennon-mts}
