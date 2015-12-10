@@ -52,7 +52,7 @@
 		\end{equation*}
 		$\beta_{ij} \in (V_N \cup V_T)^*$
 		
-		Грамматика порождает слово $\alpha$, если:
+		Грамматика порождает слово $\alpha \in V_T^*$, если:
 		$$
 			S \rightarrow \beta_1 \rightarrow \ldots \rightarrow \alpha,
 		$$
@@ -269,7 +269,7 @@
 
 		Упорядочим классы:				
 		\begin{equation*}
-			K_i \prec_* K_j \Rightarrow i < j
+			K_i \prec_* K_j \Rightarrow i \leq j
 		\end{equation*}
 		
 		Матрица первых моментов примет вид:
@@ -288,6 +288,8 @@
 		Блоки $A_{ii} (i = 1,2,\ldots,m)$ неразложимы, имеют перроновы корни $r_i$.
 		
 		Перронов корень всей матрицы $r = \max\{r_i\}$.
+		
+		$r = 1$ --- критический случай.
 	\end{frame}
 	
 	\begin{frame}
@@ -311,16 +313,60 @@
 	\end{frame}
 	
 	\begin{frame}
-		\frametitle{Результат: степень матрицы первых моментов}
+		\frametitle{Степень матрицы первых моментов}
 		Пусть $B_{ij}^{(t)}$ --- блок матрицы $A^t$ на позиции блока $B_{ij}$ матрицы $A$.
 		
 		При $t \rightarrow \infty$
 		\begin{equation*}
-			B_{ij}^{(t)} \sim H_{ij} \cdot r^t \cdot t^{s_{ij} - 1}
+			B_{ij}^{(t)} \sim H_{ij} \cdot r^t \cdot t^{s^*_{ij} - 1}
 		\end{equation*}
 		\begin{flushright}
 			\textit{Л. П. Жильцова}
 		\end{flushright}
+		
+		В критическом случае:
+		$$
+			B_{ij}^{(t)} \sim H_{ij} \cdot t^{s^*_{ij} - 1}
+		$$
+			
+	\end{frame}
+
+	\begin{frame}
+		\frametitle{Грамматика вида <<цепочки>>}
+		\begin{picture}(1000, 35)
+		\put(60, 20){\circle{30}}
+		\put(54, 16){$K_1$}
+		\put(75, 20){\vector(1,0){25}}
+		\put(115, 20){\circle{30}}
+		\put(109, 16){$K_2$}
+		\put(130, 20){\vector(1,0){25}}
+		\put(165, 10){...}
+		\put(185, 20){\vector(1,0){25}}
+		\put(225, 20){\circle{30}}
+		\put(219, 16){$K_m$}
+		\end{picture}
+		\vspace{-30pt}
+		
+		\begin{equation*}
+		K_1 \prec K_2 \prec \ldots \prec K_m
+		\end{equation*}
+		
+		Матрица первых моментов такой грамматики имеет вид:
+		\begin{equation*}
+		A =
+		\begin{pmatrix}
+		A_{11} & A_{12} & 0      & \cdots & 0      & 0      \\
+		0      & A_{22} & A_{23} & \cdots & 0      & 0      \\
+		0      & 0      & A_{33} & \cdots & 0      & 0      \\
+		\vdots & \vdots & \vdots & \ddots & \vdots & \vdots \\
+		0      & 0      & 0      & \cdots & A_{m-1,m-1} & A_{m-1,m} \\
+		0      & 0      & 0      & \cdots & 0      & A_{mm}
+		\end{pmatrix}
+		\end{equation*}
+		
+		Блоки $A_{ii} (i = 1,2,\ldots,m)$ неразложимы, имеют перроновы корни $r_i$.
+		
+		Перронов корень всей матрицы $r = \max\{r_i\}$.
 	\end{frame}
 
 	\begin{frame}
@@ -332,11 +378,11 @@
 		При $t \rightarrow \infty$
 		\begin{equation*}
 			\begin{split}
-				&Q_i(t) = c_n \cdot U_i \cdot t^{-\left(\frac{1}{2}\right)^{s_{nm} - 1}} \cdot (1 + o(1)) \\
-				&P_i(t) = \tilde{c}_n \cdot U_i \cdot t^{-1 -\left(\frac{1}{2}\right)^{s_{nm} - 1}} \cdot (1 + o(1))
+				&Q_i(t) \sim c_i \cdot t^{-\left(\frac{1}{2}\right)^{q_l - 1}} \\
+				&P_i(t) \sim \tilde{c}_i \cdot t^{-1 -\left(\frac{1}{2}\right)^{q_l - 1}}
 			\end{split},
 		\end{equation*}
-		где $A_i \in K_n$, $U_i, c_n, \tilde{c}_n > 0$.
+		где $A_i \in K_l$, $c_i, \tilde{c}_i > 0$, $q_l$ --- число 
 		
 		\begin{picture}(1000, 45)
 			\put(20, 20){\circle*{20}}
@@ -355,9 +401,9 @@
 			\put(270, 20){\vector(1,0){20}}
 			\put(300, 20){\circle{20}}
 			\put(140, -10){\vector(0,1){20}}
-			\put(142, -5){$n$}
+			\put(142, -5){$l$}
 			\put(140, -10){\vector(1,0){170}}
-			\put(200, -2){$s_{nm} = 2$}
+			\put(200, -2){$q_l = 2$}
 		\end{picture}
 	\end{frame}
 	
@@ -367,7 +413,7 @@
 		\begin{equation*}
 		\begin{split}
 		&Q_i(t) \sim c_i \cdot t^{-\left(\frac{1}{2}\right)^{q_l - 1}} \\
-		&P_i(t) \sim c_i \cdot t^{-1 -\left(\frac{1}{2}\right)^{q_l - 1}}
+		&P_i(t) \sim \tilde{c}_i \cdot t^{-1 -\left(\frac{1}{2}\right)^{q_l - 1}}
 		\end{split},
 		\end{equation*}
 		где $A_i \in K_l$, $c_i > 0$, $q_l = s_{lm}^*$.
@@ -379,17 +425,9 @@
 		
 		При $t \rightarrow \infty$
 		\begin{equation*}
-			M_{ij}(t) = d_i \cdot p_{ij} \cdot t^{\left(\frac{1}{2}\right)^{s_{nm} - 1 - \xi}} \cdot (1 + o(1)),
+			M_{ij}(t) \sim d_i \cdot p_{ij} \cdot t^{\left(\frac{1}{2}\right)^{q_{l+1} - 1}},
 		\end{equation*}
-		где $A_i \in K_n$, $d_i > 0$ и
-		\begin{equation*}
-			\xi = \left\{
-			\begin{split}
-				&1,\quad K_n \text{ --- критический} \\
-				&0,\quad K_n \text{ --- докритический}
-			\end{split}
-			\right.
-		\end{equation*}
+		где $A_i \in K_l$, $d_i > 0$ и
 		
 		\begin{picture}(1000, 45)
 			\put(20, 20){\circle*{20}}
@@ -407,10 +445,10 @@
 			\put(260, 20){\circle{20}}
 			\put(270, 20){\vector(1,0){20}}
 			\put(300, 20){\circle{20}}
-			\put(140, -10){\vector(0,1){20}}
-			\put(142, -5){$n$}
-			\put(140, -10){\vector(1,0){170}}
-			\put(200, -2){$s_{nm} = 2$}
+			\put(100, -10){\vector(0,1){20}}
+			\put(102, -5){$l$}
+			\put(100, -10){\vector(1,0){190}}
+			\put(180, -2){$q_{l+1} = 2$}
 		\end{picture}
 	\end{frame}
 	
@@ -420,17 +458,12 @@
 		
 		При $t \rightarrow \infty$
 		\begin{equation*}
-		M_{ij}(t) = d_i \cdot p_{ij} \cdot t^{\left(\frac{1}{2}\right)^{s_{nm} - 1 - \xi}} \cdot (1 + o(1)),
+		M_{ij}(t) \sim d_i \cdot p_{ij} \cdot t^{\left(\frac{1}{2}\right)^{\tilde{q}_l - 1}},
 		\end{equation*}
-		где $A_i \in K_n$, $d_i > 0$ и
-		\begin{equation*}
-		\xi = \left\{
-		\begin{split}
-		&1,\quad K_n \text{ --- критический} \\
-		&0,\quad K_n \text{ --- докритический}
-		\end{split}
-		\right.
-		\end{equation*}
+		где $A_i \in K_l$, $d_i > 0$, и
+		$$
+			\tilde{q}_l = q_1 - q^-_l = s_{1m}^* - s_{1l}^*
+		$$
 	\end{frame}
 	
 	% Список литературы
