@@ -1,0 +1,245 @@
+\documentclass[russian,14pt,twoside]{extreport}
+\usepackage[T2A]{fontenc}
+\usepackage[cp1251]{inputenc}
+\usepackage[russian]{babel}
+% ----------------------------------------------------------------------------
+%\usepackage{pscyr}
+%\renewcommand{\rmdefault}{ftm}
+%\renewcommand{\sfdefault}{ftx}
+\usepackage{microtype}
+\usepackage{setspace}
+\selectfont
+\parindent=18pt
+\frenchspacing
+% ----------------------------------------------------------------------------
+\usepackage{makeidx}
+\makeindex
+% ----------------------------------------------------------------------------
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amscd}
+\usepackage{mathtools}
+\usepackage{bm}
+% ----------------------------------------------------------------------------
+\usepackage[labelformat=empty]{caption}
+\usepackage{graphicx}
+\usepackage[all]{xy}
+% ----------------------------------------------------------------------------
+\usepackage{import}
+\usepackage{url}
+% ----------------------------------------------------------------------------
+\binoppenalty=10000
+\relpenalty=10000
+\sloppy
+% ----------------------------------------------------------------------------
+\special{papersize=210mm,297mm}
+\usepackage[%
+	left=2.3cm,%
+	top=2.3cm,%
+	right=2.3cm,%
+	bottom=2.8cm,%
+	headsep=0.8cm,%
+	footskip=0.8cm]{geometry}
+% ----------------------------------------------------------------------------
+%\usepackage{perpage}
+%\MakePerPage{footnote}
+\renewcommand{\thefootnote}{\fnsymbol{footnote}}
+% ----------------------------------------------------------------------------
+\newcommand\booktitle{%
+\small IX~Международная конференция
+<<Дискретные модели в теории управляющих систем>>}
+% ----------------------------------------------------------------------------
+\usepackage{fancyhdr}
+\fancyhead{}
+\fancyfoot{}
+\fancyhead[RE,LO]{\normalsize \thepage}
+\fancyhead[LE,RO]{\booktitle}
+\pagestyle{fancy}
+% ----------------------------------------------------------------------------
+\makeatletter
+\newcommand\Title[2]{%
+\penalty -200
+\vskip 18pt plus 6pt
+{\leftskip=1.5\parindent
+\rightskip=1.5\parindent
+\vbox{\centering\sffamily%\scshape
+\bfseries\Large #1}}
+\addcontentsline{toc}{section}{\textit{#2}\\#1}
+\nopagebreak
+\vskip 6pt
+\@afterheading
+}
+
+\newcommand\OneAuthor[3]{%
+\vbox{%
+\leavevmode
+{\hangindent=\parindent\centering
+\bfseries\normalsize #1\par}
+\vskip 3pt
+\raggedright
+\slshape\footnotesize
+#2, e-mail: \texttt{#3}\\*}
+\nopagebreak
+\medskip
+\@afterheading
+}
+
+\makeatletter
+\newcommand\TwoAuthor[6]{%
+\vbox{%
+\hangindent=\parindent
+{\centering
+\bfseries\normalsize #1$^1$, #4$^2$\\}
+\vskip 3pt
+\footnotesize
+$^1$ {#2}, e-mail: \texttt{#3}\\
+$^2$ {#5}, e-mail: \texttt{#6}}
+\nopagebreak
+\smallskip
+\@afterheading
+}
+
+\newcommand\ThreeAuthor[9]{%
+\vbox{%
+\hangindent=\parindent
+{\centering
+\bfseries\normalsize #1$^1$, #4$^2$, #7$^3$\\}
+\vskip 3pt
+\footnotesize
+$^1$ {#2}, e-mail: \texttt{#3}\\
+$^2$ {#5}, e-mail: \texttt{#6}\\
+$^3$ {#8}, e-mail: \texttt{#9}}
+\nopagebreak
+\smallskip
+\@afterheading
+}
+
+\newcommand\FourAuthor[9]{%
+\def\Argi{{#1}}%
+\def\Argii{{#2}}%
+\def\Argiii{{#3}}%
+\def\Argiv{{#4}}%
+\def\Argv{{#5}}%
+\def\Argvi{{#6}}%
+\def\Argvii{{#7}}%
+\def\Argviii{{#8}}%
+\def\Argix{{#9}}%
+\FourAuthorContinue
+}
+\newcommand\FourAuthorContinue[3]{%
+\vbox{%
+\hangindent=\parindent
+{\centering
+{\bfseries\normalsize \Argi$^1$, \Argiv$^2$, \Argvii$^3$, #1$^4$\\}}
+\vskip 3pt
+\footnotesize
+$^1$ \Argii, e-mail: \texttt{\Argiii}\\
+$^2$ \Argv, e-mail: \texttt{\Argvi}\\
+$^3$ \Argviii, e-mail: \texttt{\Argix}\\
+$^4$ #2, e-mail: \texttt{#3}}
+\nopagebreak
+\smallskip
+\@afterheading
+}
+
+\newcommand\FiveAuthor[9]{%
+\def\Argi{{#1}}%
+\def\Argii{{#2}}%
+\def\Argiii{{#3}}%
+\def\Argiv{{#4}}%
+\def\Argv{{#5}}%
+\def\Argvi{{#6}}%
+\def\Argvii{{#7}}%
+\def\Argviii{{#8}}%
+\def\Argix{{#9}}%
+\FiveAuthorContinue
+}
+\newcommand\FiveAuthorContinue[6]{%
+\vbox{%
+\hangindent=\parindent
+{\centering
+\bfseries\normalsize \Argi$^1$, \Argiv$^2$, \Argvii$^3$, #1$^4$, #4$^5$\\}
+\vskip 3pt
+\footnotesize
+$^1$ {\Argii}, e-mail: \texttt{\Argiii}\\
+$^2$ {\Argv}, e-mail: \texttt{\Argvi}\\
+$^3$ {\Argviii}, e-mail: \texttt{\Argix}\\
+$^4$ {#2}, e-mail: \texttt{#3}\\
+$^5$ {#5}, e-mail: \texttt{#6}}
+\nopagebreak
+\smallskip
+\@afterheading
+}
+
+\newcommand\Subtitle[1]{
+\medskip
+\noindent
+{\bfseries\large #1}
+\par\nopagebreak
+\smallskip
+\@afterheading
+}
+
+\newcommand\References{
+\medskip
+\noindent
+{\scshape\large Список литературы}
+\par\nopagebreak
+\smallskip
+\@afterheading
+}
+
+% ----------------------------------------------------------------------------
+% Customize lists layout
+\usepackage{enumitem}
+\setlist[enumerate]{%
+    %labelindent=0pt by default
+    leftmargin=*,%
+    topsep=4pt plus 2pt minus 2pt,%
+    partopsep=2pt plus 1pt minus 1pt,%
+    parsep=2pt plus 1pt,%
+    itemsep=2pt plus 1pt%
+}
+\setlist[itemize]{%
+    %labelindent=0pt by default
+    leftmargin=*,%
+    topsep=4pt plus 2pt minus 2pt,%
+    partopsep=2pt plus 1pt minus 1pt,%
+    parsep=2pt plus 1pt,%
+    itemsep=2pt plus 1pt%
+}
+% ----------------------------------------------------------------------------
+\makeatother
+% ----------------------------------------------------------------------------
+\newcommand\SectionProgHead[4]{%
+\vbox{%
+\vskip 24pt
+{\centering\sffamily\scshape\bfseries\LARGE #1\par}
+\vskip 3pt
+{\centering\itshape\large #2\break #3\par}
+\vskip 6pt
+{\leavevmode\centering\slshape\large #4\par}
+\vskip 6pt
+}}
+
+\newcommand\SectionTitleHead[2]{%
+\vbox{%
+\vskip 24pt
+{\centering\sffamily\scshape\bfseries\huge #1\par}
+\vskip 6pt
+{\centering\bfseries\LARGE #2\par}
+\vskip 24pt
+}
+\addcontentsline{toc}{chapter}{{\bfseries #1}}
+}
+% ----------------------------------------------------------------------------
+\newcommand\emphauth[1]{\textrm{#1}}
+\newcommand\emphatitle[1]{\textrm{#1}}
+\newcommand\emphbtitle[1]{\textrm{#1}}
+\newcommand\emphctitle[1]{\textrm{#1}}
+% ----------------------------------------------------------------------------
+\begin{document}
+\input{article}
+\end{document}
+%% ---------------------------------------------------------------------------
+% vim:ts=4 sw=4 tw=79 cc=80
