@@ -488,7 +488,7 @@ $$
 
 \medskip
 
-Для доказательства основного результата раздела предварительно докажем две леммы.
+Для доказательства основного результата раздела предварительно докажем лемму.
 
 Через $R_X(n)$ обозначим выражение
 \begin{equation}
@@ -498,86 +498,6 @@ $$
 \end{equation}
 где $X=(x_1, \ldots, x_k)$ --- целочисленный неотрицательный вектор, $Q_j(n)$ --- вероятности продолжения ($j=1,\ldots,k$), $k$ --- общее число нетерминалов в грамматике.
 
-
-
-
-\medskip
-
-\begin{lemma}
-При $n \rightarrow \infty$
-\begin{equation}
-\left(1-\sum_{j=1}^k x_j Q_j(n-1)\right) \cdot \sum_{j=1}^k \left(x_j \cdot \frac {P_j(n)}{1-Q_j(n-1)} \right)\le R_X(n) \le
-\sum_{j=1}^k \left(x_j \cdot \frac{P_j(n)}{1-Q_j(n)}\right).
-\label{z2}
-\end{equation}
-\end{lemma}
-
-\proof
-
-В $R_X(n)$ вынесем за скобки $\prod_{j=1}^k \left(1-Q_j(n-1)\right)^{x_j}:$ 
-
-%%$$
-\begin{equation}
-R_X(n)=\prod_{j=1}^k \left(1-Q_j(n-1)\right)^{x_j} \cdot  \left( \prod_{j=1}^k \left(\frac{1-Q_j(n)}{1-Q_j(n-1)} \right)^{x_j}-1\right).
-\label{z3}
-\end{equation}
-
-%$$
-Заметим, что $\frac{1-Q_j(n)}{1-Q_j(n-1)}=1+\frac {P_j(n)}{1-Q_j(n-1)}.$
-
-К выражению $\left(1+\frac {P_j(n)}{1-Q_j(n-1)}\right)^{x_j}$ применим формулу для бинома Ньютона и ограничимся первыми двумя слагаемыми. Получим неравенство $\left(1+\frac {P_j(n)}{1-Q_j(n-1)}\right)^{x_j} \geq 1+ x_j \cdot \frac {P_j(n)}{1-Q_j(n-1)}.$ Применяя это неравенство к (\ref{z3}), получим нижнюю оценку для $R_X(n):$
-$$
-R_X(n)\geq \prod_{j=1}^k \left(1-Q_j(n-1)\right)^{x_j} \cdot\left( \prod_{j=1}^k \left(1+x_j \cdot \frac {P_j(n)}{1-Q_j(n-1)}\right)^{x_j} -1 \right) \geq 
-$$
-$$
-\geq \prod_{j=1}^k \left(1 -Q_j(n-1)\right)^{x_j} \cdot \left( \sum_{j=1}^k x_j \cdot \frac {P_j(n)}{1-Q_j(n-1)} \right).
-$$
-Для оценки $\prod_{j=1}^k \left(1 -Q_j(n-1)\right)^{x_j}$ используем следующее равенство, доказанное в \cite{sev}:
-\begin{equation}
-(1-y_1)^{n_1} \ldots (1-y_k)^{n_k}=
-1- \Delta, \,\,
-\mbox{где} \,\, 0 \le \Delta \le \sum_{j}n_j y_j, \, \, \mbox{и} \,\, \, 0\leq y_j\leq 1.
-\label{z4}
-\end{equation}
-
-Положив $Q_j(n-1)$ в качестве $y_j$ и $x_j$ в качестве $n_j,$ получим неравенство
- $\prod_{j=1}^k \left(1 -Q_j(n-1)\right)^{x_j} \geq 1-\sum_{j=1}^k x_j \cdot Q_j(n-1).$
-Используя это неравенство, получаем нижнюю оценку для $R_X(n):$
-$$
-R_X(n)\geq 
-\left(1-\sum_{j=1}^k x_j Q_j(n-1)\right) \cdot \sum_{j=1}^k \left(x_j \cdot \frac {P_j(n)}{1-Q_j(n-1)} \right).
-$$
-
-Найдем теперь верхнюю оценку для $R_X(n).$
-Аналогично (\ref{z3}) можно записать, что
-$$
-R_X(n)=\prod_{j=1}^k \left(1-Q_j(n)\right)^{x_j} \cdot  \left(1- \prod_{j=1}^k \left(\frac{1-Q_j(n-1)}{1-Q_j(n)} \right)^{x_j}\right)=
-$$
-\begin{equation}
-=\prod_{j=1}^k \left(1-Q_j(n)\right)^{x_j} \cdot  \left(1- \prod_{j=1}^k \left(1-\frac {P_j(n)}{1-Q_j(n)}\right)^{x_j}\right).
-\label{z5}
-\end{equation}
-
-Положив в (\ref{z4}) $\frac {P_j(n)}{1-Q_j(n)}$ в качестве $y_j$ и $x_j$ в качестве $n_j,$ получаем неравенство 
-$$
- \prod_{j=1}^k \left(1-\frac {P_j(n)}{1-Q_j(n)}\right)^{x_j} \geq \left(1-\sum_{j=1}^k x_j \cdot \frac {P_j(n)}{1-Q_j(n)}\right).
-$$
-Используя эту оценку в (\ref{z5}), находим, что
-$$
-R_X(n)\le
-\prod_{j=1}^k \left(1-Q_j(n) \right)^{x_j}\cdot
-\sum_{j=1}^k \left(x_j \cdot \frac{P_j(n)}{1-Q_j(n)}\right)\le 
-\sum_{j=1}^k \left(x_j \cdot \frac{P_j(n)}{1-Q_j(n)}\right).
-$$
-
-\lemp
-
-
-Из леммы 1 как следствие вытекает 
-
-\medskip
-
-???
 
 \begin{lemma}
 При $n \rightarrow \infty$
@@ -592,26 +512,36 @@ $\tilde{c}_1$ и $\tilde{c}_2$ -- положительные константы.%%\end{lemma}
 
 \proof
 
-Применим теорему 2 для $Q_l(n),$ учитывая, что $q_1 \ge q_i$ для любого $i.$
-Тогда при $n \rightarrow \infty$
+Заметим, что
 $$
-R_X(n)\le \sum_{l=1}^k x_l P(D_l^{n})\cdot
-(1+\tilde{c}_2 n^{q_1-1 } r^n )
-, \,\, \mbox{где}\, \, \tilde{c}_2>0.
+\prod_{j=1}^k (1 - Q_j(n))^{x_j} = 1 - \sum_{j = 1}^k x_j Q_j(n) + \sum_{j,l = 1}^k x_j x_l Q_j(n) Q_l(n) + \sum_{j=1}^k (C_{x_j}^2 Q_j(n)^2) - \dots
 $$
 
-Для получения нижней оценки для $R_X(n)$ используем следующее равенство, доказанное в \cite{sev}:
-%$$
-%$$
-Применяя (\ref{z2}) и (\ref{z3}), а также учитывая, что $\varphi_l(n)\geq 0$ для любого $l,$ получим, что
+В каждом из слагаемых выделим $\sum x_j Q_j(n)$:
 $$
-R_X(n)\ge
-\left(1-\sum_{j=1}^k x_j Q_j(n-1) \right)\sum_{l=1}^k x_l P(D_l^{n}))\geq
-\left(1-\tilde{c}_1 n^{q^{*}_1-1} r^{n}\sum_{j=1}^k x_j\right) \sum_{l=1}^k x_l P(D_l^{n})
+1 - \sum_{j=1}^k x_j Q_j(n) + \sum_{j=1}^k x_j Q_j(n) \sum_{l=1}^k x_l Q_l(n) + \sum_{j=1}^k \frac{(x_j - 1)}{2} Q_j(n) - \dots =
 $$
-для некоторой положительной константы $\tilde{c}_1.$
+
+Аналогично преобразуя $\prod_{j=1}^k (1 - Q_j(n-1))^{x_j}$, и подставляя в $R_X(n)$, получаем:
+$$
+R_X(n) = \sum_{j=1}^k x_j Q_j(n) \left(1 - \sum_{l=1}^k x_l Q_l(n) - \dots\right)
+$$
+
+Число слагаемых в скобках, а также константы перед величинами $Q(.)$, полностью определяются вектором $X$, и не зависят от $n$. Обозначим через $c$ максимальный модуль таких констант. Каждое слагаемое можно оценить как $O(n^{q_1 - 1} r^t)$. Тогда
+$$
+R_X(n) = \sum_{j=1}^k x_j Q_j(n) (1 + \psi_X(n))
+$$ 
+где $|\psi_X(n)| \leq \tilde{c} n^{q_1 - 1} r^t$.
+
 
 \lemp
+
+
+
+
+
+
+
 
 \nopagebreak
 \medskip
