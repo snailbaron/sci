@@ -1,0 +1,78 @@
+\documentclass[twoside,11pt,a4paper]{article}
+    \usepackage{daiostyle}
+%%%%%%%%%%%%%%%%%% Обязательные поля для заполнения автором статьи %%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%% Для создания pdf файла вначале  файл dvi надо перевести в формат ps, а затем ps в pdf
+
+\def\families{Э.~Х.~Гимади$^{1,2}$, А.~М.~Истомин$^1$, И.~А.~Рыков$^1$}%И.\,О.\,Фамилии авторов  с номерами их мест работы.
+\def\familieswithout{Э.~Х.~Гимади, А.~М.~Истомин, И.~А.~Рыков}%И.\,О.\,Фамилии авторов  без номеров мест работы.
+\def\efamilies{E.~Kh.~Гимади$^{1,2}$, A.~M.~Istomin$^1$, I.~A.~Rykov$^1$}%И.\,О.\,Фамилии  авторов c номнрами мест их работы на английском.
+\def\fullnames{\sl Гимади~Эдуард~Хайрутдинович\\Истомин\,Алексей\,Михайлович\\Рыков\,Иван\,Александрович}%Фамилии, имена и отчества авторов
+\def\efullnames{{\sl Edward~Kh.~Gimadi\\Alexey~M.~Istomin\\Ivan~A.~Rykov}}%Фамилии, имена и отчества авторов на английском
+\def\metka{gimadi}%метка первой страницы статьи.
+\def\UDC{519.8}%Номер УДК
+\def\nazvaniestati{\uppercase{О ЗАДАЧЕ НЕСКОЛЬКИХ КОММИВОЯЖ\"eРОВ\\[2mm] С
+ОГРАНИЧЕНИЯМИ НА ПРОПУСКНЫЕ СПОСОБНОСТИ\\[2mm] Р\"eБЕР ГРАФА}}%Название статьи
+\def\enazvaniestati{\uppercase{Optimization of using an unstring devices with\\[2mm] the faces of clergy title}}%Название статьи на английском
+\def\ssylka{\ffootnote{}{Исследование выполнено при финансовой поддержке
+Российского фонда фундаментальных исследований (проекты
+\No~12--01--00093а,
+      10--07--00195а,
+      12--01--33028мол\_а\_вед),
+целевой программы Президиума РАН (проект \No~227) и
+  междисциплинарного интеграционного проекта СО РАН (проект \No~7Б).}}%Ссылки на проекты в указанном формате. Если работа выполнена без поддержки по проектам, то  \ffoonote{}{...} убирается.
+\def\shortname{ О задаче нескольких коммивояжёров}%Краткое название статьи (умещающееся в одну строку колонтитула)
+\def\annotation{Рассматривается частный случай задачи отыска\-ния~$m$
+гамильтоновых циклов с ограничениями на число повторений\break рёбер
+($m$-Capacitated Peripatetic Salesman Problem, $m$-CPSP)~--- задачи
+$2$-CPSP на минимум и максимум с весами рёбер из целочисленного
+сегмента $\{1,q\}$. Пропускные способности рёбер заданы независимыми
+случайными величинами, принимающими значение~$2$~(1) с вероятностью
+$p$ ($1-p$). Построены алгоритмы решения задач
+\mbox{$2$-CPSP$_{\min}$} \mbox{и~$2$-CPSP$_{\max}$} с
+гарантированными оценками точности в~среднем по всем возможным
+входам. В частности, для задач на графах с весами рёбер $1$ и $2$
+алгоритмы имеют оценки точности $(19-5p)/12$ и~$(25+7p)/36$ в
+среднем по всем возможным входам для задачи на минимум и на максимум
+соответственно.  Ил.~17, библиогр.~20.}
+\def\enannotation{We consider a particular case of the
+problem of finding~$m$ Hamiltonian cycles with capacity restrictions
+on edges usage ($m$-Ca\-pacitated Peripatetic Salesman Problem,
+$m$-CPSP): the $2$-CPSP on minimum and maximum with edge weights
+from an integer segment $\{1,q\}$. The edges capacities are
+independent identically distributed random variables which assume
+$2$ with probability $p$ and $1$ with probability $1-p$. Polynomial
+algorithms for $2$-CPSP$_{\min}$ and $2$-CPSP$_{\max}$ with
+guarantee approximation ratio in average for all possible inputs are
+presented. In the case when edge weights are $1$ and $2$, the
+presented algorithms  have approximation ratio $(19-5p)/12$ and $(25
++ 7p)/36$ for the $2$-CPSP$_{\min}$ and the $2$-CPSP$_{\max}$
+correspondingly. Ill.~17, bibliogr.~20.}%Аннотация статьи на английском
+\def\addressesavtorov{{\rm\small$^1$ Институт математики  им. С.\,Л.\,Соболева СО РАН,\\ пр. Акад.
+Коптюга, 4,  630090 Новосибирск, Россия,\\ $^2$ Новосибирский гос. университет, ул. Пирогова,~2,\\
+630090 Новосибирск, Россия\\[1mm]}}
+% Адреса авторов для переписки, тел., факсы. Если есть соавторы и их служебные адреса различны,
+%то указываются здесь и их фамилии с соответствующими адресами
+\def\eaddressesavtorov{{\rm\small$^1$Sobolev Institute of Mathematics,\\
+4 Acad. Koptyug Ave., 630090 Novosibirsk, Russia\\
+$^2$ Novosibirsk State University,\\ 2 Pirogov St.,
+630090 Novosibirsk, Russia\\[1mm]}}% Адреса авторов для переписки. Если есть соавторы и их служебные адреса различны,
+%то указываются здесь и их фамилии с соответствующими адресами на английском
+\def\familiesforcopyright{Гимади~Э.~Х., Истомин~А.~М., Рыков~И.~А.}%Фамилия автора~И.~О.. Если есть соавторы, то их ФИО указываются через запятую
+%в том же формате (для копирайта)
+\def\kluchwords{задача коммивояжёра, задача нескольких
+коммивояж\"еров, р\"еберно непересекающийся гамильтонов цикл,
+приближённый алгоритм, гарантированная оценка точности.}%ключевые слова
+\def\ekluchwords{traveling salesman problem, $m$-peripatetic
+salesman problem, approximation algorithm, edge-disjoint Hamiltonian
+cycle, guarantee approximation ratio.}%ключевые слова на английском
+\def\email{gimadi@math.nsc.ru, alexeyistomin@gmail.com, rykovweb@gmail.com}%E-mail адреса авторов
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+\normalsize
+\setcounter{page}{3}%
+\statia{gistoryk}%файл статьи
+\end{document}

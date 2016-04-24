@@ -1,0 +1,296 @@
+\usepackage[cp1251]{inputenc}
+ \usepackage[dvips]{color}
+  \usepackage[russian]{babel}
+ \usepackage{slashbox}
+ \usepackage{indentfirst}
+  \usepackage{colortbl}
+\usepackage[dvips]{graphicx}
+\usepackage{geometry}
+\usepackage{latexsym}
+\usepackage{latexsym,tikz,xcolor,xkeyval}
+   \usepackage[all,arc,arrow]{xy}
+   \usepackage{amssymb,amsmath,amsfonts,amsthm,epsfig}
+   \usepackage[mathscr]{eucal}
+   \usepackage{mathtext}
+   \usepackage{srcltx}
+   \usepackage{pb-diagram}
+
+  % \usepackage{pstricks}
+\input epsf
+   %\usepackage{textcomp}
+   \usepackage{fancyhdr}
+   \overfullrule=0pt
+   \topmargin 26mm
+   \textwidth 127mm\textheight 190mm\headsep=4mm
+   \oddsidemargin 24mm\evensidemargin=\oddsidemargin\marginparsep 0.25in\marginparwidth 0.5in
+\pagestyle{fancy}
+\makeatletter
+
+%%%%%%%Установки для журнала%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcounter{issueyear}\setcounter{issueyear}{2000}%год выпуска
+\newcounter{numvolume}\setcounter{numvolume}{55}%номер тома
+\newcounter{numjournal}\setcounter{numjournal}{10}%номер журнала
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\def\issuemonths{\ifcase\thenumjournal ********\or Январь---февраль\or Март---апрель\or Май---июнь\or
+Июль---август\or Сентябрь---октябрь\or Ноябрь---декабрь\else
+********\fi}
+\def\ISSN{1560--7542}
+\def\Issuemonth{\ifcase\thenumjournal
+********\or January--February\or March--April\or July--August\or
+  September--October\or November--December\else ********\fi}
+
+\newcommand{\avtor}[1]{\item {\bf #1}}
+
+\newcommand{\firstpage}{
+${}$
+
+\vspace*{-3\baselineskip}${}$\hfill\parbox{110mm}{\footnotesize${}$\hfill\uppercase{Дискретный анализ и исследование операций}\\
+${}$\hfill\scriptsize\issuemonths\ \theissueyear.  Том
+\thenumvolume, \No\ \thenumjournal}}
+\newcommand{\firstpageofarticle}[2]{
+${}$
+
+\vspace*{-3\baselineskip}${}$\hfill\parbox{110mm}{\footnotesize${}$\hfill\uppercase{Дискретный анализ и исследование операций}\\
+${}$\hfill\scriptsize\issuemonths\ \theissueyear.  Том
+\thenumvolume, \No\ \thenumjournal. C.~\pageref{#1}--\pageref{#2}}}
+
+
+\newcommand{\famavtor}[1]{\footnote{${}$\\ \small\copyright \bf\ \theissueyear\ #1}}
+
+\newcommand{\statja}[9]{
+\thispagestyle{empty}
+
+\firstpageofarticle{#1}{#2}
+
+\vspace*{\baselineskip} \noindent{УДК #4}\setcounter{footnote}{0}
+\renewcommand{\thefootnote}{\fnsymbol{footnote}}
+
+\vspace*{\baselineskip} \label{#1}\begin{center}\large
+\uppercase{#5}\setcounter{section}{0} %
+\setcounter{lemma}{0}%
+\setcounter{theorem}{0}%
+\setcounter{sled}{0}%
+\setcounter{utv}{0}%
+\setcounter{equation}{0}%
+\setcounter{definition}{0}%
+\setcounter{property}{0}%
+#6\end{center}
+\renewcommand{\thefootnote}{}\famavtor{#9} ${}$
+\renewcommand{\thefootnote}{\fnsymbol{footnote}}
+
+\vspace*{-2\baselineskip}
+\begin{center}\large\sl #3\\[14pt]\end{center}
+
+ #7 #8\label{#2}}
+ \newcommand{\letterinred}[5]{
+\thispagestyle{empty}
+
+\firstpageofarticle{#1}{#2}
+
+\vspace*{\baselineskip} \setcounter{footnote}{0}
+\renewcommand{\thefootnote}{\fnsymbol{footnote}}
+
+\vspace*{\baselineskip} \label{#1}\begin{center}\large
+\uppercase{#4}\end{center}
+\renewcommand{\thefootnote}{\fnsymbol{footnote}}
+
+\vspace*{-\baselineskip}
+\begin{center}\large\sl #3\\[14pt]\end{center}
+
+ #5 \label{#2}}
+\newcommand{\daio}[2]{ --- Дискрет. анализ и исслед. операций. --- \theissueyear.~--- Т.~\thenumvolume,
+\No~\thenumjournal.~--- С.~\pageref{#1}--\pageref{#2}.}
+
+\newcommand{\ba}[1]{\begin{array}{#1}}
+\newcommand{\ea}{\end{array}}
+\newcommand{\ds}{\displaystyle\ }
+\newcommand{\ffootnote}[2]{\footnote[1]{$^{#1)}$\parbox[t]{120mm}{\small #2}}$^{#1)}$}
+
+\newlength{\Sp}
+\settowidth{\Sp}{\small aaa Statja postupila}
+\newlength{\Pv}
+\settowidth{\Pv}{\small a Mepepaonahhyq bapnanm ---}
+\newenvironment{zz}[3]{{#1}
+
+\noindent{\begin{minipage}[t]{70mm}\small{#2}
+\end{minipage}\hfill\begin{minipage}[t]{\Sp}\small
+Статья поступила\\
+{#3}\\
+\end{minipage}}\\}%
+{}
+
+\newenvironment{zzp}[4]{{#1}
+
+\noindent{\begin{minipage}[t]{70mm}\small{#2}
+\end{minipage}\hfill\begin{minipage}[t]{\Pv}\small Статья~поступила\\
+{#3}\\
+Исправленный~вариант~---\\
+{#4}\\
+\end{minipage}}\\} %
+{}
+\newenvironment{zze}[3]{{#1}
+
+\noindent{\begin{minipage}[t]{70mm}\small{#2}
+\end{minipage}\hfill\begin{minipage}[t]{\Sp}\small
+Received\\
+{#3}\\
+\end{minipage}}\\}%
+{}
+
+\newenvironment{zzpe}[4]{{#1}
+
+\noindent{\begin{minipage}[t]{70mm}\small{#2}
+\end{minipage}\hfill\begin{minipage}[t]{\Pv}\small Received\\
+{#3}\\
+Revised\\
+{#4}\\
+\end{minipage}}\\} %
+{}
+
+\newenvironment{zzf}[4]{{#1}
+
+\noindent{\begin{minipage}[t]{70mm}\small{#2}
+\end{minipage}\hfill\begin{minipage}[t]{\Pv}\small Статья~поступила\\
+{#3}\\
+Окончательный~вариант~---\\
+{#4}\\
+\end{minipage}}\\} %
+{}
+
+\newcommand{\headpara}[1]{\begin{center}\bf #1\end{center}
+
+\vspace*{-4pt}\indent}
+\renewcommand{\le}{\leqslant}
+\renewcommand{\ge}{\geqslant}
+\renewcommand{\leq}{\leqslant}
+\renewcommand{\geq}{\geqslant}
+\renewcommand{\epsilon}{\varepsilon}
+\renewcommand{\emptyset}{\varnothing}
+
+\renewcommand\section{\@startsection{section}{1}{\z@}%
+                                   {-0.1ex \@plus -1ex \@minus -.6ex}%
+                                   {1.3ex \@plus .2ex}%
+                                   {\center\normalfont\bfseries}}
+\renewcommand\subsection{\@startsection{subsection}{2}{\z@}%
+                                     {-3.25ex\@plus -1ex \@minus -.2ex}%
+                                     {1.5ex \@plus .2ex}%
+                                     {\center\normalfont\bfseries}}
+\renewcommand\subsubsection{\@startsection{subsubsection}{3}{\z@}%
+                                     {-3.25ex\@plus -1ex \@minus -.2ex}%
+                                     {1.5ex \@plus .2ex}%
+                                     {\center\normalfont\bfseries}}
+\renewcommand\paragraph{\@startsection{paragraph}{4}{\z@}%
+                                    {3.25ex \@plus1ex \@minus.2ex}%
+                                    {-1em}%
+                                    {\normalfont\bfseries\indent}}
+\renewcommand\subparagraph{\@startsection{subparagraph}{5}{\parindent}%
+                                       {3.25ex \@plus1ex \@minus .2ex}%
+                                       {-1em}%
+                                      {\normalfont\bfseries\indent}}
+\renewcommand \thesection {\@arabic\c@section.\hspace*{-3mm} }
+\renewcommand\thesubsection{\thesection\hspace*{3mm}\@arabic\c@subsection. }
+\renewcommand\thesubsubsection{\thesubsection\@arabic\c@subsubsection. }
+%%  Список литературы
+\def\@biblabel#1{#1.\hfill}
+\addto\extrasrussian{%
+\def\bibname{\center\textbf{\uppercase{Литература}}}
+\def\refname{\center\textbf{\uppercase{Литература}}}}
+
+%% The following definition is based on OL.sty VERSION: 1.1 of Optical Society of America
+%% to normalize parskib bewteen bibitems and the vertical indent before the bibliography
+\renewenvironment{thebibliography}[1]
+     {\vspace{-24pt}\section*{\refname}
+        %\@mkboth{\MakeUppercase\refname}{\MakeUppercase\refname}%
+      \list{\bf\@arabic\c@enumiv .}         %Начертание нумерации: полужирный шрифт
+           {\settowidth\labelwidth{.25in}%
+            \leftmargin\labelwidth
+  \setlength{\parsep}{0pc}
+  \setlength{\labelsep}{4 pt}
+  \setlength{\itemsep}{0.02in}
+  \setlength{\listparindent}{0in}
+  \setlength{\itemindent}{0in}
+            \advance\leftmargin\labelsep
+            \@openbib@code
+            \usecounter{enumiv}%
+            \let\p@enumiv\@empty
+            \renewcommand\theenumiv{\@arabic\c@enumiv}}%
+      \sloppy
+      \clubpenalty4000
+      \@clubpenalty \clubpenalty
+      \widowpenalty4000%
+      \sfcode`\.\@m
+      \small}                               %Шрифт для списка литературы: чуть мельче основного текста статьи (размер как раньше и был)
+     {\def\@noitemerr
+       {\@latex@warning{Empty `thebibliography' environment}}%
+      \endlist \vskip.2in}
+
+\def\th@plain{%
+  \slshape % body font
+}
+\def\thm@indent{\indent} % indent
+\def\thm@space@setup{%
+  \thm@preskip=5pt \thm@postskip=3pt
+}
+
+\makeatother
+\renewcommand{\emptyset}{\varnothing}
+\newcommand{\ES}{\varnothing}
+
+%\theorembodyfont{\slshape}
+\newtheorem{definition}{Определение}
+\newtheorem{lemma}{Лемма}
+\newtheorem{theorem}{Теорема}
+\newtheorem*{theorema}{Теорема}
+\newtheorem{utv}{Утверждение}
+\newtheorem{gip}{Условие}
+\newtheorem{sled}{Следствие}
+\newtheorem{property}{Свойство}
+\newtheorem{pred}{Предложение}
+
+\newcommand{\remarka}[1]{\indent{\bf Замечание#1.}~}
+\def\proofP[#1]{\indent{\sc Доказательство #1. }}
+\def\proof{\indent{\sc Доказательство. }}
+\renewenvironment{abstract}[2]
+  {\begin{center}\parbox{110mm}{\small{\bf Аннотация.} #1\\[2mm]{\bf Ключевые слова:} #2}\end{center}}%
+  {}
+\newcommand{\thmp}{Теорема~\thetheorem\ доказана. \medskip}
+\newcommand{\lemp}{Лемма~\thelemma\ доказана. \medskip}
+\newcommand{\sledp}{Следствие~\thesled\ доказано. \medskip}
+\newcommand{\utvp}{Утверждение~\theutv\ доказано. \medskip}
+\newcommand{\predp}{Предложение~\thepred\ доказано. \medskip}
+\newcommand{\abstracteng}[2]
+  {\begin{center}\parbox{110mm}{\small
+  {\bf Abstract.} #1\\[2mm]{\bf Keywords:} #2}\end{center}}%
+\newcommand{\firstpageofarticleeng}[2]{
+${}$
+
+\vspace*{\baselineskip}${}$\hfill\parbox{110mm}{\footnotesize${}$\hfill\uppercase{Diskretnyi Analiz i Issledovanie Operatsii}\\
+${}$\hfill\scriptsize\Issuemonth\ \theissueyear.  Volume
+\thenumvolume, No.~\thenumjournal. P.~\pageref{#1}--\pageref{#2}}}
+\newcommand{\statia}[1]{\newpage \statja{\metka1}
+{\metka2}{\families\\[1mm]{\rm\small\addressesavtorov
+E-mail: \email}}{\UDC}{\nazvaniestati} {\ssylka}{ \fancyhf{}
+\fancyhead[E]{\rm\thepage\hfill\sl\familieswithout\hfill${}$}
+ \fancyhead[O]{\hfill\sl \shortname
+\hfill\rm\thepage}
+\input #1}
+{\begin{zzp}{\vspace*{-0.3\baselineskip}} {\fullnames}
+{** ** 20** г.\\}%Дата получения статьи (заполняется редакцией)
+{** ** 20** г.\\}%Дата получения последнего переработанного варианта статьи (заполняется редакцией)
+\end{zzp}\newpage
+\firstpageofarticleeng{\metka1}{\metka2}
+
+\vspace*{4mm}\noindent UDC \UDC
+
+\begin{center}\enazvaniestati\\[3mm]\sl \efamilies\\[1mm]
+{\rm\small\eaddressesavtorov E-mail: \email}\end{center}
+
+\abstracteng{\enannotation}{\ekluchwords}
+
+\begin{zzpe}{\vspace*{-0.3\baselineskip}}
+{\efullnames\\
+}%
+{** ** 20**\\[-3mm]}{** ** 20**\\[-3mm]}
+\end{zzpe}}
+{\familiesforcopyright}}
