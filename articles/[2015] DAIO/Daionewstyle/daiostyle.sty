@@ -14,12 +14,14 @@
    \usepackage{mathtext}
    \usepackage{srcltx}
    \usepackage{pb-diagram}
+\usepackage{cite}
 
   % \usepackage{pstricks}
 \input epsf
    %\usepackage{textcomp}
    \usepackage{fancyhdr}
-   \overfullrule=0pt
+\providecommand{\No}{\textnumero}
+      \overfullrule=0pt
    \topmargin 26mm
    \textwidth 127mm\textheight 190mm\headsep=4mm
    \oddsidemargin 24mm\evensidemargin=\oddsidemargin\marginparsep 0.25in\marginparwidth 0.5in
@@ -61,7 +63,7 @@ ${}$\hfill\scriptsize\issuemonths\ \theissueyear.  Том
 \newcommand{\statja}[9]{
 \thispagestyle{empty}
 
-\firstpageofarticle{#1}{#2}
+\label{#1}\firstpageofarticle{#1}{#2}
 
 \vspace*{\baselineskip} \noindent{УДК #4}\setcounter{footnote}{0}
 \renewcommand{\thefootnote}{\fnsymbol{footnote}}
@@ -236,6 +238,8 @@ Revised\\
 \makeatother
 \renewcommand{\emptyset}{\varnothing}
 \newcommand{\ES}{\varnothing}
+\newcommand{\refsect}[1]{{\ref{#1}\tikz\filldraw[white] (0,0)
+circle(1mm);}}
 
 %\theorembodyfont{\slshape}
 \newtheorem{definition}{Определение}
@@ -268,13 +272,35 @@ ${}$
 \vspace*{\baselineskip}${}$\hfill\parbox{110mm}{\footnotesize${}$\hfill\uppercase{Diskretnyi Analiz i Issledovanie Operatsii}\\
 ${}$\hfill\scriptsize\Issuemonth\ \theissueyear.  Volume
 \thenumvolume, No.~\thenumjournal. P.~\pageref{#1}--\pageref{#2}}}
-\newcommand{\statia}[1]{\newpage \statja{\metka1}
-{\metka2}{\families\\[1mm]{\rm\small\addressesavtorov
-E-mail: \email}}{\UDC}{\nazvaniestati} {\ssylka}{ \fancyhf{}
+
+\newcommand{\beginpaper}{\thispagestyle{empty}
+
+\label{\metka1}\firstpageofarticle{\metka1}{\metka2}
+
+
+\vspace*{\baselineskip} \noindent{УДК \UDC}\setcounter{footnote}{0}
+\renewcommand{\thefootnote}{\fnsymbol{footnote}}
+
+
+\vspace*{\baselineskip}\begin{center}\large
+\uppercase{\nazvaniestati}\setcounter{section}{0} %
+\setcounter{lemma}{0}%
+\setcounter{theorem}{0}%
+\setcounter{sled}{0}%
+\setcounter{utv}{0}%
+\setcounter{equation}{0}%
+\setcounter{definition}{0}%
+\setcounter{property}{0}%
+\ssylka\\[3mm]{\sl\families}\\[1mm]\addressesavtorov\end{center}
+\footnote{${}$\\ \small\copyright \bf\ \theissueyear\
+\familiesforcopyright}
+\renewcommand{\thefootnote}{\fnsymbol{footnote}}
+\fancyhf{}
 \fancyhead[E]{\rm\thepage\hfill\sl\familieswithout\hfill${}$}
  \fancyhead[O]{\hfill\sl \shortname
-\hfill\rm\thepage}
-\input #1}
+\hfill\rm\thepage} \abstract{\annotation}{\kluchwords}}
+
+\newcommand{\konezpaper}{
 {\begin{zzp}{\vspace*{-0.3\baselineskip}} {\fullnames}
 {** ** 20** г.\\}%Дата получения статьи (заполняется редакцией)
 {** ** 20** г.\\}%Дата получения последнего переработанного варианта статьи (заполняется редакцией)
@@ -292,5 +318,4 @@ E-mail: \email}}{\UDC}{\nazvaniestati} {\ssylka}{ \fancyhf{}
 {\efullnames\\
 }%
 {** ** 20**\\[-3mm]}{** ** 20**\\[-3mm]}
-\end{zzpe}}
-{\familiesforcopyright}}
+\end{zzpe}}\label{\metka2}}

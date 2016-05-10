@@ -1,26 +1,25 @@
-    \documentclass[twoside,11pt,a4paper]{article}
-\usepackage{daiostyle}
-
+\documentclass[twoside,11pt,a4paper]{article}
+    \usepackage{daiostyle}
 %%%%%%%%%%%%%%%%%% Обязательные поля для заполнения автором статьи %%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\newcommand{\No}{\textnumero}
-
 %%% Для создания pdf файла вначале  файл dvi надо перевести в формат ps, а затем ps в pdf
+%%% Для ссылки на раздел, подраздел, параграф и подпараграф использовать новую команду \refsect вместо \ref
 
-\def\families{Л.~П.~Жильцова$^1$, И.~М.~Мартынов$^1$}%И.\,О.\,Фамилии авторов  с номерами их мест работы.
+
+\def\families{Л.~П.~Жильцова$^1$, И.~М.~Мартынов$^2$}%И.\,О.\,Фамилии авторов  с номерами их мест работы.
 \def\familieswithout{Л.~П.~Жильцова, И.~М.~Мартынов}%И.\,О.\,Фамилии авторов  без номеров мест работы.
 \def\efamilies{L.~P.~Zhiltsova$^1$, I.~M.~Martynov$^1$}%И.\,О.\,Фамилии  авторов c номнрами мест их работы на английском.
-\def\fullnames{\sl Жильцова~Лариса~Павловна\\Мартынов\,Игорь\,Михайлович}%Фамилии, имена и отчества авторов
+\def\fullnames{\sl Жильцова~Лариса~Павловна\\Мартынов~Игорь~Михайлович}%Фамилии, имена и отчества авторов
 \def\efullnames{{\sl Larisa~P.~Zhiltsova\\Igor~M.~Martynov}}%Фамилии, имена и отчества авторов на английском
 \def\metka{zhiltsova}%метка первой страницы статьи.
-\def\UDC{999.9}%Номер УДК
-\def\nazvaniestati{\uppercase{О СВОЙСТВАХ ВЕРОЯТНОСТНЫХ ХАРАКТЕРИСТИК ДЕРЕВЬЕВ
-ВЫВОДА В РАЗЛОЖИМЫХ СТОХАСТИЧЕСКИХ КС-ГРАММАТИКАХ}}%Название статьи
-\def\enazvaniestati{\uppercase{On properties of probabilistic characteristics of derivation trees in stochastic CF-grammars}}%Название статьи на английском
+\def\UDC{???.?}%Номер УДК
+\def\nazvaniestati{\uppercase{О СВОЙСТВАХ ВЕРОЯТНОСТНЫХ ХАРАКТЕРИСТИК\\[2mm]
+ДЕРЕВЬЕВ ВЫВОДА В РАЗЛОЖИМЫХ СТОХАСТИЧЕСКИХ\\[2mm] КС-ГРАММАТИКАХ}}%Название статьи
+\def\enazvaniestati{\uppercase{On properties of stochastic characteristics\\[2mm]
+of derivation trees in reducible probabilistic CF-grammars}}%Название статьи на английском
 
 \def\ssylka{}
-
 %\def\ssylka{\ffootnote{}{Исследование выполнено при финансовой поддержке
 %Российского фонда фундаментальных исследований (проекты
 %\No~12--01--00093а,
@@ -29,33 +28,55 @@
 %целевой программы Президиума РАН (проект \No~227) и
 %  междисциплинарного интеграционного проекта СО РАН (проект \No~7Б).}}%Ссылки на проекты в указанном формате. Если работа выполнена без поддержки по проектам, то  \ffoonote{}{...} убирается.
 
-\def\shortname{О свойствах вероятностных характеристик деревьев вывода}%Краткое название статьи (умещающееся в одну строку колонтитула)
-\def\annotation{!!!ПРОВЕРИТЬ!!! При исследовании возможностей экономного кодирования слов, структурные и вероятностные свойства которых моделируются стохастической КС-грамматикой, в качестве меры эффективности кодирования рассматривается стоимость кодирования, которая определяется на множестве "`длинных"' слов. В качестве множества таких слов целесообразно рассматривать множество слов КС-языка, имеющих деревья вывода фиксированной высоты $t$  при $t\rightarrow\infty$. При этом возникает необходимость в вычислении математических ожиданий числа применений различных правил КС-грамматики в словах языка, имеющих дерево вывода высоты $t$.}
-\def\enannotation{!!!TRANSLATE PROPERLY!!! Coding coding data compression CF-grammars bla-bla-bla...}
+\def\shortname{ О свойствах вероятностных характеристик}%Краткое название статьи (умещающееся в одну строку колонтитула)  
 
-\def\addressesavtorov{{\rm\small$^1$ Нижегородский государственный университет им. Н.\,И.\,Лобачевского,\\ пр. Гагарина, X, XXXXXX Нижний Новгород, Россия,\\[1mm]}}
+\def\annotation{Рассматривается язык, порожденный стохастической
+контекстно-свободной грамматикой, матрица первых моментов которой разложима и ее
+перронов корень меньше $1$. Для такого языка установлены некоторые
+закономерности в деревьях вывода фиксированной высоты $t$ при
+$t\rightarrow \infty.$ Найдено математическое ожидание числа вершин дерева
+вывода на ярусе $\tau$, к которым применено произвольное правило грамматики, при
+$\tau,$ $t-\tau \rightarrow \infty.$ Доказано, что математическое ожидание числа
+применений правила во всем дереве вывода линейно зависит от высоты $t$ дерева.}   
+
+\def\enannotation{We consider a language, produced by a probabilistic
+context-free grammar, having a reducible matrix of first moments, with a
+spectral radius less than $1$. For this language we state some conformities in
+derivation trees of fixed height $t$, where $t\rightarrow \infty$. We found
+mathematical estimation of number of tree nodes on tier $\tau$, having a certain
+production applied to them, where $\tau,$ $t-\tau \rightarrow \infty$. We prove
+that mathematical estimation of production rules in the whole derivation tree is
+asymptotically a linear function of tree height $t$.}%Аннотация статьи на английском
+
+\def\addressesavtorov{{\rm\small$^1$ Нижегородский государственный университет
+им. Н.\,И.\,Лобачевского,\\ пр. Гагарина, 23, 603950 Нижний Новгород, Россия,\\[1mm]}}
+
 % Адреса авторов для переписки, тел., факсы. Если есть соавторы и их служебные адреса различны,
 %то указываются здесь и их фамилии с соответствующими адресами
-
-\def\eaddressesavtorov{{\rm\small$^1$Sobolev Institute of Mathematics,\\
-4 Acad. Koptyug Ave., 630090 Novosibirsk, Russia\\
-$^2$ Novosibirsk State University,\\ 2 Pirogov St.,
-630090 Novosibirsk, Russia\\[1mm]}}% Адреса авторов для переписки. Если есть соавторы и их служебные адреса различны,
+\def\eaddressesavtorov{{\rm\small$^1$Lobachevsky State University of Nizhni
+Novgorod,\\ 23 Gagarin Ave., 603950 Nizhny Novgorod, Russia\\[1mm]}}% Адреса авторов для переписки. Если есть соавторы и их служебные адреса различны,
 %то указываются здесь и их фамилии с соответствующими адресами на английском
-
-\def\familiesforcopyright{Жильцова~Л.~П., Мартынов~И.~М}%Фамилия автора~И.~О.. Если есть соавторы, то их ФИО указываются через запятую
+\def\familiesforcopyright{Жильцова~Л.~П., Мартынов~И.~М.}%Фамилия автора~И.~О.. Если есть соавторы, то их ФИО указываются через запятую
 %в том же формате (для копирайта)
-\def\kluchwords{теория кодирования, сжатие данных, КС-грамматики, деревья вывода, ...}
-
-\def\ekluchwords{coding theory, CF-grammar, derivation tree, spectral radius, ...}
-
+\def\kluchwords{стохастическая КС-грамматика, дерево вывода, сжатие данных,
+экономное кодирование, матрица первых моментов, перронов корень, правила
+вывода, разложимая матрица}%ключевые слова
+\def\ekluchwords{probabilistic CF-grammar, derivation tree, data compression,
+first moments matrix, spectral radius, derivation rules, reducible matrix}%ключевые слова на английском
 \def\email{larzhil@rambler.ru, murbidodrus@gmail.com}%E-mail адреса авторов
-
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{document}
 \normalsize
 \setcounter{page}{3}%
-\statia{article.tex}%файл статьи
+\beginpaper
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%% вставка текста статьи без названия, фамилий и аннотаций %%%%%%%%%%%%%%
+%%%%%%% либо так
+\input Zhiltsov24_06_0416.tex
+%%%%%%%% либо текст статьи непосредственно %%%%%%%%%%%%%%%%%
+\konezpaper
+
 \end{document}
