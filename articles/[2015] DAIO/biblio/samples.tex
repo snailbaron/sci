@@ -1,0 +1,155 @@
+\documentclass[10pt]{article}
+\usepackage[utf8]{inputenc}		%[utf8][cp1251][cp866]
+\usepackage[T2A]{fontenc}		%[T1][TS1][OT1][OT2][T2A][T2B][T2C][X2]
+\usepackage[russian,english]{babel}
+\usepackage{amssymb,amsmath,amsfonts,amsthm}
+\usepackage{verbatim}
+\usepackage{cite}
+% \usepackage{cmap}
+\usepackage{srcltx}
+% \usepackage{hyperref}
+% \usepackage{remreset}
+\usepackage{graphicx}
+% \usepackage[left=1cm,right=1cm,top=1cm,bottom=1cm]{geometry} % поля страницы
+
+% \renewcommand{\baselinestretch}{1.2}
+% \renewcommand{\thesection}{\arabic{chapter}.\arabic{section}.}
+
+%A4 ~ 595pt x 840pt (210mm x 297mm)
+%1pt = 0.3528mm
+\oddsidemargin 24pt
+\textwidth 444pt
+
+\topmargin 12pt
+\headheight 0pt
+\headsep 0pt
+\textheight 650pt
+% \setlength{\textheight}{45\baselineskip}
+% \setlength{\textheight}{\baselinestretch\textheight}
+% \addtolength{\textheight}{\topskip}
+
+\binoppenalty=10000
+\relpenalty=10000
+
+\date{}
+
+\begin{document}
+
+Журнальные статьи: на русском~\cite{Alekseev1999,GK2014,Marchenkov2011}, 
+на английском~\cite{DK2015,FJ2010}, на других языках~\cite{EG1960,Havel1955,Konig1916}
+
+Статьи в сборниках статей: на русском~\cite{Vasilev1978}, на английском~\cite{Yablonskii1982}
+
+Статьи в сборниках конференций: на русском~\cite{KS2014,Zakharova2010}, на английском~\cite{Malyugin2001,Uhlig1987}
+
+Книги: на русском~\cite{Alekseev2004,EMST1990,Stetsyuk2014}, переведенные на русский~\cite{GJ1979}, на английском~\cite{Attallah1998}
+
+Диссертации и выпускные работы~\cite{Chugunova2007,Hansen1992}
+
+\begin{thebibliography}{99}  %% {99} если цитируется больше 9 источников
+
+\bibitem{Alekseev1999}
+\textbf{V.\,E.\,Alekseev,} 
+A polynomial algorithm for finding the largest independent sets in claw-free graphs, 
+\textit{Diskretn. Anal. Issled. Oper., Ser.~1,} \textbf{6}, No.~4, 3--19, 1999.
+
+\bibitem{GK2014}
+\textbf{A.\,E.\,Galashov} and \textbf{A.\,V.\,Kel'manov,} 
+A 2-approximate algorithm to solve one problem of the family of disjoint vector subsets, 
+\textit{Avtom. Telemekh.,} No.~4, 5--19, 2014. 
+Translated in \textit{Autom. Remote Control,} \textbf{75}, No.~4, 595--606, 2014.
+
+\bibitem{Marchenkov2011}
+\textbf{S.\,S.\,Marchenkov,} FE classification of functions of many-valued logic, 
+\textit{Vestn. Mosk. Univ., Ser. 15,} No.~2, 32--39, 2011.
+Translated in \textit{Mosc. Univ. Comput. Math. Cybern.,} \textbf{35}, No.~2, 89--96, 2011.
+
+\bibitem{DK2015}
+\textbf{I.\,A.\,Davydov} and \textbf{Yu.\,A.\,Kochetov,}
+VNS-based heuristic with an exponential neighborhood for the server load balancing problem, 
+\textit{Electron. Notes Discrete Math.,} \textbf{47}, 53--60, 2015.
+
+\bibitem{FJ2010}
+\textbf{G.\,Fan} and \textbf{S.\,Jin,} Coverage problem in wireless sensor network: A survey, 
+\textit{J. Netw.,} \textbf{5}, No.~9, 1033--1040, 2010.
+
+\bibitem{EG1960}
+\textbf{P.\,Erd\H{o}s} and \textbf{T.\,Gallai,} Graphs with prescribed degrees of vertices, 
+\textit{Mat. Lapok.,} \textbf{11}, 264--274, 1960 [Hungarian].
+
+\bibitem{Havel1955}
+\textbf{V.\,Havel,} A remark on the existence of finite graphs, 
+\textit{\v{C}as. P\v{e}stov\'{a}n\'{\i} Mat.,} \textbf{80}, No.~4, 477--480, 1955 [Czech].
+
+\bibitem{Konig1916}
+\textbf{D.\,K\"{o}nig,} On graphs and its applications to determinant theory and set theory, 
+\textit{Math. Ann.,} \textbf{77}, No.~4, 453--465, 1916 [German].
+
+\bibitem{Vasilev1978}
+\textbf{Yu.\,L.\,Vasil’ev,} Massive classes of dense Boolean functions, 
+in \textit{Metody diskretnogo analiza v sinteze upravlyayushchikh sistem} 
+(Methods of Discrete Analysis in Synthesis of Control Systems), Vol.~32, pp.~21--33, 
+Izd. Inst. Mat., Novosibirsk, 1978.
+
+\bibitem{Yablonskii1982}
+\textbf{S.\,V.\,Yablonskii,} Asymptotically best method for synthesis of reliable circuits from unreliable elements, 
+in J.\,L.\,Kulikowski, M.\,Michalewicz, S.\,V.\,Yablonskii, and Yu.\,I.\,Zhuravlev, eds., \textit{Discrete Mathematics,} 
+pp.~11--19, Instytut Matematyczny PAN, Warsaw, 1982 (Banach Cent. Publ., Vol.~7).
+
+\bibitem{KS2014}
+\textbf{E.\,A.\,Kazakovtseva} and \textbf{V.\,V.\,Servakh,} 
+NP-hardness of the project scheduling problem with credits 
+in \textit{Tezisy dokladov XVI Baikal'skoi mezhdunarodnoi shkoly-seminara ``Metody optimizatsii i ikh prilozheniya''} 
+(Abstr. XVI Baikal Int. School-Seminar ``Optimization Methods and Their Applications''), 
+\textit{Olkhon, Irkutsk Reg., Russia, June 30 -- July 6, 2014,} p.~56, Inst. Sist. Energ. SO RAN, Irkutsk, 2014.
+
+\bibitem{Zakharova2010}
+\textbf{D.\,V.\,Zakharova,} 
+Weighted independent sets in graphs with bounded minors of the extended incidence matrix, 
+in \textit{Materialy X Mezhdunarodnogo seminara ``Diskretnaya matematika i ee prilozheniya''} 
+(Proc. X Int. Seminar ``Discrete Math. and Its Applications''), 
+\textit{Moscow, Russia, Jan.~1--6, 2010,} pp.~303--305, Izd. Mekh.-Mat. Fak. MGU, Moscow, 2010.
+
+\bibitem{Malyugin2001}
+\textbf{S.\,A.\,Malyugin,} On affine nonsystematic codes, in \textit{Proc. Conf. Devoted 
+to the 90th Anniversary of A.\,A.\,Lyapunov, Novosibirsk, Russia, Oct.~8--11, 2001,} pp.~393--394, 
+Novosibirsk, 2009. Available at http://www.sbras.ru/ws/Lyap2001/2288/. Accessed Jan. 13, 2015.
+
+\bibitem{Uhlig1987}
+\textbf{D.\,Uhlig,} Reliable networks from unreliable gates with almost minimal complexity, 
+in \textit{Fundamentals of Computation Theory} (Proc. Int. Conf. FCT’87, Kazan, USSR, June 22--26, 1987), 
+pp.~462--469, Springer-Verlag, Berlin, 1987 (Lect. Notes Comput. Sci., Vol.~278).
+
+\bibitem{Alekseev2004}
+\textbf{V.\,B.\,Alekseev,} \textit{Lektsii po diskretnoi matematike} (Lectures on Discrete Mathematics), 
+Izd. Otd. Fak. VMiK MGU, Moscow, 2004.
+
+\bibitem{EMST1990}
+\textbf{V.\,A.\,Emelichev, O.\,I.\,Melnikov, V.\,I.\,Sarvanov,} and \textbf{R.\,I.\,Tyshkevich,} 
+\textit{Lektsii po teorii grafov,} Nauka, Moscow, 1990. Translated under the title 
+\textit{Lectures on Graph Theory,} B.\,I.\,Wissen\-schaftsverlag, Mannheim, 1994.
+
+\bibitem{Stetsyuk2014}
+\textbf{P.\,I.\,Stetsyuk,} 
+\textit{Metody ellipsoidov i $r$-algoritmy} (Ellipsoid Methods and $r$-Algorithms), Evrika, Chisinau, 2014.
+
+\bibitem{GJ1979}
+\textbf{M.\,R.\,Garey} and \textbf{D.\,S.\,Johnson,} 
+\textit{Computers and Intractability: A Guide to the Theory of NP-Completeness,} Freeman, San Francisco, 1979. 
+Translated under the title \textit{Vychislitel'nye mashiny i trudnoreshaemye zadachi,} Mir, Moscow, 1982.
+
+\bibitem{Attallah1998}
+\textbf{M.\,J.\,Attallah,} ed., 
+\textit{Algorithms and Theory of Computation Handbook,} CRC Press, Boca Raton, 1998.
+
+\bibitem{Chugunova2007}
+\textbf{V.\,V.\,Chugunova,} Synthesis of asymptotically optimal reliable circuits under inverse failures 
+at the element outputs, \textit{Cand. Sci. Dissertation,} Penz. Gos. Univ., Penza, 2007.
+
+\bibitem{Hansen1992}
+\textbf{H.\,M.\,Hansen,} Scheduling with minimum waiting periods, \textit{Master Thesis,} 
+Odense Univ., Odense, Denmark, 1992.
+
+\end{thebibliography}
+
+\end{document}
