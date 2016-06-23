@@ -10,11 +10,17 @@
 \usepackage{qtree}
 \usepackage{graphics}
 
+%\uselanguage{russian}
+%\languagepath{russian}
+%\deftranslation[to=russian]{Theorem}{Теорема}
+
+
 \renewcommand{\leq}{\leqslant}
 \renewcommand{\geq}{\geqslant}
 
 \title{О числе нетерминалов в деревьях вывода разложимой стохастической КС-грамматики}
 \author{Мартынов Игорь Михайлович}
+
 
 
 \begin{document}
@@ -46,7 +52,7 @@
 	}
 
 	\begin{frame}
-		\frametitle{КС-грамматика (КСГ)}
+		\frametitle{Контекстно-свободная грамматика (КСГ)}
 		$$
 			G = <V_N, V_T, S, R>
 		$$
@@ -339,138 +345,78 @@
 	\end{frame}
 
 	\begin{frame}
-		\frametitle{Грамматика вида <<цепочки>>}
-		\begin{picture}(1000, 35)
-		\put(60, 20){\circle{30}}
-		\put(54, 16){$K_1$}
-		\put(75, 20){\vector(1,0){25}}
-		\put(115, 20){\circle{30}}
-		\put(109, 16){$K_2$}
-		\put(130, 20){\vector(1,0){25}}
-		\put(165, 10){...}
-		\put(185, 20){\vector(1,0){25}}
-		\put(225, 20){\circle{30}}
-		\put(219, 16){$K_m$}
-		\end{picture}
-		\vspace{-30pt}
-		
-		\begin{equation*}
-		K_1 \prec K_2 \prec \ldots \prec K_m
-		\end{equation*}
-		
-		Матрица первых моментов такой грамматики имеет вид:
-		\begin{equation*}
-		A =
-		\begin{pmatrix}
-		A_{11} & A_{12} & 0      & \cdots & 0      & 0      \\
-		0      & A_{22} & A_{23} & \cdots & 0      & 0      \\
-		0      & 0      & A_{33} & \cdots & 0      & 0      \\
-		\vdots & \vdots & \vdots & \ddots & \vdots & \vdots \\
-		0      & 0      & 0      & \cdots & A_{m-1,m-1} & A_{m-1,m} \\
-		0      & 0      & 0      & \cdots & 0      & A_{mm}
-		\end{pmatrix}
-		\end{equation*}
-		
-		Блоки $A_{ii} (i = 1,2,\ldots,m)$ неразложимы, имеют перроновы корни $r_i$.
-		
-		Перронов корень всей матрицы $r = \max\{r_i\}$.
-	\end{frame}
+    	\frametitle{Граф классов нетерминалов}
+    	
+    	\begin{picture}(300,200)
 
-	\begin{frame}
-		\frametitle{Вероятности продолжения: цепочка}
-		$Q_i(t)$ --- вероятность деревьев вывода высоты $\geq t$ с корнем $A_i$ (вероятности продолжения).
-		
-		$P_i(t)$ --- вероятность деревьев высоты $t$.
-		
-		При $t \rightarrow \infty$
-		\begin{equation*}
-			\begin{split}
-				&Q_i(t) \sim c_i \cdot t^{-\left(\frac{1}{2}\right)^{q_l - 1}} \\
-				&P_i(t) \sim \tilde{c}_i \cdot t^{-1 -\left(\frac{1}{2}\right)^{q_l - 1}}
-			\end{split},
-		\end{equation*}
-		где $A_i \in K_l$, $c_i, \tilde{c}_i > 0$, $q_l$ --- число 
-		
-		\begin{picture}(1000, 45)
-			\put(20, 20){\circle*{20}}
-			\put(30, 20){\vector(1,0){20}}
-			\put(60, 20){\circle{20}}
-			\put(70, 20){\vector(1,0){20}}
-			\put(100, 20){\circle*{20}}
-			\put(110, 20){\vector(1,0){20}}
-			\put(140, 20){\circle{20}}
-			\put(150, 20){\vector(1,0){20}}
-			\put(180, 20){\circle*{20}}
-			\put(190, 20){\vector(1,0){20}}
-			\put(220, 20){\circle*{20}}
-			\put(230, 20){\vector(1,0){20}}
-			\put(260, 20){\circle{20}}
-			\put(270, 20){\vector(1,0){20}}
-			\put(300, 20){\circle{20}}
-			\put(140, -10){\vector(0,1){20}}
-			\put(142, -5){$l$}
-			\put(140, -10){\vector(1,0){170}}
-			\put(200, -2){$q_l = 2$}
-		\end{picture}
+            \put(145, 195){$K_1$}
+        	\put(150, 180){\circle{20}}
+        	
+        	\put(90, 150){$K_2$}
+        	\put(110, 140){\circle*{20}}
+        	\put(200, 150){$K_3$}
+        	\put(190, 140){\circle{20}}
+        	
+        	\put(145, 115){$K_4$}
+        	\put(150, 100){\circle*{20}}
+        	
+        	\put(90,  70){$K_5$}
+        	\put(110, 60){\circle{20}}
+        	\put(200, 70){$K_6$}
+        	\put(190, 60){\circle{20}}
+        	
+        	\put(60,  30){$K_7$}
+        	\put(80,  20){\circle{20}}
+        	\put(150, 30){$K_8$}
+        	\put(140, 20){\circle*{20}}
+        	\put(200, 30){$K_9$}
+        	\put(190, 20){\circle*{20}}
+
+            \put(143, 173){\vector(-1,-1){27}}
+            \put(157, 173){\vector(1,-1){27}}
+            \put(117, 133){\vector(1,-1){27}}
+            \put(183, 133){\vector(-1,-1){27}}
+            \put(143, 93){\vector(-1,-1){27}}
+            \put(157, 93){\vector(1,-1){27}}
+            \put(104, 51){\vector(-3,-4){18}}
+            \put(116, 51){\vector(3,-4){18}}
+            \put(190, 50){\vector(0,-1){20}}
+        	
+    	\end{picture}
 	\end{frame}
 	
+
+	
+	% Теорема от мат. ожиданиях
 	\begin{frame}
-		\frametitle{Вероятности продолжения}
-		При $t \rightarrow \infty$
-		\begin{equation*}
-		\begin{split}
-		&Q_i(t) \sim c_i \cdot t^{-\left(\frac{1}{2}\right)^{q_l - 1}} \\
-		&P_i(t) \sim \tilde{c}_i \cdot t^{-1 -\left(\frac{1}{2}\right)^{q_l - 1}}
-		\end{split},
-		\end{equation*}
-		где $A_i \in K_l$, $c_i > 0$, $q_l = s_{lm}^*$.
+    	\frametitle{Число применений правила вывода}
+    	
+    	\begin{theorem}
+        	Пусть $q_{ij}(t)$ --- число применений правила $r_{ij} : A_i \rightarrow \beta_{ij}$ в случайном дереве вывода высоты $t$, и $q_i(t)$ --- число нетерминалов $A_i$ в таком дереве. Тогда
+        	    	
+        	\begin{equation*}
+            	\begin{aligned}
+                	& M(q_{ij}(t)) \sim c_i \cdot p_{ij} \cdot t^{(\frac{1}{2})^{s_1 - s_{1l} - 1}} \\
+                	& M(q_i(t)) \sim d_i \cdot t^{(\frac{1}{2})^{s_1 - s_{1l} - 1}}
+                \end{aligned} \quad
+                (t \rightarrow \infty)
+            \end{equation*}
+            где $c_i$ и $d_i$ --- некоторые константы, и $p_{ij}$ --- вероятность применения правила $r_{ij}$.
+        \end{theorem}
 	\end{frame}
 	
+	% Теорема о дисперсии.
 	\begin{frame}
-		\frametitle{Число применений правила: цепочка}
-		$M_{ij}(t)$ --- математическое ожидание числа применений правила $r_{ij}$ в деревьях высоты $t$
-		
-		При $t \rightarrow \infty$
-		\begin{equation*}
-			M_{ij}(t) \sim d_i \cdot p_{ij} \cdot t^{\left(\frac{1}{2}\right)^{q_{l+1} - 1}},
-		\end{equation*}
-		где $A_i \in K_l$, $d_i > 0$ и
-		
-		\begin{picture}(1000, 45)
-			\put(20, 20){\circle*{20}}
-			\put(30, 20){\vector(1,0){20}}
-			\put(60, 20){\circle{20}}
-			\put(70, 20){\vector(1,0){20}}
-			\put(100, 20){\circle*{20}}
-			\put(110, 20){\vector(1,0){20}}
-			\put(140, 20){\circle{20}}
-			\put(150, 20){\vector(1,0){20}}
-			\put(180, 20){\circle*{20}}
-			\put(190, 20){\vector(1,0){20}}
-			\put(220, 20){\circle*{20}}
-			\put(230, 20){\vector(1,0){20}}
-			\put(260, 20){\circle{20}}
-			\put(270, 20){\vector(1,0){20}}
-			\put(300, 20){\circle{20}}
-			\put(100, -10){\vector(0,1){20}}
-			\put(102, -5){$l$}
-			\put(100, -10){\vector(1,0){190}}
-			\put(180, -2){$q_{l+1} = 2$}
-		\end{picture}
-	\end{frame}
-	
-	\begin{frame}
-		\frametitle{Число применений правила}
-		$M_{ij}(t)$ --- математическое ожидание числа применений правила $r_{ij}$ в деревьях высоты $t$
-		
-		При $t \rightarrow \infty$
-		\begin{equation*}
-		M_{ij}(t) \sim d_i \cdot p_{ij} \cdot t^{\left(\frac{1}{2}\right)^{\tilde{q}_l - 1}},
-		\end{equation*}
-		где $A_i \in K_l$, $d_i > 0$, и
-		$$
-			\tilde{q}_l = q_1 - q^-_l = s_{1m}^* - s_{1l}^*
-		$$
+    	\frametitle{Соотношение числа нетерминалов}
+    	
+    	\begin{theorem}
+            Для любой пары нетерминалов $A_i \in K_h$ и $A_j \in K_l$, такой что $s_{1h} = s_{1l}$, в случайном дереве высоты $t$
+    	
+        	\begin{equation*}
+            	D(\frac{q_i(t)}{q_j(t)}) \rightarrow 0 \quad (t \rightarrow \infty)
+        	\end{equation*}
+
+    	\end{theorem}
 	\end{frame}
 	
 	% Список литературы
